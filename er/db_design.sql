@@ -2,44 +2,84 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
 
+DROP TABLE IF EXISTS METHOD_PARAMETER;
 DROP TABLE IF EXISTS MODULE;
+DROP TABLE IF EXISTS MODULE_METHOD;
 DROP TABLE IF EXISTS MODULE_TYPE;
+DROP TABLE IF EXISTS PACKAGE;
+DROP TABLE IF EXISTS SEQUENCE_MANAGER;
 
 
 
 
 /* Create Tables */
 
+CREATE TABLE METHOD_PARAMETER
+(
+	no char(7) NOT NULL,
+	method_no int(6) unsigned NOT NULL,
+	parameter_id char(128) NOT NULL,
+	paramter_type char(128) NOT NULL,
+	parameter_name char(128) NOT NULL,
+	PRIMARY KEY (no)
+);
+
+
 CREATE TABLE MODULE
 (
-	-- モジュールの唯一の物理名。LogicやService、Utilなどは想定されています。
-	id char(40) NOT NULL COMMENT 'モジュールの唯一の物理名。LogicやService、Utilなどは想定されています。'
+	package_id char(128) NOT NULL,
+	module_id char(128) NOT NULL,
+	-- モジュールタイプの唯一の物理名。LogicやService、Utilなどは想定されています。
+	module_type char(40) NOT NULL COMMENT 'モジュールタイプの唯一の物理名。LogicやService、Utilなどは想定されています。',
+	module_id_name char(128) NOT NULL,
+	method1 char(128),
+	PRIMARY KEY (package_id, module_id),
+	UNIQUE (package_id, module_id)
+);
+
+
+CREATE TABLE MODULE_METHOD
+(
+	no char(7) NOT NULL,
+	method_id char(128) NOT NULL,
+	method_id_name char(128) NOT NULL,
+	method_return_type char(128) NOT NULL,
+	method_throws_1 char(128),
+	method_parameter_1 char(128),
+	method_parameter_2 char(128),
+	PRIMARY KEY (no)
 );
 
 
 -- モジュールの種類を管理するテーブル
 CREATE TABLE MODULE_TYPE
 (
-	-- モジュールの唯一の物理名。LogicやService、Utilなどは想定されています。
-	id char(40) NOT NULL COMMENT 'モジュールの唯一の物理名。LogicやService、Utilなどは想定されています。',
-	-- モジュールの唯一の論理名。
-	name char(256) NOT NULL COMMENT 'モジュールの唯一の論理名。',
+	-- モジュールタイプの唯一の物理名。LogicやService、Utilなどは想定されています。
+	module_type char(40) NOT NULL COMMENT 'モジュールタイプの唯一の物理名。LogicやService、Utilなどは想定されています。',
+	-- モジュールタイプの唯一の論理名。
+	module_type_name char(128) NOT NULL COMMENT 'モジュールタイプの唯一の論理名。',
 	-- モジュールの説明内容
-	comment char(256) DEFAULT '' COMMENT 'モジュールの説明内容',
-	PRIMARY KEY (id),
-	UNIQUE (name)
+	comment text COMMENT 'モジュールの説明内容',
+	PRIMARY KEY (module_type)
 ) COMMENT = 'モジュールの種類を管理するテーブル';
 
 
+CREATE TABLE PACKAGE
+(
+	package_id char(128) NOT NULL,
+	-- モジュールの説明内容
+	comment text COMMENT 'モジュールの説明内容',
+	PRIMARY KEY (package_id)
+);
 
-/* Create Foreign Keys */
 
-ALTER TABLE MODULE
-	ADD FOREIGN KEY (id)
-	REFERENCES MODULE_TYPE (id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
+CREATE TABLE SEQUENCE_MANAGER
+(
+	sequence_id char(128) NOT NULL,
+	now int(6) unsigned DEFAULT 0 NOT NULL,
+	increment int(6) unsigned DEFAULT 1 NOT NULL,
+	PRIMARY KEY (sequence_id)
+);
 
 
 
