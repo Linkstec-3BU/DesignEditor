@@ -1,16 +1,11 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
-/* Drop Tables */
-
-DROP TABLE IF EXISTS METHOD_PARAMETER;
-DROP TABLE IF EXISTS MODULE;
-DROP TABLE IF EXISTS MODULE_METHOD;
-DROP TABLE IF EXISTS MODULE_TYPE;
-DROP TABLE IF EXISTS PACKAGE;
-DROP TABLE IF EXISTS SEQUENCE_MANAGER;
-
-
-
+DROP TABLE IF EXISTS method_parameter;
+DROP TABLE IF EXISTS module;
+DROP TABLE IF EXISTS module_method;
+DROP TABLE IF EXISTS module_type;
+DROP TABLE IF EXISTS package;
+DROP TABLE IF EXISTS sequence_manager;
 
 /* Create Tables */
 
@@ -70,15 +65,6 @@ CREATE TABLE PACKAGE
 	-- モジュールの説明内容
 	comment text COMMENT 'モジュールの説明内容',
 	PRIMARY KEY (package_id)
-);
-
-
-CREATE TABLE SEQUENCE_MANAGER
-(
-	sequence_id char(128) NOT NULL,
-	now int(6) unsigned DEFAULT 0 NOT NULL,
-	increment int(6) unsigned DEFAULT 1 NOT NULL,
-	PRIMARY KEY (sequence_id)
 );
 
 
