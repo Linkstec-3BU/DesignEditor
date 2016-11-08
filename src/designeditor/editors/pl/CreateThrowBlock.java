@@ -1,5 +1,6 @@
 package designeditor.editors.pl;
 
+import designeditor.editors.pl.bean.EditArea;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

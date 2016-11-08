@@ -1,24 +1,24 @@
-package designeditor.editors.pl;
+package designeditor.editors.pl.bean;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class AreaName {
+public class AreaType {
 	private final SimpleStringProperty no;
-	private final SimpleStringProperty name;
+	private final SimpleStringProperty areaType;
 	private final SimpleStringProperty areaName;
 
-	public AreaName(String lno, String lareaName, String lname) {
+	public AreaType(String lno, String lareaType, String lareaName) {
 		this.no = new SimpleStringProperty(lno);
+		this.areaType = new SimpleStringProperty(lareaType);
 		this.areaName = new SimpleStringProperty(lareaName);
-		this.name = new SimpleStringProperty(lname);
 	}
 
 	public String getAreaName() {
 		return areaName.get();
 	}
 
-	public String getName() {
-		return name.get();
+	public String getAreaType() {
+		return areaType.get();
 	}
 
 	public String getNo() {
@@ -29,8 +29,8 @@ public class AreaName {
 		areaName.set(lareaName);
 	}
 
-	public void setName(String lname) {
-		name.set(lname);
+	public void setAreaType(String lareaType) {
+		areaType.set(lareaType);
 	}
 
 	public void setNo(String lno) {

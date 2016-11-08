@@ -1,4 +1,4 @@
-package designeditor.editors.pl;
+package designeditor.editors.pl.bean;
 
 import javafx.beans.property.SimpleStringProperty;
 
