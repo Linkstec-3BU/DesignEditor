@@ -66,29 +66,27 @@ public class ExcelEditTool extends Application {
 
 		stage.setTitle("メソッド設計エディター");
 
-		
-
 		final HBox hbox1 = new HBox();
 		final Label label1 = new Label("メソッド名:");
 		label1.setFont(new Font("Arial", 16));
 		final TextField text1 = new TextField();
-		hbox1.getChildren().addAll(label1,text1);
-		
+		hbox1.getChildren().addAll(label1, text1);
+
 		final HBox hbox2 = new HBox();
 		final Label label2 = new Label("パラメータ:");
 		label2.setFont(new Font("Arial", 16));
 		final TextField text2 = new TextField();
-		hbox2.getChildren().addAll(label2,text2);
-		
+		hbox2.getChildren().addAll(label2, text2);
+
 		final HBox hbox3 = new HBox();
 		final Label label3 = new Label("戻り値:");
-		label3.setFont(new Font("Arial", 16));		
+		label3.setFont(new Font("Arial", 16));
 		final TextField text3 = new TextField();
-		hbox3.getChildren().addAll(label3,text3);
-		
+		hbox3.getChildren().addAll(label3, text3);
+
 		final Label label = new Label("処理詳細エリア");
 		label.setFont(new Font("Arial", 20));
-		
+
 		TableView<EditArea> table = new TableView<>();
 		table.setEditable(true);
 
@@ -144,14 +142,16 @@ public class ExcelEditTool extends Application {
 		logicContext.getItems().addAll(addCalculusBlock);
 		logicContext.getItems().addAll(items2);
 
-		//TODO debug 用
-//		TableColumn<EditArea, String> tag = new TableColumn<>("tag");
-//		tag.setMinWidth(40);
-//		tag.setCellValueFactory(new PropertyValueFactory<EditArea, String>("tag"));
-//
-//		TableColumn<EditArea, String> step = new TableColumn<>("step");
-//		step.setMinWidth(40);
-//		step.setCellValueFactory(new PropertyValueFactory<EditArea, String>("step"));
+		// TODO debug 用
+		// TableColumn<EditArea, String> tag = new TableColumn<>("tag");
+		// tag.setMinWidth(40);
+		// tag.setCellValueFactory(new PropertyValueFactory<EditArea,
+		// String>("tag"));
+		//
+		// TableColumn<EditArea, String> step = new TableColumn<>("step");
+		// step.setMinWidth(40);
+		// step.setCellValueFactory(new PropertyValueFactory<EditArea,
+		// String>("step"));
 
 		TableColumn<EditArea, String> logicOneCol = new TableColumn<>("");
 		logicOneCol.setMinWidth(40);
@@ -177,12 +177,12 @@ public class ExcelEditTool extends Application {
 		commentCol.setMinWidth(300);
 		commentCol.setCellValueFactory(new PropertyValueFactory<EditArea, String>("comment"));
 
-		//TODO　debug用
-//		table.getColumns().addAll(numberCol, tag, step, logicOneCol, logicTwoCol, logicThreeCol, sencondNameCol,
-//				commentCol);
-		
-		table.getColumns().addAll(numberCol, logicOneCol, logicTwoCol, logicThreeCol, sencondNameCol,
-				commentCol);
+		// TODO debug用
+		// table.getColumns().addAll(numberCol, tag, step, logicOneCol,
+		// logicTwoCol, logicThreeCol, sencondNameCol,
+		// commentCol);
+
+		table.getColumns().addAll(numberCol, logicOneCol, logicTwoCol, logicThreeCol, sencondNameCol, commentCol);
 
 		table.setItems(editAreaData);
 
@@ -193,7 +193,23 @@ public class ExcelEditTool extends Application {
 				row.setOnMousePressed(e -> {
 					if (e.isSecondaryButtonDown()) {
 						logicContext.show(row, e.getScreenX(), e.getScreenY());
-						addControlBlockLogic(stage, addControlBlock, row.getIndex());
+						int index = row.getIndex();
+						String step = ConstantManager.BLOCK_STEP_ONE;
+						for (int j = index; j >= 0; j--) {
+							if (ConstantManager.BLOCK_END_TAG.equals(editAreaData.get(j).getTag())) {
+								step = editAreaData.get(j).getStep();
+								break;
+							} else if (ConstantManager.BLOCK_START_TAG.equals(editAreaData.get(j).getTag())) {
+								if (ConstantManager.BLOCK_STEP_ONE.equals(editAreaData.get(j).getStep())) {
+									step = ConstantManager.BLOCK_STEP_TWO;
+								} else if (ConstantManager.BLOCK_STEP_TWO.equals(editAreaData.get(j).getStep())) {
+									step = ConstantManager.BLOCK_STEP_THREE;
+								}
+								break;
+							}
+						}
+
+						addControlBlockLogic(stage, addControlBlock, row.getIndex(), step);
 						addCalculusBlockLogic(stage, addCalculusBlock, row.getIndex());
 
 						menuLogic(logicContext, row.getIndex());
@@ -206,7 +222,7 @@ public class ExcelEditTool extends Application {
 		final VBox vbox = new VBox();
 		vbox.setSpacing(5);
 		vbox.setPadding(new Insets(10, 10, 10, 10));
-		vbox.getChildren().addAll(hbox1,hbox2,hbox3,label, table);
+		vbox.getChildren().addAll(hbox1, hbox2, hbox3, label, table);
 		VBox.setVgrow(table, Priority.ALWAYS);
 
 		stage.setScene(new Scene(vbox));
@@ -217,47 +233,21 @@ public class ExcelEditTool extends Application {
 	/*
 	 * 制御Brock追加
 	 */
-	private void addControlBlockLogic(Stage stage, Menu logicMenu, int index) {
+	private void addControlBlockLogic(Stage stage, Menu logicMenu, int index, String step) {
+
 		for (int i = 0; i < logicMenu.getItems().size(); i++) {
 			MenuItem subMenu = logicMenu.getItems().get(i);
 			if (ConstantManager.ADD_SELECT_BLOCK.equals(subMenu.getText())) {
 				subMenu.setOnAction(ex -> {
-					int idx = index;
-					for (int j = index; j >= 0; j--) {
-						if (ConstantManager.BLOCK_END_TAG.equals(editAreaData.get(j).getTag())) {
-							break;
-						} else if (ConstantManager.BLOCK_START_TAG.equals(editAreaData.get(j).getTag())) {
-							idx = j;
-							break;
-						}
-					}
-					openDialog1(stage, idx, index);
+					openDialog1(stage, step, index);
 				});
 			} else if (ConstantManager.ADD_FOREACH_BLOCK.equals(subMenu.getText())) {
 				subMenu.setOnAction(ex -> {
-					int idx = index;
-					for (int j = index; j >= 0; j--) {
-						if (ConstantManager.BLOCK_END_TAG.equals(editAreaData.get(j).getTag())) {
-							break;
-						} else if (ConstantManager.BLOCK_START_TAG.equals(editAreaData.get(j).getTag())) {
-							idx = j;
-							break;
-						}
-					}
-					openDialog2(stage, idx,index);
+					openDialog2(stage, step, index);
 				});
 			} else if (ConstantManager.ADD_THROW_BLOCK.equals(subMenu.getText())) {
 				subMenu.setOnAction(ex -> {
-					int idx = index;
-					for (int j = index; j >= 0; j--) {
-						if (ConstantManager.BLOCK_END_TAG.equals(editAreaData.get(j).getTag())) {
-							break;
-						} else if (ConstantManager.BLOCK_START_TAG.equals(editAreaData.get(j).getTag())) {
-							idx = j;
-							break;
-						}
-					}
-					openDialog3(stage, idx,index);
+					openDialog3(stage, step, index);
 				});
 			}
 		}
@@ -308,137 +298,41 @@ public class ExcelEditTool extends Application {
 					ObservableList<EditArea> ifLogicData = FXCollections.observableArrayList();
 					if (ConstantManager.BLOCK_STEP_ZERO.equals(edit.getStep())) {
 						ifLogicData.add(edit);
-					} else if (ConstantManager.BLOCK_STEP_ONE.equals(edit.getStep())) {
-						if (ConstantManager.BLOCK_START_TAG.equals(edit.getTag())) {
-							for (int j = index; j < editAreaData.size(); j++) {
-								ifLogicData.add(editAreaData.get(j));
-								if (ConstantManager.BLOCK_END_TAG.equals(editAreaData.get(j).getTag())
-										&& ConstantManager.BLOCK_STEP_ONE.equals(editAreaData.get(j).getStep())) {
-									break;
-								}
+					} else {
+						for (int j = index; j < editAreaData.size(); j++) {
+							ifLogicData.add(editAreaData.get(j));
+							if (ConstantManager.BLOCK_END_TAG.equals(editAreaData.get(j).getTag())
+									&& edit.getStep().equals(editAreaData.get(j).getStep())) {
+								break;
 							}
-						} else if (ConstantManager.BLOCK_END_TAG.equals(edit.getTag())) {
-							for (int j = index - 1; j >= 0; j--) {
-								ifLogicData.add(editAreaData.get(j));
-								if (ConstantManager.BLOCK_START_TAG.equals(editAreaData.get(j).getTag())
-										&& ConstantManager.BLOCK_STEP_ONE.equals(editAreaData.get(j).getStep())) {
-									break;
-								}
-							}
-						} else {
-							for (int j = index; j < editAreaData.size(); j++) {
-								ifLogicData.add(editAreaData.get(j));
-								if (ConstantManager.BLOCK_END_TAG.equals(editAreaData.get(j).getTag())
-										&& ConstantManager.BLOCK_STEP_ONE.equals(editAreaData.get(j).getStep())) {
-									break;
-								}
-							}
-							for (int j = index - 1; j >= 0; j--) {
-								ifLogicData.add(editAreaData.get(j));
-								if (ConstantManager.BLOCK_START_TAG.equals(editAreaData.get(j).getTag())
-										&& ConstantManager.BLOCK_STEP_ONE.equals(editAreaData.get(j).getStep())) {
-									break;
-								}
+						}
+						for (int j = index; j >= 0; j--) {
+							ifLogicData.add(editAreaData.get(j));
+							if (ConstantManager.BLOCK_START_TAG.equals(editAreaData.get(j).getTag())
+									&& edit.getStep().equals(editAreaData.get(j).getStep())) {
+								break;
 							}
 						}
 
-					} else if (ConstantManager.BLOCK_STEP_TWO.equals(edit.getStep())) {
-						if (ConstantManager.BLOCK_START_TAG.equals(edit.getTag())) {
-							for (int j = index; j < editAreaData.size(); j++) {
-								ifLogicData.add(editAreaData.get(j));
-								if (ConstantManager.BLOCK_END_TAG.equals(editAreaData.get(j).getTag())
-										&& ConstantManager.BLOCK_STEP_TWO.equals(editAreaData.get(j).getStep())) {
-									break;
-								}
-							}
-						} else if (ConstantManager.BLOCK_END_TAG.equals(edit.getTag())) {
-							for (int j = index - 1; j >= 0; j--) {
-								ifLogicData.add(editAreaData.get(j));
-								if (ConstantManager.BLOCK_START_TAG.equals(editAreaData.get(j).getTag())
-										&& ConstantManager.BLOCK_STEP_TWO.equals(editAreaData.get(j).getStep())) {
-									break;
-								}
-							}
-						} else {
-							for (int j = index; j < editAreaData.size(); j++) {
-								ifLogicData.add(editAreaData.get(j));
-								if (ConstantManager.BLOCK_END_TAG.equals(editAreaData.get(j).getTag())
-										&& ConstantManager.BLOCK_STEP_TWO.equals(editAreaData.get(j).getStep())) {
-									break;
-								}
-							}
-							for (int j = index - 1; j >= 0; j--) {
-								ifLogicData.add(editAreaData.get(j));
-								if (ConstantManager.BLOCK_START_TAG.equals(editAreaData.get(j).getTag())
-										&& ConstantManager.BLOCK_STEP_TWO.equals(editAreaData.get(j).getStep())) {
-									break;
-								}
-							}
-						}
-					} else if (ConstantManager.BLOCK_STEP_THREE.equals(edit.getStep())) {
-						if (ConstantManager.BLOCK_START_TAG.equals(edit.getTag())) {
-							for (int j = index; j < editAreaData.size(); j++) {
-								ifLogicData.add(editAreaData.get(j));
-								if (ConstantManager.BLOCK_END_TAG.equals(editAreaData.get(j).getTag())
-										&& ConstantManager.BLOCK_STEP_THREE.equals(editAreaData.get(j).getStep())) {
-									break;
-								}
-							}
-						} else if (ConstantManager.BLOCK_END_TAG.equals(edit.getTag())) {
-							for (int j = index - 1; j >= 0; j--) {
-								ifLogicData.add(editAreaData.get(j));
-								if (ConstantManager.BLOCK_START_TAG.equals(editAreaData.get(j).getTag())
-										&& ConstantManager.BLOCK_STEP_THREE.equals(editAreaData.get(j).getStep())) {
-									break;
-								}
-							}
-						} else {
-							for (int j = index; j < editAreaData.size(); j++) {
-								ifLogicData.add(editAreaData.get(j));
-								if (ConstantManager.BLOCK_END_TAG.equals(editAreaData.get(j).getTag())
-										&& ConstantManager.BLOCK_STEP_THREE.equals(editAreaData.get(j).getStep())) {
-									break;
-								}
-							}
-							for (int j = index - 1; j >= 0; j--) {
-								ifLogicData.add(editAreaData.get(j));
-								if (ConstantManager.BLOCK_START_TAG.equals(editAreaData.get(j).getTag())
-										&& ConstantManager.BLOCK_STEP_THREE.equals(editAreaData.get(j).getStep())) {
-									break;
-								}
-							}
-						}
-					}
+					} 
 					editAreaData.removeAll(ifLogicData);
 
 				});
 			} else if (ConstantManager.ADD_RETURN_BLOCK.equals(subMenu.getText())) {
 				subMenu.setOnAction(ex -> {
 					String flg = ConstantManager.BLOCK_STEP_ZERO;
-					if (index > 0) {
-						EditArea beforeEdit = editAreaData.get(index - 1);
-						flg = beforeEdit.getStep();
-					}
 					EditArea edit = new EditArea("", flg, "", "", "", "RETURN", "");
 					editAreaData.add(index, edit);
 				});
 			} else if (ConstantManager.ADD_BREAK_BLOCK.equals(subMenu.getText())) {
 				subMenu.setOnAction(ex -> {
 					String flg = ConstantManager.BLOCK_STEP_ZERO;
-					if (index > 0) {
-						EditArea beforeEdit = editAreaData.get(index - 1);
-						flg = beforeEdit.getStep();
-					}
 					EditArea edit = new EditArea("", flg, "", "", "", "BREAK", "");
 					editAreaData.add(index, edit);
 				});
 			} else if (ConstantManager.ADD_CONTINUE_BLOCK.equals(subMenu.getText())) {
 				subMenu.setOnAction(ex -> {
 					String flg = ConstantManager.BLOCK_STEP_ZERO;
-					if (index > 0) {
-						EditArea beforeEdit = editAreaData.get(index - 1);
-						flg = beforeEdit.getStep();
-					}
 					EditArea edit = new EditArea("", flg, "", "", "", "CONTINUE", "");
 					editAreaData.add(index, edit);
 				});
@@ -446,7 +340,7 @@ public class ExcelEditTool extends Application {
 		}
 	}
 
-	private String openDialog1(Stage stage, int idx, int index) {
+	private String openDialog1(Stage stage, String step, int index) {
 		Stage newStage = new Stage();
 		newStage.initModality(Modality.APPLICATION_MODAL);
 		newStage.initOwner(stage);
@@ -465,41 +359,14 @@ public class ExcelEditTool extends Application {
 		Button btn = new Button();
 		btn.setText("登録");
 		btn.setOnAction(e -> {
-			EditArea edit = editAreaData.get(idx);
-			System.out.println(idx);
-			System.out.println(edit.getStep());
+			CreateSelectBlock block = new CreateSelectBlock();
 			ObservableList<EditArea> ifLogicData = FXCollections.observableArrayList();
-			if (ConstantManager.BLOCK_STEP_ONE.equals(edit.getStep())) {
-				ifLogicData.addAll(
-						new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_TWO, "", "IF", "",
-								text1.getText(), ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_TWO, "", "ELSE", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""), new EditArea(
-								ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_TWO, "", "END", "", "", ""));
-			} else if (ConstantManager.BLOCK_STEP_TWO.equals(edit.getStep())) {
-				ifLogicData.addAll(
-						new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_THREE, "", "", "IF",
-								text1.getText(), ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_THREE, "", "", "ELSE", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea(ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_THREE, "", "", "END", "",
-								""));
+			if (ConstantManager.BLOCK_STEP_ONE.equals(step)) {
+				ifLogicData = block.CreateStepOneBlock(text1.getText());
+			} else if (ConstantManager.BLOCK_STEP_TWO.equals(step)) {
+				ifLogicData = block.CreateStepTwoBlock(text1.getText());
 			} else {
-				ifLogicData.addAll(
-						new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_ONE, "IF", "", "",
-								text1.getText(), ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ONE, "ELSE", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""), new EditArea(
-								ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_ONE, "END", "", "", "", ""));
+				ifLogicData = block.CreateStepThreeBlock(text1.getText());
 			}
 
 			editAreaData.addAll(index, ifLogicData);
@@ -518,7 +385,7 @@ public class ExcelEditTool extends Application {
 		return "";
 	}
 
-	private String openDialog2(Stage stage, int idx,int index) {
+	private String openDialog2(Stage stage, String step, int index) {
 		Stage newStage = new Stage();
 		newStage.initModality(Modality.APPLICATION_MODAL);
 		newStage.initOwner(stage);
@@ -533,33 +400,14 @@ public class ExcelEditTool extends Application {
 		Button btn = new Button();
 		btn.setText("登録");
 		btn.setOnAction(e -> {
-			EditArea edit = editAreaData.get(idx);
+			CreateForeachBlock block = new CreateForeachBlock();
 			ObservableList<EditArea> ifLogicData = FXCollections.observableArrayList();
-			if (ConstantManager.BLOCK_STEP_ONE.equals(edit.getStep())) {
-				ifLogicData.addAll(
-						new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_TWO, "", "FOR", "",
-								text1.getText(), ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""), new EditArea(
-								ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_TWO, "", "END", "", "", ""));
-			} else if (ConstantManager.BLOCK_STEP_TWO.equals(edit.getStep())) {
-				ifLogicData.addAll(
-						new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_THREE, "", "", "FOR",
-								text1.getText(), ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea(ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_THREE, "", "", "END", "",
-								""));
+			if (ConstantManager.BLOCK_STEP_ONE.equals(step)) {
+				ifLogicData = block.CreateStepOneBlock(text1.getText());	
+			} else if (ConstantManager.BLOCK_STEP_TWO.equals(step)) {
+				ifLogicData = block.CreateStepTwoBlock(text1.getText());
 			} else {
-				ifLogicData.addAll(
-						new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_ONE, "FOR", "", "",
-								text1.getText(), ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""), new EditArea(
-								ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_ONE, "END", "", "", "", ""));
+				ifLogicData = block.CreateStepThreeBlock(text1.getText());
 			}
 
 			editAreaData.addAll(index, ifLogicData);
@@ -578,7 +426,7 @@ public class ExcelEditTool extends Application {
 		return "";
 	}
 
-	private String openDialog3(Stage stage, int idx,int index) {
+	private String openDialog3(Stage stage, String step, int index) {
 		Stage newStage = new Stage();
 		newStage.initModality(Modality.APPLICATION_MODAL);
 		newStage.initOwner(stage);
@@ -593,35 +441,16 @@ public class ExcelEditTool extends Application {
 		Button btn = new Button();
 		btn.setText("登録");
 		btn.setOnAction(e -> {
-
-			EditArea edit = editAreaData.get(idx);
+			CreateThrowBlock block = new CreateThrowBlock();
 			ObservableList<EditArea> ifLogicData = FXCollections.observableArrayList();
-			if (ConstantManager.BLOCK_STEP_ONE.equals(edit.getStep())) {
-				ifLogicData.addAll(
-						new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_TWO, "", "TRY", "",
-								text1.getText(), ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_TWO, "", "CATCH", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_TWO, "", "FINALLY", "", "", ""), new EditArea(
-								ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_TWO, "", "END", "", "", ""));
-			} else if (ConstantManager.BLOCK_STEP_TWO.equals(edit.getStep())) {
-				ifLogicData.addAll(
-						new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_THREE, "", "", "TRY",
-								text1.getText(), ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_THREE, "", "", "CATCH", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_THREE, "", "", "FINALLY", "", ""),
-						new EditArea(ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_THREE, "", "", "END", "",
-								""));
+			if (ConstantManager.BLOCK_STEP_ONE.equals(step)) {
+				ifLogicData = block.CreateStepOneBlock(text1.getText());	
+			} else if (ConstantManager.BLOCK_STEP_TWO.equals(step)) {
+				ifLogicData = block.CreateStepTwoBlock(text1.getText());
 			} else {
-				ifLogicData.addAll(
-						new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_ONE, "TRY", "", "",
-								text1.getText(), ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ONE, "CATCH", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-						new EditArea("", ConstantManager.BLOCK_STEP_ONE, "FINALLY", "", "", "", ""), new EditArea(
-								ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_ONE, "END", "", "", "", ""));
+				ifLogicData = block.CreateStepThreeBlock(text1.getText());
 			}
+
 			editAreaData.addAll(index, ifLogicData);
 			newStage.close();
 		});
