@@ -4,25 +4,31 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class EditArea {
 
-	private final SimpleStringProperty flg;
+	private final SimpleStringProperty tag;
+	private final SimpleStringProperty step;
 	private final SimpleStringProperty logicOne;
-	private final SimpleStringProperty logicTwn;
+	private final SimpleStringProperty logicTwo;
 	private final SimpleStringProperty logicThree;
 	private final SimpleStringProperty editArea;
 	private final SimpleStringProperty comment;
 
-	public EditArea(String flg,String logicOne, String logicTwn, String logicThree,
+	public EditArea(String tag,String step,String logicOne, String logicTwo, String logicThree,
 			String editArea, String comment) {
-		this.flg = new SimpleStringProperty(flg);
+		this.tag = new SimpleStringProperty(tag);
+		this.step = new SimpleStringProperty(step);
 		this.logicOne = new SimpleStringProperty(logicOne);
-		this.logicTwn = new SimpleStringProperty(logicTwn);
+		this.logicTwo = new SimpleStringProperty(logicTwo);
 		this.logicThree = new SimpleStringProperty(logicThree);
 		this.editArea = new SimpleStringProperty(editArea);
 		this.comment = new SimpleStringProperty(comment);
 	}
 
-	public String getFlg() {
-		return flg.get();
+	public String getTag() {
+		return tag.get();
+	}
+	
+	public String getStep() {
+		return step.get();
 	}
 	
 	public String getComment() {
@@ -41,12 +47,16 @@ public class EditArea {
 		return logicThree.get();
 	}
 
-	public String getLogicTwn() {
-		return logicTwn.get();
+	public String getLogicTwo() {
+		return logicTwo.get();
 	}
 
-	public void setFlg(String flg) {
-		this.flg.set(flg);
+	public void setTag(String tag) {
+		this.tag.set(tag);
+	}
+	
+	public void setStep(String step) {
+		this.step.set(step);
 	}
 	
 	public void setComment(String comment) {
@@ -65,7 +75,7 @@ public class EditArea {
 		this.logicThree.set(logicThree);
 	}
 
-	public void setLogicTwn(String logicTwn) {
-		this.logicTwn.set(logicTwn);
+	public void setLogicTwo(String logicTwo) {
+		this.logicTwo.set(logicTwo);
 	}
 }
