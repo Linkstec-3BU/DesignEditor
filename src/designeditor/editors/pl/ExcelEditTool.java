@@ -158,12 +158,12 @@ public class ExcelEditTool extends Application {
 		addCalculusBlock.getItems().add(new MenuItem(ConstantManager.ADD_DEFINE_VAR_BLOCK));
 		addCalculusBlock.getItems().add(new MenuItem(ConstantManager.ADD_FORMULA_BLOCK));
 		addCalculusBlock.getItems().add(new MenuItem(ConstantManager.ADD_CALL_BLOCK));
-		
+
 		logicContext.getItems().addAll(items1);
 		logicContext.getItems().addAll(addControlBlock);
 		logicContext.getItems().addAll(addCalculusBlock);
 		logicContext.getItems().addAll(items2);
-		
+
 		// TODO debug 用
 		// TableColumn<EditArea, String> tag = new TableColumn<>("tag");
 		// tag.setMinWidth(40);
@@ -199,7 +199,7 @@ public class ExcelEditTool extends Application {
 		commentCol.setCellValueFactory(new PropertyValueFactory<EditArea, String>("comment"));
 		commentCol.setEditable(true);
 		commentCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		
+
 		// TODO debug用
 		// table.getColumns().addAll(numberCol, tag, step, logicOneCol,
 		// logicTwoCol, logicThreeCol, sencondNameCol,
@@ -209,37 +209,52 @@ public class ExcelEditTool extends Application {
 
 		table.setItems(editAreaData);
 
+		table.setOnMousePressed(e -> {
+			if (e.isSecondaryButtonDown() && table.getItems().size() == 0) {
+				logicContext.show(table, e.getScreenX(), e.getScreenY());
+				int index = 0;
+				String step = ConstantManager.BLOCK_STEP_ONE;
+				addControlBlockLogic(stage, addControlBlock, index, step);
+				addCalculusBlockLogic(stage, addCalculusBlock, index);
+				menuLogic(logicContext, index);
+			}
+		});
+		;
+
 		table.setRowFactory(new Callback<TableView<EditArea>, TableRow<EditArea>>() {
 			@Override
 			public TableRow<EditArea> call(TableView<EditArea> param) {
 				TableRow<EditArea> row = new TableRow<>();
 				row.setOnMousePressed(e -> {
-					// 右クリック
-					if (e.isSecondaryButtonDown()) {
-						logicContext.show(row, e.getScreenX(), e.getScreenY());
-						int index = row.getIndex();
-						String step = ConstantManager.BLOCK_STEP_ONE;
-						for (int j = index; j >= 0; j--) {
-							if (ConstantManager.BLOCK_END_TAG.equals(editAreaData.get(j).getTag())) {
-								step = editAreaData.get(j).getStep();
-								break;
-							} else if (ConstantManager.BLOCK_START_TAG.equals(editAreaData.get(j).getTag())) {
-								if (ConstantManager.BLOCK_STEP_ONE.equals(editAreaData.get(j).getStep())) {
-									step = ConstantManager.BLOCK_STEP_TWO;
-								} else if (ConstantManager.BLOCK_STEP_TWO.equals(editAreaData.get(j).getStep())) {
-									step = ConstantManager.BLOCK_STEP_THREE;
+					int index = row.getIndex();
+					if (index < editAreaData.size()) {
+						// 右クリック
+						if (e.isSecondaryButtonDown()) {
+							logicContext.show(row, e.getScreenX(), e.getScreenY());
+
+							String step = ConstantManager.BLOCK_STEP_ONE;
+							for (int j = index; j >= 0; j--) {
+								if (ConstantManager.BLOCK_END_TAG.equals(editAreaData.get(j).getTag())) {
+									step = editAreaData.get(j).getStep();
+									break;
+								} else if (ConstantManager.BLOCK_START_TAG.equals(editAreaData.get(j).getTag())) {
+									if (ConstantManager.BLOCK_STEP_ONE.equals(editAreaData.get(j).getStep())) {
+										step = ConstantManager.BLOCK_STEP_TWO;
+									} else if (ConstantManager.BLOCK_STEP_TWO.equals(editAreaData.get(j).getStep())) {
+										step = ConstantManager.BLOCK_STEP_THREE;
+									}
+									break;
 								}
-								break;
 							}
+
+							addControlBlockLogic(stage, addControlBlock, index, step);
+							addCalculusBlockLogic(stage, addCalculusBlock, index);
+
+							menuLogic(logicContext, index);
+							// ダブルクリック
+						} else if (e.getClickCount() == 2) {
+							editRow(row.getIndex(), stage);
 						}
-
-						addControlBlockLogic(stage, addControlBlock, row.getIndex(), step);
-						addCalculusBlockLogic(stage, addCalculusBlock, row.getIndex());
-
-						menuLogic(logicContext, row.getIndex());
-						// ダブルクリック
-					} else if (e.getClickCount() == 2) {
-						editRow(row.getIndex(), stage);
 					}
 				});
 
@@ -252,7 +267,7 @@ public class ExcelEditTool extends Application {
 			if ("".equals(text1.getText())) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setContentText("メソッド名を入力してください.");
-				alert.showAndWait();				
+				alert.showAndWait();
 				return;
 			}
 			StringBuilder strBuilder = new StringBuilder();
@@ -263,7 +278,7 @@ public class ExcelEditTool extends Application {
 				String editArea = edit.getEditArea();
 				String commont = edit.getComment();
 				String step = edit.getStep();
-				String tag = edit.getTag();				
+				String tag = edit.getTag();
 				if (ConstantManager.BLOCK_STEP_ZERO.equals(step) && !"".equals(editArea)) {
 					strBuilder.append(editArea);
 					strBuilder.append("\r\n");
@@ -274,36 +289,36 @@ public class ExcelEditTool extends Application {
 					} else if (ConstantManager.BLOCK_END_TAG.equals(tag)) {
 						strBuilder.append("}");
 						strBuilder.append("\r\n");
-					} else  {
+					} else {
 						strBuilder.append("}" + logicOne + "{");
 						strBuilder.append("\r\n");
 					}
-				}else if (ConstantManager.BLOCK_STEP_TWO.equals(step)) {
+				} else if (ConstantManager.BLOCK_STEP_TWO.equals(step)) {
 					if (ConstantManager.BLOCK_START_TAG.equals(tag)) {
-						strBuilder.append("	"+logicTwo + "(" + editArea + ")" + "{");
+						strBuilder.append("	" + logicTwo + "(" + editArea + ")" + "{");
 						strBuilder.append("\r\n");
 					} else if (ConstantManager.BLOCK_END_TAG.equals(tag)) {
-						strBuilder.append("	"+"}");
+						strBuilder.append("	" + "}");
 						strBuilder.append("\r\n");
 					} else {
-						strBuilder.append("	"+"}" + logicTwo + "{");
+						strBuilder.append("	" + "}" + logicTwo + "{");
 						strBuilder.append("\r\n");
 					}
-				}else if (ConstantManager.BLOCK_STEP_THREE.equals(step)) {
+				} else if (ConstantManager.BLOCK_STEP_THREE.equals(step)) {
 					if (ConstantManager.BLOCK_START_TAG.equals(tag)) {
-						strBuilder.append("		"+logicThree + "(" + editArea + ")" + "{");
+						strBuilder.append("		" + logicThree + "(" + editArea + ")" + "{");
 						strBuilder.append("\r\n");
 					} else if (ConstantManager.BLOCK_END_TAG.equals(tag)) {
-						strBuilder.append("		"+"}");
+						strBuilder.append("		" + "}");
 						strBuilder.append("\r\n");
 					} else {
-						strBuilder.append("		"+"}" + logicThree + "{");
+						strBuilder.append("		" + "}" + logicThree + "{");
 						strBuilder.append("\r\n");
 					}
 				}
 			}
-			
-			File file = new File(text1.getText() + ".java"); 
+
+			File file = new File(text1.getText() + ".java");
 			OutputStreamWriter outputString = null;
 			try {
 				file.createNewFile();
@@ -574,7 +589,7 @@ public class ExcelEditTool extends Application {
 
 		newStage.setTitle("項目選択");
 
-		Label label1 = new Label("対象リスト項目を入力してください:");
+		Label label1 = new Label("項目を入力してください:");
 		label1.setMaxSize(200, 20);
 		TextField text1 = new TextField();
 		text1.setMaxSize(200, 20);
@@ -654,7 +669,7 @@ public class ExcelEditTool extends Application {
 
 		newStage.setTitle("項目選択");
 
-		Label label1 = new Label("対象リスト項目を入力してください:");
+		Label label1 = new Label("項目を入力してください:");
 		label1.setMaxSize(200, 20);
 		TextField text1 = new TextField();
 		text1.setMaxSize(200, 20);
