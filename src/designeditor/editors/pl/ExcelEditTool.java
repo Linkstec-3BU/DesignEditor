@@ -44,7 +44,7 @@ import javafx.util.Callback;
 
 public class ExcelEditTool extends Application {
 
-	// ƒ_ƒ~[ƒf[ƒ^
+	// ãƒ€ãƒŸãƒ¼ãƒ‡ãƒ¼ã‚¿
 	private final ObservableList<EditArea> editAreaData = FXCollections.observableArrayList(
 			new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "1", "2", "3", "4", "5"),
 			new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
@@ -54,19 +54,19 @@ public class ExcelEditTool extends Application {
 			new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
 			new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
 
-	// ƒ_ƒ~[ƒf[ƒ^
+	// ãƒ€ãƒŸãƒ¼ãƒ‡ãƒ¼ã‚¿
 	private final ObservableList<AreaType> areaTypeData = FXCollections.observableArrayList(
-			new AreaType("1", "ŒÄoƒpƒ‰ƒ[ƒ^’è‹`", "ŒÄoE“ü‹àî•ñ"), new AreaType("2", "ŒÄoƒpƒ‰ƒ[ƒ^’è‹`", "ŒÄoEc‚î•ñ"),
-			new AreaType("3", "ŒÄoƒpƒ‰ƒ[ƒ^’è‹`", "ŒÄoEˆ—î•ñ"), new AreaType("4", "ì‹Æ—Ìˆæ’è‹`", "ì‹ÆEì‹Æ—Ìˆæ"),
-			new AreaType("5", "ì‹Æ—Ìˆæ’è‹`", "ì‹ÆE’P€–Úƒ`ƒFƒbƒN")
+			new AreaType("1", "å‘¼å‡ºãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å®šç¾©", "å‘¼å‡ºãƒ»å…¥é‡‘æƒ…å ±"), new AreaType("2", "å‘¼å‡ºãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å®šç¾©", "å‘¼å‡ºãƒ»æ®‹é«˜æƒ…å ±"),
+			new AreaType("3", "å‘¼å‡ºãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å®šç¾©", "å‘¼å‡ºãƒ»å‡¦ç†æƒ…å ±"), new AreaType("4", "ä½œæ¥­é ˜åŸŸå®šç¾©", "ä½œæ¥­ãƒ»ä½œæ¥­é ˜åŸŸ"),
+			new AreaType("5", "ä½œæ¥­é ˜åŸŸå®šç¾©", "ä½œæ¥­ãƒ»å˜é …ç›®ãƒã‚§ãƒƒã‚¯")
 
 	);
 
-	// ƒ_ƒ~[ƒf[ƒ^
+	// ãƒ€ãƒŸãƒ¼ãƒ‡ãƒ¼ã‚¿
 	private final ObservableList<AreaName> areaNameData = FXCollections.observableArrayList(
-			new AreaName("1", "ì‹ÆEì‹Æ—Ìˆæ", "“X•ÜƒR[ƒh"), new AreaName("2", "ì‹ÆEì‹Æ—Ìˆæ", "ŒûÀ”Ô†"),
-			new AreaName("3", "ì‹ÆEì‹Æ—Ìˆæ", "ŒvZc‚"), new AreaName("4", "ì‹ÆEì‹Æ—Ìˆæ", "Œ‹‰ÊƒR[ƒh"),
-			new AreaName("5", "ì‹ÆEì‹Æ—Ìˆæ", "Œ‹‰ÊÚ×")
+			new AreaName("1", "ä½œæ¥­ãƒ»ä½œæ¥­é ˜åŸŸ", "åº—èˆ—ã‚³ãƒ¼ãƒ‰"), new AreaName("2", "ä½œæ¥­ãƒ»ä½œæ¥­é ˜åŸŸ", "å£åº§ç•ªå·"),
+			new AreaName("3", "ä½œæ¥­ãƒ»ä½œæ¥­é ˜åŸŸ", "è¨ˆç®—æ®‹é«˜"), new AreaName("4", "ä½œæ¥­ãƒ»ä½œæ¥­é ˜åŸŸ", "çµæœã‚³ãƒ¼ãƒ‰"),
+			new AreaName("5", "ä½œæ¥­ãƒ»ä½œæ¥­é ˜åŸŸ", "çµæœè©³ç´°")
 
 	);
 
@@ -78,37 +78,37 @@ public class ExcelEditTool extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 
-		stage.setTitle("ƒƒ\ƒbƒhİŒvƒGƒfƒBƒ^[");
+		stage.setTitle("ãƒ¡ã‚½ãƒƒãƒ‰è¨­è¨ˆã‚¨ãƒ‡ã‚£ã‚¿ãƒ¼");
 
 		final HBox hbox1 = new HBox();
-		final Label label1 = new Label("ƒƒ\ƒbƒh–¼:");
+		final Label label1 = new Label("ãƒ¡ã‚½ãƒƒãƒ‰å:");
 		label1.setMinWidth(100);
 		label1.setFont(new Font("Arial", 16));
 		final TextField text1 = new TextField();
 		hbox1.getChildren().addAll(label1, text1);
 
 		final HBox hbox2 = new HBox();
-		final Label label2 = new Label("ƒpƒ‰ƒ[ƒ^:");
+		final Label label2 = new Label("ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿:");
 		label2.setMinWidth(100);
 		label2.setFont(new Font("Arial", 16));
 		final TextField text2 = new TextField();
 		hbox2.getChildren().addAll(label2, text2);
 
 		final HBox hbox3 = new HBox();
-		final Label label3 = new Label("–ß‚è’l:");
+		final Label label3 = new Label("æˆ»ã‚Šå€¤:");
 		label3.setMinWidth(100);
 		label3.setFont(new Font("Arial", 16));
 		final TextField text3 = new TextField();
 		hbox3.getChildren().addAll(label3, text3);
 
-		final Label label = new Label("ˆ—Ú×ƒGƒŠƒA");
+		final Label label = new Label("å‡¦ç†è©³ç´°ã‚¨ãƒªã‚¢");
 		label.setFont(new Font("Arial", 20));
 
 		TableView<EditArea> table = new TableView<>();
 		table.setMaxWidth(819);
 		table.setEditable(true);
 
-		// ”Ô†—ñİ’è
+		// ç•ªå·åˆ—è¨­å®š
 		TableColumn<EditArea, EditArea> numberCol = new TableColumn<>("No");
 		numberCol.setMinWidth(20);
 		numberCol.setCellValueFactory(new Callback<CellDataFeatures<EditArea, EditArea>, ObservableValue<EditArea>>() {
@@ -160,7 +160,7 @@ public class ExcelEditTool extends Application {
 		logicContext.getItems().addAll(addCalculusBlock);
 		logicContext.getItems().addAll(items2);
 
-		// TODO debug —p
+		// TODO debug ç”¨
 		// TableColumn<EditArea, String> tag = new TableColumn<>("tag");
 		// tag.setMinWidth(40);
 		// tag.setCellValueFactory(new PropertyValueFactory<EditArea,
@@ -186,17 +186,17 @@ public class ExcelEditTool extends Application {
 		logicThreeCol.setCellValueFactory(new PropertyValueFactory<EditArea, String>("logicThree"));
 		// logicThreeCol.setId("logicOneCol");
 
-		TableColumn<EditArea, String> sencondNameCol = new TableColumn<>("ˆ—Ú×“à—e");
+		TableColumn<EditArea, String> sencondNameCol = new TableColumn<>("å‡¦ç†è©³ç´°å†…å®¹");
 		sencondNameCol.setMinWidth(300);
 		sencondNameCol.setCellValueFactory(new PropertyValueFactory<EditArea, String>("editArea"));
 
-		TableColumn<EditArea, String> commentCol = new TableColumn<>("ƒRƒƒ“ƒg");
+		TableColumn<EditArea, String> commentCol = new TableColumn<>("ã‚³ãƒ¡ãƒ³ãƒˆ");
 		commentCol.setMinWidth(300);
 		commentCol.setCellValueFactory(new PropertyValueFactory<EditArea, String>("comment"));
 		commentCol.setEditable(true);
 		commentCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		
-		// TODO debug—p
+		// TODO debugç”¨
 		// table.getColumns().addAll(numberCol, tag, step, logicOneCol,
 		// logicTwoCol, logicThreeCol, sencondNameCol,
 		// commentCol);
@@ -210,7 +210,7 @@ public class ExcelEditTool extends Application {
 			public TableRow<EditArea> call(TableView<EditArea> param) {
 				TableRow<EditArea> row = new TableRow<>();
 				row.setOnMousePressed(e -> {
-					// ‰EƒNƒŠƒbƒN
+					// å³ã‚¯ãƒªãƒƒã‚¯
 					if (e.isSecondaryButtonDown()) {
 						logicContext.show(row, e.getScreenX(), e.getScreenY());
 						int index = row.getIndex();
@@ -233,7 +233,7 @@ public class ExcelEditTool extends Application {
 						addCalculusBlockLogic(stage, addCalculusBlock, row.getIndex());
 
 						menuLogic(logicContext, row.getIndex());
-						// ƒ_ƒuƒ‹ƒNƒŠƒbƒN
+						// ãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒã‚¯
 					} else if (e.getClickCount() == 2) {
 						editRow(row.getIndex(), stage);
 					}
@@ -243,11 +243,11 @@ public class ExcelEditTool extends Application {
 			}
 		});
 
-		Button addBtn = new Button("ƒ\[ƒX¶¬");
+		Button addBtn = new Button("ã‚½ãƒ¼ã‚¹ç”Ÿæˆ");
 		addBtn.setOnAction(e -> {
 			if ("".equals(text1.getText())) {
 				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setContentText("ƒƒ\ƒbƒh–¼‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢.");
+				alert.setContentText("ãƒ¡ã‚½ãƒƒãƒ‰åã‚’å…¥åŠ›ã—ã¦ãã ã•ã„.");
 				alert.showAndWait();				
 				return;
 			}
@@ -331,7 +331,7 @@ public class ExcelEditTool extends Application {
 	}
 
 	/*
-	 * §ŒäBrock’Ç‰Á
+	 * åˆ¶å¾¡Brockè¿½åŠ 
 	 */
 	private void addControlBlockLogic(Stage stage, Menu logicMenu, int index, String step) {
 
@@ -354,7 +354,7 @@ public class ExcelEditTool extends Application {
 	}
 
 	/*
-	 * ŒvZBrock’Ç‰Á
+	 * è¨ˆç®—Brockè¿½åŠ 
 	 */
 	private void addCalculusBlockLogic(Stage stage, Menu logicMenu, int index) {
 		for (int i = 0; i < logicMenu.getItems().size(); i++) {
@@ -377,7 +377,7 @@ public class ExcelEditTool extends Application {
 	}
 
 	/*
-	 * ƒƒjƒ…[‹@”\
+	 * ãƒ¡ãƒ‹ãƒ¥ãƒ¼æ©Ÿèƒ½
 	 */
 	private void menuLogic(ContextMenu logicContext, int index) {
 		for (int i = 0; i < logicContext.getItems().size(); i++) {
@@ -445,15 +445,15 @@ public class ExcelEditTool extends Application {
 		newStage.initModality(Modality.APPLICATION_MODAL);
 		newStage.initOwner(stage);
 
-		newStage.setTitle("€–Ú‘I‘ğ");
+		newStage.setTitle("é …ç›®é¸æŠ");
 
-		Label label1 = new Label("€–Ú‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢:");
+		Label label1 = new Label("é …ç›®ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„:");
 		label1.setMaxSize(200, 20);
 		TextField text1 = new TextField();
 		text1.setMaxSize(200, 20);
 
 		Button btn = new Button();
-		btn.setText("“o˜^");
+		btn.setText("ç™»éŒ²");
 		btn.setOnAction(e -> {
 			CreateSelectBlock block = new CreateSelectBlock();
 			ObservableList<EditArea> ifLogicData = FXCollections.observableArrayList();
@@ -486,15 +486,15 @@ public class ExcelEditTool extends Application {
 		newStage.initModality(Modality.APPLICATION_MODAL);
 		newStage.initOwner(stage);
 
-		newStage.setTitle("€–Ú‘I‘ğ");
+		newStage.setTitle("é …ç›®é¸æŠ");
 
-		Label label1 = new Label("ğŒ‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢:");
+		Label label1 = new Label("æ¡ä»¶ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„:");
 		label1.setMaxSize(200, 20);
 		TextField text1 = new TextField();
 		text1.setMaxSize(200, 20);
 
 		Button btn = new Button();
-		btn.setText("“o˜^");
+		btn.setText("ç™»éŒ²");
 		btn.setOnAction(e -> {
 			CreateForeachBlock block = new CreateForeachBlock();
 			ObservableList<EditArea> ifLogicData = FXCollections.observableArrayList();
@@ -527,15 +527,15 @@ public class ExcelEditTool extends Application {
 		newStage.initModality(Modality.APPLICATION_MODAL);
 		newStage.initOwner(stage);
 
-		newStage.setTitle("€–Ú‘I‘ğ");
+		newStage.setTitle("é …ç›®é¸æŠ");
 
-		Label label1 = new Label("€–Ú‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢:");
+		Label label1 = new Label("é …ç›®ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„:");
 		label1.setMaxSize(200, 20);
 		TextField text1 = new TextField();
 		text1.setMaxSize(200, 20);
 
 		Button btn = new Button();
-		btn.setText("“o˜^");
+		btn.setText("ç™»éŒ²");
 		btn.setOnAction(e -> {
 			CreateThrowBlock block = new CreateThrowBlock();
 			ObservableList<EditArea> ifLogicData = FXCollections.observableArrayList();
@@ -568,15 +568,15 @@ public class ExcelEditTool extends Application {
 		newStage.initModality(Modality.APPLICATION_MODAL);
 		newStage.initOwner(stage);
 
-		newStage.setTitle("€–Ú‘I‘ğ");
+		newStage.setTitle("é …ç›®é¸æŠ");
 
-		Label label1 = new Label("‘ÎÛƒŠƒXƒg€–Ú‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢:");
+		Label label1 = new Label("å¯¾è±¡ãƒªã‚¹ãƒˆé …ç›®ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„:");
 		label1.setMaxSize(200, 20);
 		TextField text1 = new TextField();
 		text1.setMaxSize(200, 20);
 
 		Button btn = new Button();
-		btn.setText("“o˜^");
+		btn.setText("ç™»éŒ²");
 		btn.setOnAction(e -> {
 			String flg = ConstantManager.BLOCK_STEP_ZERO;
 
@@ -603,10 +603,10 @@ public class ExcelEditTool extends Application {
 		newStage.initModality(Modality.APPLICATION_MODAL);
 		newStage.initOwner(stage);
 
-		newStage.setTitle("€–Ú‘I‘ğ");
+		newStage.setTitle("é …ç›®é¸æŠ");
 
 		for (int i = 0; i < dataList.size(); i++) {
-			Label label1 = new Label("€–Ú‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢:");
+			Label label1 = new Label("é …ç›®ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„:");
 			label1.setMaxSize(200, 20);
 			TextField text1 = new TextField(editAreaData.get(dataList.get(i)).getEditArea());
 			text1.setMaxSize(200, 20);
@@ -615,7 +615,7 @@ public class ExcelEditTool extends Application {
 		}
 
 		Button btn = new Button();
-		btn.setText("“o˜^");
+		btn.setText("ç™»éŒ²");
 		btn.setOnAction(e -> {
 
 			for (int i = 0; i < dataList.size(); i++) {
@@ -648,15 +648,15 @@ public class ExcelEditTool extends Application {
 		newStage.initModality(Modality.APPLICATION_MODAL);
 		newStage.initOwner(stage);
 
-		newStage.setTitle("€–Ú‘I‘ğ");
+		newStage.setTitle("é …ç›®é¸æŠ");
 
-		Label label1 = new Label("‘ÎÛƒŠƒXƒg€–Ú‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢:");
+		Label label1 = new Label("å¯¾è±¡ãƒªã‚¹ãƒˆé …ç›®ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„:");
 		label1.setMaxSize(200, 20);
 		TextField text1 = new TextField();
 		text1.setMaxSize(200, 20);
 
 		Button btn = new Button();
-		btn.setText("“o˜^");
+		btn.setText("ç™»éŒ²");
 		btn.setOnAction(e -> {
 			String flg = ConstantManager.BLOCK_STEP_ZERO;
 			EditArea edit = new EditArea("", flg, "", "", "", text1.getText(), "");
@@ -682,16 +682,16 @@ public class ExcelEditTool extends Application {
 		newStage.initModality(Modality.APPLICATION_MODAL);
 		newStage.initOwner(stage);
 
-		newStage.setTitle("€–Ú‘I‘ğ");
+		newStage.setTitle("é …ç›®é¸æŠ");
 		TableView<AreaType> table1 = new TableView<>();
 
 		TableColumn<AreaType, String> col11 = new TableColumn<>("No");
 		col11.setMinWidth(20);
 		col11.setCellValueFactory(new PropertyValueFactory<AreaType, String>("No"));
-		TableColumn<AreaType, String> col12 = new TableColumn<>("—Ìˆæí•Ê");
+		TableColumn<AreaType, String> col12 = new TableColumn<>("é ˜åŸŸç¨®åˆ¥");
 		col12.setMinWidth(200);
 		col12.setCellValueFactory(new PropertyValueFactory<AreaType, String>("areaType"));
-		TableColumn<AreaType, String> col13 = new TableColumn<>("—Ìˆæ–¼Ì");
+		TableColumn<AreaType, String> col13 = new TableColumn<>("é ˜åŸŸåç§°");
 		col13.setMinWidth(200);
 		col13.setCellValueFactory(new PropertyValueFactory<AreaType, String>("areaName"));
 		table1.getColumns().addAll(col11, col12, col13);
@@ -701,10 +701,10 @@ public class ExcelEditTool extends Application {
 		TableColumn<AreaName, String> col21 = new TableColumn<>("No");
 		col21.setMinWidth(20);
 		col21.setCellValueFactory(new PropertyValueFactory<AreaName, String>("No"));
-		TableColumn<AreaName, String> col22 = new TableColumn<>("—Ìˆæ–¼Ì");
+		TableColumn<AreaName, String> col22 = new TableColumn<>("é ˜åŸŸåç§°");
 		col22.setMinWidth(200);
 		col22.setCellValueFactory(new PropertyValueFactory<AreaName, String>("areaName"));
-		TableColumn<AreaName, String> col23 = new TableColumn<>("€–Ú–¼");
+		TableColumn<AreaName, String> col23 = new TableColumn<>("é …ç›®å");
 		col23.setMinWidth(200);
 		col23.setCellValueFactory(new PropertyValueFactory<AreaName, String>("name"));
 		table2.getColumns().addAll(col21, col22, col23);
