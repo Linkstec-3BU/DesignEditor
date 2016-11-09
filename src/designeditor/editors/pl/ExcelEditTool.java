@@ -1,5 +1,6 @@
 package designeditor.editors.pl;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
@@ -30,6 +30,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -72,21 +73,24 @@ public class ExcelEditTool extends Application {
 	public void start(Stage stage) throws Exception {
 
 		stage.setTitle("メソッド設計エディター");
-
+		
 		final HBox hbox1 = new HBox();
 		final Label label1 = new Label("メソッド名:");
+		label1.setMinWidth(100);
 		label1.setFont(new Font("Arial", 16));
 		final TextField text1 = new TextField();
 		hbox1.getChildren().addAll(label1, text1);
 
 		final HBox hbox2 = new HBox();
 		final Label label2 = new Label("パラメータ:");
+		label2.setMinWidth(100);
 		label2.setFont(new Font("Arial", 16));
 		final TextField text2 = new TextField();
 		hbox2.getChildren().addAll(label2, text2);
 
 		final HBox hbox3 = new HBox();
 		final Label label3 = new Label("戻り値:");
+		label3.setMinWidth(100);
 		label3.setFont(new Font("Arial", 16));
 		final TextField text3 = new TextField();
 		hbox3.getChildren().addAll(label3, text3);
@@ -95,6 +99,7 @@ public class ExcelEditTool extends Application {
 		label.setFont(new Font("Arial", 20));
 
 		TableView<EditArea> table = new TableView<>();
+		table.setMaxWidth(819);
 		table.setEditable(true);
 
 		// 番号列設定
@@ -107,16 +112,17 @@ public class ExcelEditTool extends Application {
 				return new ReadOnlyObjectWrapper(p.getValue());
 			}
 		});
-
+		
+		
 		numberCol.setCellFactory(new Callback<TableColumn<EditArea, EditArea>, TableCell<EditArea, EditArea>>() {
 			@Override
 			public TableCell<EditArea, EditArea> call(TableColumn<EditArea, EditArea> param) {
 				return new TableCell<EditArea, EditArea>() {
 					@Override
 					protected void updateItem(EditArea item, boolean empty) {
-						super.updateItem(item, empty);
-
 						if (this.getTableRow() != null && item != null) {
+//							setStyle("-fx-background-color: green");
+							setTextFill(Paint.valueOf("#000000"));
 							setText(this.getTableRow().getIndex() + 1 + "");
 						} else {
 							setText("");
@@ -161,17 +167,21 @@ public class ExcelEditTool extends Application {
 		// String>("step"));
 
 		TableColumn<EditArea, String> logicOneCol = new TableColumn<>("");
-		logicOneCol.setMinWidth(40);
+		logicOneCol.setMinWidth(60);
 		logicOneCol.setCellValueFactory(new PropertyValueFactory<EditArea, String>("logicOne"));
-
+//		logicOneCol.setId("logicOneCol");
+		
+		
 		TableColumn<EditArea, String> logicTwoCol = new TableColumn<>("");
-		logicTwoCol.setMinWidth(40);
+		logicTwoCol.setMinWidth(60);
 		logicTwoCol.setCellValueFactory(new PropertyValueFactory<EditArea, String>("logicTwo"));
-
+//		logicTwoCol.setId("logicOneCol");
+		
 		TableColumn<EditArea, String> logicThreeCol = new TableColumn<>("");
-		logicThreeCol.setMinWidth(40);
+		logicThreeCol.setMinWidth(60);
 		logicThreeCol.setCellValueFactory(new PropertyValueFactory<EditArea, String>("logicThree"));
-
+//		logicThreeCol.setId("logicOneCol");
+		
 		TableColumn<EditArea, String> sencondNameCol = new TableColumn<>("処理詳細内容");
 		sencondNameCol.setMinWidth(300);
 		sencondNameCol.setCellValueFactory(new PropertyValueFactory<EditArea, String>("editArea"));
@@ -232,8 +242,9 @@ public class ExcelEditTool extends Application {
 		vbox.setPadding(new Insets(10, 10, 10, 10));
 		vbox.getChildren().addAll(hbox1, hbox2, hbox3, label, table);
 		VBox.setVgrow(table, Priority.ALWAYS);
-
-		stage.setScene(new Scene(vbox));
+		Scene scene = new Scene(vbox);
+		scene.getStylesheets().add(getClass().getResource("ExcelEditTool.css").toExternalForm());
+		stage.setScene(scene);
 		stage.show();
 
 	}
@@ -567,7 +578,6 @@ public class ExcelEditTool extends Application {
 		btn.setText("登録");
 		btn.setOnAction(e -> {
 			String flg = ConstantManager.BLOCK_STEP_ZERO;
-
 			EditArea edit = new EditArea("", flg, "", "", "", text1.getText(), "");
 			editAreaData.add(index, edit);
 			newStage.close();
