@@ -1,4 +1,4 @@
-package designeditor.editors.pl;
+package designeditor.editors.pl.logic;
 
 import designeditor.editors.pl.bean.EditArea;
 import javafx.collections.ObservableList;

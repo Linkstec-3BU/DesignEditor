@@ -10,6 +10,10 @@ import java.util.List;
 import designeditor.editors.pl.bean.AreaName;
 import designeditor.editors.pl.bean.AreaType;
 import designeditor.editors.pl.bean.EditArea;
+import designeditor.editors.pl.constant.ConstantManager;
+import designeditor.editors.pl.logic.CreateForeachBlock;
+import designeditor.editors.pl.logic.CreateSelectBlock;
+import designeditor.editors.pl.logic.CreateThrowBlock;
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
@@ -154,12 +158,12 @@ public class ExcelEditTool extends Application {
 		addCalculusBlock.getItems().add(new MenuItem(ConstantManager.ADD_DEFINE_VAR_BLOCK));
 		addCalculusBlock.getItems().add(new MenuItem(ConstantManager.ADD_FORMULA_BLOCK));
 		addCalculusBlock.getItems().add(new MenuItem(ConstantManager.ADD_CALL_BLOCK));
-
+		
 		logicContext.getItems().addAll(items1);
 		logicContext.getItems().addAll(addControlBlock);
 		logicContext.getItems().addAll(addCalculusBlock);
 		logicContext.getItems().addAll(items2);
-
+		
 		// TODO debug 用
 		// TableColumn<EditArea, String> tag = new TableColumn<>("tag");
 		// tag.setMinWidth(40);

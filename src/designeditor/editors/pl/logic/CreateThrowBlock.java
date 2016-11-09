@@ -1,20 +1,21 @@
-package designeditor.editors.pl;
+package designeditor.editors.pl.logic;
 
 import designeditor.editors.pl.bean.EditArea;
+import designeditor.editors.pl.constant.ConstantManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class CreateForeachBlock implements CreateBlock {
+public class CreateThrowBlock implements CreateBlock {
 
 	@Override
 	public ObservableList<EditArea> CreateStepOneBlock(String jyoken) {
 		ObservableList<EditArea> ifLogicData = FXCollections.observableArrayList();
 		ifLogicData.addAll(
-				new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_ONE, "FOR", "", "",
+				new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_ONE, "TRY", "", "",
 						jyoken, ""),
+				new EditArea("", ConstantManager.BLOCK_STEP_ONE, "CATCH", "", "", "", ""),
 				new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-				new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-				new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""), new EditArea(
+				new EditArea("", ConstantManager.BLOCK_STEP_ONE, "FINALLY", "", "", "", ""), new EditArea(
 						ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_ONE, "END", "", "", "", ""));
 		return ifLogicData;
 	}
@@ -23,11 +24,11 @@ public class CreateForeachBlock implements CreateBlock {
 	public ObservableList<EditArea> CreateStepTwoBlock(String jyoken) {
 		ObservableList<EditArea> ifLogicData = FXCollections.observableArrayList();
 		ifLogicData.addAll(
-				new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_TWO, "", "FOR", "",
+				new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_TWO, "", "TRY", "",
 						jyoken, ""),
+				new EditArea("", ConstantManager.BLOCK_STEP_TWO, "", "CATCH", "", "", ""),
 				new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-				new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-				new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""), new EditArea(
+				new EditArea("", ConstantManager.BLOCK_STEP_TWO, "", "FINALLY", "", "", ""), new EditArea(
 						ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_TWO, "", "END", "", "", ""));
 		return ifLogicData;
 	}
@@ -36,11 +37,11 @@ public class CreateForeachBlock implements CreateBlock {
 	public ObservableList<EditArea> CreateStepThreeBlock(String jyoken) {
 		ObservableList<EditArea> ifLogicData = FXCollections.observableArrayList();
 		ifLogicData.addAll(
-				new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_THREE, "", "", "FOR",
+				new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_THREE, "", "", "TRY",
 						jyoken, ""),
+				new EditArea("", ConstantManager.BLOCK_STEP_THREE, "", "", "CATCH", "", ""),
 				new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-				new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
-				new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""),
+				new EditArea("", ConstantManager.BLOCK_STEP_THREE, "", "", "FINALLY", "", ""),
 				new EditArea(ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_THREE, "", "", "END", "",
 						""));
 
