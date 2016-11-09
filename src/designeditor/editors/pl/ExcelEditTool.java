@@ -1,6 +1,9 @@
 package designeditor.editors.pl;
 
-import java.awt.Color;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +18,8 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -27,6 +32,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -73,7 +79,7 @@ public class ExcelEditTool extends Application {
 	public void start(Stage stage) throws Exception {
 
 		stage.setTitle("メソッド設計エディター");
-		
+
 		final HBox hbox1 = new HBox();
 		final Label label1 = new Label("メソッド名:");
 		label1.setMinWidth(100);
@@ -112,8 +118,7 @@ public class ExcelEditTool extends Application {
 				return new ReadOnlyObjectWrapper(p.getValue());
 			}
 		});
-		
-		
+
 		numberCol.setCellFactory(new Callback<TableColumn<EditArea, EditArea>, TableCell<EditArea, EditArea>>() {
 			@Override
 			public TableCell<EditArea, EditArea> call(TableColumn<EditArea, EditArea> param) {
@@ -121,7 +126,7 @@ public class ExcelEditTool extends Application {
 					@Override
 					protected void updateItem(EditArea item, boolean empty) {
 						if (this.getTableRow() != null && item != null) {
-//							setStyle("-fx-background-color: green");
+							// setStyle("-fx-background-color: green");
 							setTextFill(Paint.valueOf("#000000"));
 							setText(this.getTableRow().getIndex() + 1 + "");
 						} else {
@@ -169,19 +174,18 @@ public class ExcelEditTool extends Application {
 		TableColumn<EditArea, String> logicOneCol = new TableColumn<>("");
 		logicOneCol.setMinWidth(60);
 		logicOneCol.setCellValueFactory(new PropertyValueFactory<EditArea, String>("logicOne"));
-//		logicOneCol.setId("logicOneCol");
-		
-		
+		// logicOneCol.setId("logicOneCol");
+
 		TableColumn<EditArea, String> logicTwoCol = new TableColumn<>("");
 		logicTwoCol.setMinWidth(60);
 		logicTwoCol.setCellValueFactory(new PropertyValueFactory<EditArea, String>("logicTwo"));
-//		logicTwoCol.setId("logicOneCol");
-		
+		// logicTwoCol.setId("logicOneCol");
+
 		TableColumn<EditArea, String> logicThreeCol = new TableColumn<>("");
 		logicThreeCol.setMinWidth(60);
 		logicThreeCol.setCellValueFactory(new PropertyValueFactory<EditArea, String>("logicThree"));
-//		logicThreeCol.setId("logicOneCol");
-		
+		// logicThreeCol.setId("logicOneCol");
+
 		TableColumn<EditArea, String> sencondNameCol = new TableColumn<>("処理詳細内容");
 		sencondNameCol.setMinWidth(300);
 		sencondNameCol.setCellValueFactory(new PropertyValueFactory<EditArea, String>("editArea"));
@@ -189,7 +193,9 @@ public class ExcelEditTool extends Application {
 		TableColumn<EditArea, String> commentCol = new TableColumn<>("コメント");
 		commentCol.setMinWidth(300);
 		commentCol.setCellValueFactory(new PropertyValueFactory<EditArea, String>("comment"));
-
+		commentCol.setEditable(true);
+		commentCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		
 		// TODO debug用
 		// table.getColumns().addAll(numberCol, tag, step, logicOneCol,
 		// logicTwoCol, logicThreeCol, sencondNameCol,
@@ -229,7 +235,7 @@ public class ExcelEditTool extends Application {
 						menuLogic(logicContext, row.getIndex());
 						// ダブルクリック
 					} else if (e.getClickCount() == 2) {
-						editRow(row.getIndex(), table, stage);
+						editRow(row.getIndex(), stage);
 					}
 				});
 
@@ -237,10 +243,85 @@ public class ExcelEditTool extends Application {
 			}
 		});
 
+		Button addBtn = new Button("ソース生成");
+		addBtn.setOnAction(e -> {
+			if ("".equals(text1.getText())) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setContentText("メソッド名を入力してください.");
+				alert.showAndWait();				
+				return;
+			}
+			StringBuilder strBuilder = new StringBuilder();
+			for (EditArea edit : editAreaData) {
+				String logicOne = edit.getLogicOne();
+				String logicTwo = edit.getLogicTwo();
+				String logicThree = edit.getLogicThree();
+				String editArea = edit.getEditArea();
+				String commont = edit.getComment();
+				String step = edit.getStep();
+				String tag = edit.getTag();				
+				if (ConstantManager.BLOCK_STEP_ZERO.equals(step) && !"".equals(editArea)) {
+					strBuilder.append(editArea);
+					strBuilder.append("\r\n");
+				} else if (ConstantManager.BLOCK_STEP_ONE.equals(step)) {
+					if (ConstantManager.BLOCK_START_TAG.equals(tag)) {
+						strBuilder.append(logicOne + "(" + editArea + ")" + "{");
+						strBuilder.append("\r\n");
+					} else if (ConstantManager.BLOCK_END_TAG.equals(tag)) {
+						strBuilder.append("}");
+						strBuilder.append("\r\n");
+					} else  {
+						strBuilder.append("}" + logicOne + "{");
+						strBuilder.append("\r\n");
+					}
+				}else if (ConstantManager.BLOCK_STEP_TWO.equals(step)) {
+					if (ConstantManager.BLOCK_START_TAG.equals(tag)) {
+						strBuilder.append("	"+logicTwo + "(" + editArea + ")" + "{");
+						strBuilder.append("\r\n");
+					} else if (ConstantManager.BLOCK_END_TAG.equals(tag)) {
+						strBuilder.append("	"+"}");
+						strBuilder.append("\r\n");
+					} else {
+						strBuilder.append("	"+"}" + logicTwo + "{");
+						strBuilder.append("\r\n");
+					}
+				}else if (ConstantManager.BLOCK_STEP_THREE.equals(step)) {
+					if (ConstantManager.BLOCK_START_TAG.equals(tag)) {
+						strBuilder.append("		"+logicThree + "(" + editArea + ")" + "{");
+						strBuilder.append("\r\n");
+					} else if (ConstantManager.BLOCK_END_TAG.equals(tag)) {
+						strBuilder.append("		"+"}");
+						strBuilder.append("\r\n");
+					} else {
+						strBuilder.append("		"+"}" + logicThree + "{");
+						strBuilder.append("\r\n");
+					}
+				}
+			}
+			
+			File file = new File(text1.getText() + ".java"); 
+			OutputStreamWriter outputString = null;
+			try {
+				file.createNewFile();
+				outputString = new OutputStreamWriter(new FileOutputStream(file));
+				outputString.write(strBuilder.toString());
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			} finally {
+				try {
+					outputString.flush();
+					outputString.close();
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+				outputString = null;
+			}
+		});
+
 		final VBox vbox = new VBox();
 		vbox.setSpacing(5);
 		vbox.setPadding(new Insets(10, 10, 10, 10));
-		vbox.getChildren().addAll(hbox1, hbox2, hbox3, label, table);
+		vbox.getChildren().addAll(hbox1, hbox2, hbox3, label, table, addBtn);
 		VBox.setVgrow(table, Priority.ALWAYS);
 		Scene scene = new Scene(vbox);
 		scene.getStylesheets().add(getClass().getResource("ExcelEditTool.css").toExternalForm());
@@ -516,7 +597,7 @@ public class ExcelEditTool extends Application {
 		return "";
 	}
 
-	private String openDialog5(Stage stage, int index, TableView<EditArea> table, List<Integer> dataList) {
+	private String openDialog5(Stage stage, int index, List<Integer> dataList) {
 		Stage newStage = new Stage();
 		final VBox vbox = new VBox();
 		newStage.initModality(Modality.APPLICATION_MODAL);
@@ -541,7 +622,7 @@ public class ExcelEditTool extends Application {
 				for (int j = 0; j < vbox.getChildren().size(); j++) {
 					Node node = vbox.getChildren().get(j);
 					String id = "text" + String.valueOf(dataList.get(i));
-					if (id.equals(node.getId())) {						
+					if (id.equals(node.getId())) {
 						EditArea edit = editAreaData.get(dataList.get(i));
 						edit.setEditArea(((TextField) node).getText());
 						editAreaData.set(dataList.get(i), edit);
@@ -656,7 +737,7 @@ public class ExcelEditTool extends Application {
 		return "";
 	}
 
-	private void editRow(int index, TableView<EditArea> table, Stage stage) {
+	private void editRow(int index, Stage stage) {
 		EditArea edit = editAreaData.get(index);
 		List<Integer> indexList = new ArrayList<Integer>();
 		if (ConstantManager.BLOCK_STEP_ZERO.equals(edit.getStep())) {
@@ -671,6 +752,6 @@ public class ExcelEditTool extends Application {
 			}
 
 		}
-		openDialog5(stage, index, table, indexList);
+		openDialog5(stage, index, indexList);
 	}
 }
