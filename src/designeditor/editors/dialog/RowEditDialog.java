@@ -42,6 +42,7 @@ public class RowEditDialog extends Dialog {
 		Text text = new Text(shell, SWT.BORDER);
 		text.setBounds(100, 35, 20, 18); 
 		text.setEditable(true);
+		text.setSize(200, 30);
 		IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
 		EditArea edit = (EditArea) (selection.getFirstElement());
 		text.setText(edit.getEditArea());

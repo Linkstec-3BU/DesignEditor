@@ -1,9 +1,5 @@
 package designeditor.editors.dialog;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -17,7 +13,6 @@ import org.eclipse.swt.widgets.Text;
 
 import designeditor.editors.bean.EditArea;
 import designeditor.editors.constant.ConstantManager;
-import designeditor.editors.logic.CreateForeachBlock;
 
 public class AddCalculusDialog extends Dialog {
 	protected Object result;
@@ -48,6 +43,7 @@ public class AddCalculusDialog extends Dialog {
 		Text text = new Text(shell, SWT.BORDER);
 		text.setBounds(100, 35, 20, 18);
 		text.setEditable(true);
+		text.setSize(200, 30);
 
 		final Button button = new Button(shell, SWT.NONE);
 		button.setText("button");

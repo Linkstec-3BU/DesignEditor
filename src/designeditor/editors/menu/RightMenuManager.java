@@ -20,15 +20,14 @@ import designeditor.editors.dialog.AddForeachDialog;
 import designeditor.editors.dialog.AddThrowDialog;
 import designeditor.editors.dialog.SelectJyokenDialog;
 
-//继承ActionGroup
+
 public class RightMenuManager extends ActionGroup {
 	private TableViewer tableViewer;
 
 	/**
 	 * 鼠标右键有菜单,首先要 生成菜单Menu,并将两个Action传入
 	 */
-	public void fillContextMenu() {// I开头的一般是接口的意思.
-		// 加入两个Action对象到菜单管理器中
+	public void fillContextMenu() {
 		MenuManager menuManager = new MenuManager();
 		menuManager.add(new AddEmptyBlockAction());
 		menuManager.add(new RemoveEmptyBlockAction());

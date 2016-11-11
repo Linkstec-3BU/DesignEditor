@@ -8,17 +8,15 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IEditorInput;
@@ -47,14 +45,12 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 	}
 
 	/**
-	 * Creates page 1 of the multi-page editor, which allows you to change the
-	 * font used in page 2.
+	 * Creates page 1 of the multi-page editor,
 	 */
 	void createPage1() {
 		
 		Composite composite = new Composite(getContainer(), SWT.NONE);
-		GridLayout layout = new GridLayout();
-		
+		FillLayout layout = new FillLayout();
 		composite.setLayout(layout);
 		
 
@@ -68,39 +64,39 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 		/**
 		 * 第三步:建立TableViewer中的列
 		 */
-		tLayout.addColumnData(new ColumnWeightData(50));// 这个是设置ID列的列宽为10像素
+		tLayout.addColumnData(new ColumnWeightData(50));
 
 		TableColumn column = new TableColumn(table1, SWT.NONE);
 		column.setText("番号");
 		column.setWidth(50);
 
-		tLayout.addColumnData(new ColumnWeightData(50));// 这个是设置ID列的列宽为40像素
+		tLayout.addColumnData(new ColumnWeightData(50));
 		TableColumn column1 = new TableColumn(table1, SWT.NONE);
 		column1.setText("");
 		column.setWidth(50);
 
-		tLayout.addColumnData(new ColumnWeightData(50));// 这个是设置ID列的列宽为10像素
+		tLayout.addColumnData(new ColumnWeightData(50));
 		TableColumn column2 = new TableColumn(table1, SWT.NONE);
 		column2.setText("");
 		column.setWidth(50);
 
-		tLayout.addColumnData(new ColumnWeightData(50));// 这个是设置ID列的列宽为10像素
+		tLayout.addColumnData(new ColumnWeightData(50));
 		TableColumn column3 = new TableColumn(table1, SWT.NONE);
 		column3.setText("");
 		column.setWidth(50);
 
-		tLayout.addColumnData(new ColumnWeightData(500));// 这个是设置ID列的列宽为70像素
+		tLayout.addColumnData(new ColumnWeightData(500));
 		TableColumn column4 = new TableColumn(table1, SWT.NONE);
 		column4.setText("処理詳細");
 		column.setWidth(500);
 
-		tLayout.addColumnData(new ColumnWeightData(400));// 这个是设置ID列的列宽为70像素
+		tLayout.addColumnData(new ColumnWeightData(500));
 		TableColumn column5 = new TableColumn(table1, SWT.NONE);
 		column5.setText("コメント");
 		column.setWidth(500);
 
 		tableView.setContentProvider(new TableViewerContentProvider());
-		// 5.设定标签器
+		
 		tableView.setLabelProvider(new TableViewerLabelProvider());
 
 		List<EditArea> editAreaData = new ArrayList<EditArea>();
@@ -120,7 +116,7 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 		});
 
 		RightMenuManager actionGroup = new RightMenuManager(tableView);
-		// 调用fillContextMenu方法将按钮注入到菜单对象中
+		
 		actionGroup.fillContextMenu();
 
 		int index = addPage(composite);

@@ -17,7 +17,7 @@ import designeditor.editors.bean.EditArea;
 public class TableViewerLabelProvider implements ITableLabelProvider{
     @Override
     public Image getColumnImage(Object element, int columnIndex) {
-        return null;//这个和getColumnText()不同的是,这个方法可以返回一个null值.
+        return null;
     }
 
     /**

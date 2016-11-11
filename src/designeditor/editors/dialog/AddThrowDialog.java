@@ -51,6 +51,7 @@ public class AddThrowDialog extends Dialog {
 		Text text = new Text(shell, SWT.BORDER);
 		text.setBounds(100, 35, 20, 18);
 		text.setEditable(true);
+		text.setSize(200, 30);
 
 		final Button button = new Button(shell, SWT.NONE);
 		button.setText("button");

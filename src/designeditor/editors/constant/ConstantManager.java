@@ -27,6 +27,11 @@ public final class ConstantManager {
 	public static final String BLOCK_STEP_THREE = "3";
 	
 	
+	/*
+	 * Blockの開始終了TAG
+	 * start：blockの開始行を標識する
+	 * end：blockの終了行を標識する
+	 */
 	public static final String BLOCK_START_TAG = "start";
 	public static final String BLOCK_END_TAG = "end";
 }
