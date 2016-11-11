@@ -1,8 +1,8 @@
-package designeditor.editors.pl.constant;
+package designeditor.editors.constant;
 
 public final class ConstantManager {
 	/*
-	 * ���j���[���e
+	 * 右メニュー
 	 */
 	public static final String ADD_EMPTY_BLOCK = "空Brock追加";
 	public static final String REMOVE_EMPTY_BLOCK = "Brock削除";

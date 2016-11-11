@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
 <?eclipse version="3.4"?>
 <plugin>
-
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            name="DesignEditor"
-            extensions="design"
+            name="DesignEditorTool"
+            extensions="mdet"
             icon="icons/sample.gif"
-            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             class="designeditor.editors.DesignEditor"
             id="designeditor.editors.DesignEditor">
       </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="designeditor.wizard"
+            name="DesignEditor"/>
+      <wizard
+            category="designeditor.wizard"
+            class="designeditor.wizard.ExcelEditWizard"
+            icon="icons/table.gif"
+            id="designeditor.wizard.ExcelEditWizard"
+            name="DesignEditor"/>
    </extension>
 
 </plugin>
