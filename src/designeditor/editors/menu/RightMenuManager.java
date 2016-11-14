@@ -18,14 +18,17 @@ import designeditor.editors.constant.ConstantManager;
 import designeditor.editors.dialog.AddCalculusDialog;
 import designeditor.editors.dialog.AddForeachDialog;
 import designeditor.editors.dialog.AddThrowDialog;
-import designeditor.editors.dialog.SelectJyokenDialog;
+import designeditor.editors.dialog.AddSelectDialog;
 
 
 public class RightMenuManager extends ActionGroup {
 	private TableViewer tableViewer;
+	private List<EditArea> editAreaList;
 
 	/**
-	 * 鼠标右键有菜单,首先要 生成菜单Menu,并将两个Action传入
+	 * 右メニュ-作成
+	 * @author daizhu
+	 * 
 	 */
 	public void fillContextMenu() {
 		MenuManager menuManager = new MenuManager();
@@ -54,13 +57,16 @@ public class RightMenuManager extends ActionGroup {
 
 	}
 
-	/**
-	 * 用来接受TableViewer对象的构造函数。 因为在Action会要使用到TableViewer对象 所以一定要把TableViewer传进来。
-	 */
-	public RightMenuManager(TableViewer tableViewer) {
+	public RightMenuManager(TableViewer tableViewer,List<EditArea> editAreaList) {
 		this.tableViewer = tableViewer;
+		this.editAreaList = editAreaList;
 	}
 
+	/**
+	 * 空Brock追加用
+	 * @author daizhu
+	 * 
+	 */
 	private final class AddEmptyBlockAction extends Action {
 		public AddEmptyBlockAction() {
 			setText(ConstantManager.ADD_EMPTY_BLOCK);
@@ -68,12 +74,16 @@ public class RightMenuManager extends ActionGroup {
 
 		public void run() {
 			Table table = tableViewer.getTable();
+			int index = table.getSelectionIndex() >= 0 ? table.getSelectionIndex() : 0;
 			EditArea edit = new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", "");
-			tableViewer.insert(edit, table.getSelectionIndex());
+			editAreaList.add(index,edit);
+			tableViewer.refresh();
 		}
 	}
 
 	/**
+	 * Brock削除
+	 * @author daizhu
 	 * 
 	 */
 	private class RemoveEmptyBlockAction extends Action {
@@ -81,9 +91,6 @@ public class RightMenuManager extends ActionGroup {
 			setText(ConstantManager.REMOVE_EMPTY_BLOCK);
 		}
 
-		/**
-		 * 继承自Action的方法,动作代码写在此方法中.
-		 */
 		public void run() {
 			Table table = tableViewer.getTable();
 			IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
@@ -116,13 +123,16 @@ public class RightMenuManager extends ActionGroup {
 				MessageDialog.openInformation(null, null, "レコードを選択してください");
 			} else {
 				for (int i = 0; i < ifLogicData.size(); i++) {
-					tableViewer.remove(ifLogicData.get(i));
+					editAreaList.removeAll(ifLogicData);
+					tableViewer.refresh();
 				}
 			}
 		}
 	}
 
 	/**
+	 * 条件分岐Brock追加(if..else if)文)
+	 * @author daizhu
 	 * 
 	 */
 	private final class AddSelectBlockAction extends Action {
@@ -132,13 +142,15 @@ public class RightMenuManager extends ActionGroup {
 
 		public void run() {
 			String step = getNewRowStep();
-			SelectJyokenDialog c = new SelectJyokenDialog(
-					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), tableViewer,step);
+			AddSelectDialog c = new AddSelectDialog(
+					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), tableViewer,step,editAreaList);
 			c.open();
 		}
 	}
 
 	/**
+	 * 繰り返しBrock追加(for-each文) 
+	 * @author daizhu
 	 * 
 	 */
 	private final class AddForeachBlockAction extends Action {
@@ -149,12 +161,14 @@ public class RightMenuManager extends ActionGroup {
 		public void run() {
 			String step = getNewRowStep();
 			AddForeachDialog c = new AddForeachDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-					tableViewer,step);
+					tableViewer,step,editAreaList);
 			c.open();
 		}
 	}
 
 	/**
+	 * 例外処理Brock追加(try..catch..finally文) 
+	 * @author daizhu
 	 * 
 	 */
 	private final class AddThrowBlockAction extends Action {
@@ -165,11 +179,16 @@ public class RightMenuManager extends ActionGroup {
 		public void run() {
 			String step = getNewRowStep();
 			AddThrowDialog c = new AddThrowDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-					tableViewer,step);
+					tableViewer,step,editAreaList);
 			c.open();
 		}
 	}
 
+	/**
+	 * 変数宣言Brock追加 
+	 * @author daizhu
+	 *
+	 */
 	private final class AddDefineVarBlockAction extends Action {
 		public AddDefineVarBlockAction() {
 			setText(ConstantManager.ADD_DEFINE_VAR_BLOCK);
@@ -177,13 +196,14 @@ public class RightMenuManager extends ActionGroup {
 
 		public void run() {
 			AddCalculusDialog c = new AddCalculusDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-					tableViewer);
+					tableViewer,editAreaList);
 			c.open();
 		}
 	}
 
 	/**
-	 * 
+	 * 計算式Brock追加 
+	 * @author daizhu
 	 */
 	private final class AddFormulaBlockAction extends Action {
 		public AddFormulaBlockAction() {
@@ -192,13 +212,14 @@ public class RightMenuManager extends ActionGroup {
 
 		public void run() {
 			AddCalculusDialog c = new AddCalculusDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-					tableViewer);
+					tableViewer,editAreaList);
 			c.open();
 		}
 	}
 
 	/**
-	 * 
+	 * 呼出Brock追加
+	 * @author daizhu
 	 */
 	private final class AddCallBlockAction extends Action {
 		public AddCallBlockAction() {
@@ -207,11 +228,16 @@ public class RightMenuManager extends ActionGroup {
 
 		public void run() {
 			AddCalculusDialog c = new AddCalculusDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-					tableViewer);
+					tableViewer,editAreaList);
 			c.open();
 		}
 	}
 
+	/**
+	 * Return Brock追加
+	 * @author daizhu
+	 *
+	 */
 	private final class AddReturnBlockAction extends Action {
 		public AddReturnBlockAction() {
 			setText(ConstantManager.ADD_RETURN_BLOCK);
@@ -219,13 +245,16 @@ public class RightMenuManager extends ActionGroup {
 
 		public void run() {
 			Table table = tableViewer.getTable();
+			int index = table.getSelectionIndex() >= 0 ? table.getSelectionIndex() : 0;
 			EditArea edit = new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "return", "");
-			tableViewer.insert(edit, table.getSelectionIndex());
+			editAreaList.add(index,edit);
+			tableViewer.refresh();
 		}
 	}
 
 	/**
-	 * 
+	 * Break Brock追加
+	 * @author daizhu
 	 */
 	private final class AddBreakBlockAction extends Action {
 		public AddBreakBlockAction() {
@@ -234,12 +263,16 @@ public class RightMenuManager extends ActionGroup {
 
 		public void run() {
 			Table table = tableViewer.getTable();
+			int index = table.getSelectionIndex() >= 0 ? table.getSelectionIndex() : 0;
 			EditArea edit = new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "break", "");
-			tableViewer.insert(edit, table.getSelectionIndex());
+			editAreaList.add(index,edit);
+			tableViewer.refresh();
 		}
 	}
 
 	/**
+	 * Continue Brock追加
+	 * @author daizhu
 	 * 
 	 */
 	private final class AddContinueBlockAction extends Action {
@@ -249,11 +282,18 @@ public class RightMenuManager extends ActionGroup {
 
 		public void run() {
 			Table table = tableViewer.getTable();
+			int index = table.getSelectionIndex() >= 0 ? table.getSelectionIndex() : 0;
 			EditArea edit = new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "continue", "");
-			tableViewer.insert(edit, table.getSelectionIndex());
+			editAreaList.add(index,edit);
+			tableViewer.refresh();
 		}
 	}
 
+	/**
+	 * 新規追加行のstepを取得する
+	 * @author daizhu
+	 * 
+	 */
 	private String getNewRowStep() {
 		Table table = tableViewer.getTable();
 		int index = table.getSelectionIndex();

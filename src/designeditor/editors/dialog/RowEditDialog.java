@@ -1,5 +1,7 @@
 package designeditor.editors.dialog;
 
+import java.util.List;
+
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -9,6 +11,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
 import designeditor.editors.bean.EditArea;
@@ -17,10 +20,12 @@ public class RowEditDialog extends Dialog {
 	protected Object result;
 	protected Shell shell;
 	private TableViewer tableViewer;
+	private List<EditArea> editAreaList;
 
-	public RowEditDialog(Shell parent, TableViewer tableViewer) {
+	public RowEditDialog(Shell parent, TableViewer tableViewer,List<EditArea> editAreaList) {
 		super(parent, SWT.NONE);
 		this.tableViewer = tableViewer;
+		this.editAreaList = editAreaList;
 	}
 
 	public Object open() {
@@ -36,6 +41,9 @@ public class RowEditDialog extends Dialog {
 	}
 
 	protected void createContents() {
+		Table table = tableViewer.getTable();
+		int index = table.getSelectionIndex();
+		
 		shell = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 		shell.setSize(312, 212);
 		shell.setText("SWT Dialog");
@@ -54,7 +62,8 @@ public class RowEditDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				edit.setEditArea(text.getText());
-				tableViewer.refresh();
+				editAreaList.set(index, edit);
+				tableViewer.refresh();				
 				shell.close();
 			}
 		});

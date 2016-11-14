@@ -1,5 +1,7 @@
 package designeditor.editors.dialog;
 
+import java.util.List;
+
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -18,10 +20,12 @@ public class AddCalculusDialog extends Dialog {
 	protected Object result;
 	protected Shell shell;
 	private TableViewer tableViewer;
+	private List<EditArea> editAreaList;
 
-	public AddCalculusDialog(Shell parent, TableViewer tableViewer) {
+	public AddCalculusDialog(Shell parent, TableViewer tableViewer,List<EditArea> editAreaList) {
 		super(parent, SWT.NONE);
 		this.tableViewer = tableViewer;
+		this.editAreaList = editAreaList;
 	}
 
 	public Object open() {
@@ -52,11 +56,10 @@ public class AddCalculusDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Table table = tableViewer.getTable();
-				int index = table.getSelectionIndex();
+				int index = table.getSelectionIndex() >= 0 ? table.getSelectionIndex() : 0;
 				EditArea edit = new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", text.getText(), "");
-				tableViewer.insert(edit, index);
-
-				// tableViewer.refresh();
+				editAreaList.add(index, edit);
+				tableViewer.refresh();
 				shell.close();
 			}
 		});
