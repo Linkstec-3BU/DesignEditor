@@ -5,67 +5,103 @@ DROP TABLE IF EXISTS module;
 DROP TABLE IF EXISTS module_method;
 DROP TABLE IF EXISTS module_type;
 DROP TABLE IF EXISTS package;
-DROP TABLE IF EXISTS sequence_manager;
 
 /* Create Tables */
 
 CREATE TABLE METHOD_PARAMETER
 (
-	no char(7) NOT NULL,
-	method_no int(6) unsigned NOT NULL,
-	parameter_id char(128) NOT NULL,
+	project_id char(20) NOT NULL,
+	package_id char(50) NOT NULL,
+	module_id char(30) NOT NULL,
+	method_id char(30) NOT NULL,
+	parameter_id char(30) NOT NULL,
 	paramter_type char(128) NOT NULL,
 	parameter_name char(128) NOT NULL,
-	PRIMARY KEY (no)
+	comment text,
+	PRIMARY KEY (project_id, package_id, module_id, method_id, parameter_id)
 );
 
 
 CREATE TABLE MODULE
 (
-	package_id char(128) NOT NULL,
-	module_id char(128) NOT NULL,
-	-- ƒ‚ƒWƒ…[ƒ‹ƒ^ƒCƒv‚Ì—Bˆê‚Ì•¨—–¼BLogic‚âServiceAUtil‚È‚Ç‚Í‘z’è‚³‚ê‚Ä‚¢‚Ü‚·B
-	module_type char(40) NOT NULL COMMENT 'ƒ‚ƒWƒ…[ƒ‹ƒ^ƒCƒv‚Ì—Bˆê‚Ì•¨—–¼BLogic‚âServiceAUtil‚È‚Ç‚Í‘z’è‚³‚ê‚Ä‚¢‚Ü‚·B',
+	project_id char(20) NOT NULL,
+	package_id char(50) NOT NULL,
+	module_id char(30) NOT NULL,
 	module_id_name char(128) NOT NULL,
-	method1 char(128),
-	PRIMARY KEY (package_id, module_id),
-	UNIQUE (package_id, module_id)
+	-- Moduleçš„Typeçš„ç‰©ç†åã€‚Logicï¼ŒServiceã€Utilä¹‹ç±»ã€‚
+	module_type char(30) NOT NULL COMMENT 'Moduleçš„Typeçš„ç‰©ç†åã€‚Logicï¼ŒServiceã€Utilä¹‹ç±»ã€‚',
+	comment text,
+	PRIMARY KEY (project_id, package_id, module_id)
 );
 
 
 CREATE TABLE MODULE_METHOD
 (
-	no char(7) NOT NULL,
-	method_id char(128) NOT NULL,
+	project_id char(20) NOT NULL,
+	package_id char(50) NOT NULL,
+	module_id char(30) NOT NULL,
+	method_id char(30) NOT NULL,
 	method_id_name char(128) NOT NULL,
-	method_return_type char(128) NOT NULL,
+	-- å¯ä»¥æ˜¯Moduleçš„ä»»ä½•ä¸€ä¸ªï¼Œä¹Ÿå¯ä»¥æ˜¯Javaå·¥ç¨‹ä¸­è¯»åˆ°çš„ä»»ä½•Classï¼Œ æ‰€ä»¥éœ€è¦ä¿å­˜åŒ…ä¿¡æ¯ã€‚ æ²¡æœ‰è¿”å›å€¼çš„è¯å°±æ˜¯Null
+	method_return_type char(128) DEFAULT '' COMMENT 'å¯ä»¥æ˜¯Moduleçš„ä»»ä½•ä¸€ä¸ªï¼Œä¹Ÿå¯ä»¥æ˜¯Javaå·¥ç¨‹ä¸­è¯»åˆ°çš„ä»»ä½•Classï¼Œ æ‰€ä»¥éœ€è¦ä¿å­˜åŒ…ä¿¡æ¯ã€‚ æ²¡æœ‰è¿”å›å€¼çš„è¯å°±æ˜¯Null',
 	method_throws_1 char(128),
-	method_parameter_1 char(128),
-	method_parameter_2 char(128),
-	PRIMARY KEY (no)
+	comment text,
+	PRIMARY KEY (project_id, package_id, module_id, method_id)
 );
 
 
--- ƒ‚ƒWƒ…[ƒ‹‚Ìí—Ş‚ğŠÇ—‚·‚éƒe[ƒuƒ‹
 CREATE TABLE MODULE_TYPE
 (
-	-- ƒ‚ƒWƒ…[ƒ‹ƒ^ƒCƒv‚Ì—Bˆê‚Ì•¨—–¼BLogic‚âServiceAUtil‚È‚Ç‚Í‘z’è‚³‚ê‚Ä‚¢‚Ü‚·B
-	module_type char(40) NOT NULL COMMENT 'ƒ‚ƒWƒ…[ƒ‹ƒ^ƒCƒv‚Ì—Bˆê‚Ì•¨—–¼BLogic‚âServiceAUtil‚È‚Ç‚Í‘z’è‚³‚ê‚Ä‚¢‚Ü‚·B',
-	-- ƒ‚ƒWƒ…[ƒ‹ƒ^ƒCƒv‚Ì—Bˆê‚Ì˜_—–¼B
-	module_type_name char(128) NOT NULL COMMENT 'ƒ‚ƒWƒ…[ƒ‹ƒ^ƒCƒv‚Ì—Bˆê‚Ì˜_—–¼B',
-	-- ƒ‚ƒWƒ…[ƒ‹‚Ìà–¾“à—e
-	comment text COMMENT 'ƒ‚ƒWƒ…[ƒ‹‚Ìà–¾“à—e',
+	-- Moduleçš„Typeçš„ç‰©ç†åã€‚Logicï¼ŒServiceã€Utilä¹‹ç±»ã€‚
+	module_type char(30) NOT NULL COMMENT 'Moduleçš„Typeçš„ç‰©ç†åã€‚Logicï¼ŒServiceã€Utilä¹‹ç±»ã€‚',
+	module_type_name char(128) NOT NULL,
+	comment text,
 	PRIMARY KEY (module_type)
-) COMMENT = 'ƒ‚ƒWƒ…[ƒ‹‚Ìí—Ş‚ğŠÇ—‚·‚éƒe[ƒuƒ‹';
+);
 
 
 CREATE TABLE PACKAGE
 (
-	package_id char(128) NOT NULL,
-	-- ƒ‚ƒWƒ…[ƒ‹‚Ìà–¾“à—e
-	comment text COMMENT 'ƒ‚ƒWƒ…[ƒ‹‚Ìà–¾“à—e',
-	PRIMARY KEY (package_id)
+	project_id char(20) NOT NULL,
+	package_id char(50) NOT NULL,
+	comment text,
+	PRIMARY KEY (project_id, package_id)
 );
+
+
+
+/* Create Foreign Keys */
+
+ALTER TABLE MODULE_METHOD
+	ADD FOREIGN KEY (project_id, package_id, module_id)
+	REFERENCES MODULE (project_id, package_id, module_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE METHOD_PARAMETER
+	ADD FOREIGN KEY (project_id, package_id, module_id, method_id)
+	REFERENCES MODULE_METHOD (project_id, package_id, module_id, method_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE MODULE
+	ADD FOREIGN KEY (module_type)
+	REFERENCES MODULE_TYPE (module_type)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE MODULE
+	ADD FOREIGN KEY (project_id, package_id)
+	REFERENCES PACKAGE (project_id, package_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
 
 
 
