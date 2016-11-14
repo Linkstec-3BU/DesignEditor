@@ -1,81 +1,80 @@
 package designeditor.editors.bean;
 
-import javafx.beans.property.SimpleStringProperty;
-
 public class EditArea {
 
-	private final SimpleStringProperty tag;
-	private final SimpleStringProperty step;
-	private final SimpleStringProperty logicOne;
-	private final SimpleStringProperty logicTwo;
-	private final SimpleStringProperty logicThree;
-	private final SimpleStringProperty editArea;
-	private final SimpleStringProperty comment;
+	private String tag;
+	private String step;
+	private String logicOne;
+	private String logicTwo;
+	private String logicThree;
+	private String editArea;
+	private String comment;
 
 	public EditArea(String tag,String step,String logicOne, String logicTwo, String logicThree,
 			String editArea, String comment) {
-		this.tag = new SimpleStringProperty(tag);
-		this.step = new SimpleStringProperty(step);
-		this.logicOne = new SimpleStringProperty(logicOne);
-		this.logicTwo = new SimpleStringProperty(logicTwo);
-		this.logicThree = new SimpleStringProperty(logicThree);
-		this.editArea = new SimpleStringProperty(editArea);
-		this.comment = new SimpleStringProperty(comment);
+		this.tag = tag;
+		this.step = step;
+		this.logicOne = logicOne;
+		this.logicTwo = logicTwo;
+		this.logicThree = logicThree;
+		this.editArea = editArea;
+		this.comment = comment;
 	}
 
 	public String getTag() {
-		return tag.get();
-	}
-	
-	public String getStep() {
-		return step.get();
-	}
-	
-	public String getComment() {
-		return comment.get();
+		return tag;
 	}
 
-	public String getEditArea() {
-		return editArea.get();
+	public String getStep() {
+		return step;
 	}
 
 	public String getLogicOne() {
-		return logicOne.get();
-	}
-
-	public String getLogicThree() {
-		return logicThree.get();
+		return logicOne;
 	}
 
 	public String getLogicTwo() {
-		return logicTwo.get();
+		return logicTwo;
+	}
+
+	public String getLogicThree() {
+		return logicThree;
+	}
+
+	public String getEditArea() {
+		return editArea;
+	}
+
+	public String getComment() {
+		return comment;
 	}
 
 	public void setTag(String tag) {
-		this.tag.set(tag);
-	}
-	
-	public void setStep(String step) {
-		this.step.set(step);
-	}
-	
-	public void setComment(String comment) {
-		this.comment.set(comment);
+		this.tag = tag;
 	}
 
-	public void setEditArea(String editArea) {
-		this.editArea.set(editArea);
+	public void setStep(String step) {
+		this.step = step;
 	}
 
 	public void setLogicOne(String logicOne) {
-		this.logicOne.set(logicOne);
-	}
-
-	public void setLogicThree(String logicThree) {
-		this.logicThree.set(logicThree);
+		this.logicOne = logicOne;
 	}
 
 	public void setLogicTwo(String logicTwo) {
-		this.logicTwo.set(logicTwo);
+		this.logicTwo = logicTwo;
 	}
+
+	public void setLogicThree(String logicThree) {
+		this.logicThree = logicThree;
+	}
+
+	public void setEditArea(String editArea) {
+		this.editArea = editArea;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 }
