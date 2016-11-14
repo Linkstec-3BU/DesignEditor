@@ -10,11 +10,11 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -36,6 +36,8 @@ import designeditor.editors.provider.TableViewerContentProvider;
 import designeditor.editors.provider.TableViewerLabelProvider;
 
 public class DesignEditor extends MultiPageEditorPart implements IResourceChangeListener {
+	private Composite composite;
+	
 	/**
 	 * Creates a multi-page editor example.
 	 */
@@ -48,17 +50,24 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 	 * Creates page 1 of the multi-page editor,
 	 */
 	void createPage1() {
+		composite = new Composite(getContainer(), SWT.NONE);
 		
-		Composite composite = new Composite(getContainer(), SWT.NONE);
 		FillLayout layout = new FillLayout();
 		composite.setLayout(layout);
 		
 		TableViewer tableView = new TableViewer(composite);
 		Table table = tableView.getTable();
+		
+		GridData gridData = new GridData();
+		gridData.horizontalSpan = 500;
+		gridData.heightHint = 500;
+		gridData.horizontalAlignment = GridData.FILL;
+		gridData.grabExcessHorizontalSpace = true;
+		table.setLayoutData(gridData);
+		
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		TableLayout tLayout = new TableLayout();
-		table.setLayout(tLayout);
+		
 		
 		/**
 		 * 
@@ -179,5 +188,4 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 		// TODO Auto-generated method stub
 
 	}
-
 }
