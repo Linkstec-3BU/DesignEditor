@@ -9,10 +9,8 @@ import org.eclipse.swt.graphics.Image;
 import designeditor.editors.bean.EditArea;
 
 /**
- * 这个方法主要是作为"标签器"的作用来用的.
- * "标签器"将一个个实体对象的字段变量分别取出然后系那是在TableViewer的各个列中.
- * 实现对应的接口
- * @author kongxiaohan
+ * 各セルに表示内容設定用
+ * @author daizhu
  */
 public class TableViewerLabelProvider implements ITableLabelProvider{
     @Override
@@ -21,17 +19,14 @@ public class TableViewerLabelProvider implements ITableLabelProvider{
     }
 
     /**
-     * 由此方法决定数据记录在表格的每一列是显示什么文字
-     * @param element 实体类对象
-     * @param columnIndex 列号，0是第一列
-     * @return 返回值一定要避免NULL值,否则出错
+     * 各セルにどの内容が表示することを設定する
+     * @param element 行対象
+     * @param columnIndex 列番号
+     * @return 表示内容
      */
     @Override
     public String getColumnText(Object element, int columnIndex) {
         EditArea edit = (EditArea) element;
-        if(columnIndex == 0){
-            return edit.getStep();
-        }
         
         if(columnIndex == 1){
             return edit.getLogicOne();

@@ -3,7 +3,6 @@ package designeditor.editors.dialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -17,7 +16,6 @@ import org.eclipse.swt.widgets.Text;
 
 import designeditor.editors.bean.EditArea;
 import designeditor.editors.constant.ConstantManager;
-import designeditor.editors.logic.CreateForeachBlock;
 import designeditor.editors.logic.CreateThrowBlock;
 
 public class AddThrowDialog extends Dialog {
@@ -26,10 +24,13 @@ public class AddThrowDialog extends Dialog {
 	private TableViewer tableViewer;
 	private String step;
 
-	public AddThrowDialog(Shell parent, TableViewer tableViewer,String step) {
+	private List<EditArea> editAreaList;
+
+	public AddThrowDialog(Shell parent, TableViewer tableViewer,String step,List<EditArea> editAreaList) {
 		super(parent, SWT.NONE);
 		this.step = step;
 		this.tableViewer = tableViewer;
+		this.editAreaList = editAreaList;
 	}
 
 	public Object open() {
@@ -70,12 +71,9 @@ public class AddThrowDialog extends Dialog {
 				} else {
 					editlist = block.CreateStepThreeBlock(text.getText());
 				}
-				int index = table.getSelectionIndex();
-				for (int i = 0; i < editlist.size(); i++) {
-					tableViewer.insert(editlist.get(i), index + i);
-				}
-
-//				tableViewer.refresh();
+				int index = table.getSelectionIndex() >= 0 ? table.getSelectionIndex() : 0;
+				editAreaList.addAll(index, editlist);
+				tableViewer.refresh();
 				shell.close();
 			}
 		});

@@ -6,13 +6,8 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
 /**
- * 创建这个类,主要是对List集合中的数据记录进行筛选和转化.
- * 是"内容器"的作用.
- * 内容器中主要是对setInput()输入的数据集集合(本例子中指的是在PeopleFactory中封装好的List集合)做处理.
- * 并且转换化成一个数组返回.
- * 
- * 实现对应的接口IStructuredContentProvider,然后实现其中的方法.
- * @author kongxiaohan
+ * setInputのパラメータを転換用
+ * @author daizhu
  */
 public class TableViewerContentProvider implements IStructuredContentProvider {
 

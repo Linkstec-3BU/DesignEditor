@@ -3,7 +3,6 @@ package designeditor.editors.dialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -24,11 +23,13 @@ public class AddForeachDialog extends Dialog {
 	protected Shell shell;
 	private TableViewer tableViewer;
 	private String step;
+	private List<EditArea> editAreaList;
 
-	public AddForeachDialog(Shell parent, TableViewer tableViewer,String step) {
+	public AddForeachDialog(Shell parent, TableViewer tableViewer,String step,List<EditArea> editAreaList) {
 		super(parent, SWT.NONE);
 		this.step = step;
 		this.tableViewer = tableViewer;
+		this.editAreaList = editAreaList;
 	}
 
 	public Object open() {
@@ -69,12 +70,10 @@ public class AddForeachDialog extends Dialog {
 				} else {
 					editlist = block.CreateStepThreeBlock(text.getText());
 				}
-				int index = table.getSelectionIndex();
-				for (int i = 0; i < editlist.size(); i++) {
-					tableViewer.insert(editlist.get(i), index + i);
-				}
+				int index = table.getSelectionIndex() >= 0 ? table.getSelectionIndex() : 0;
 
-//				tableViewer.refresh();
+				editAreaList.addAll(index, editlist);
+				tableViewer.refresh();
 				shell.close();
 			}
 		});

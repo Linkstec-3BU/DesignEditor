@@ -8,14 +8,13 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -32,6 +31,7 @@ import designeditor.editors.bean.EditArea;
 import designeditor.editors.constant.ConstantManager;
 import designeditor.editors.dialog.RowEditDialog;
 import designeditor.editors.menu.RightMenuManager;
+import designeditor.editors.provider.RowNumberLabelProvider;
 import designeditor.editors.provider.TableViewerContentProvider;
 import designeditor.editors.provider.TableViewerLabelProvider;
 
@@ -53,71 +53,61 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 		FillLayout layout = new FillLayout();
 		composite.setLayout(layout);
 		
-
 		TableViewer tableView = new TableViewer(composite);
-		Table table1 = tableView.getTable();
-		table1.setHeaderVisible(true);// 设置标头
-		table1.setLinesVisible(true);// 显示表格线
-		TableLayout tLayout = new TableLayout();// 专用于表格的布局
-		table1.setLayout(tLayout);
+		Table table = tableView.getTable();
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+		TableLayout tLayout = new TableLayout();
+		table.setLayout(tLayout);
 		
 		/**
-		 * 第三步:建立TableViewer中的列
+		 * 
 		 */
-		tLayout.addColumnData(new ColumnWeightData(50));
+		TableViewerColumn numberColumn = new TableViewerColumn(tableView, SWT.RIGHT);
+		numberColumn.getColumn().setText("番号");
+		numberColumn.getColumn().setWidth(45);
+		
+		TableColumn logicOneColumn = new TableColumn(table, SWT.NONE);
+		logicOneColumn.setText("");
+		logicOneColumn.setWidth(45);
 
-		TableColumn column = new TableColumn(table1, SWT.NONE);
-		column.setText("番号");
-		column.setWidth(50);
+		TableColumn logicTwoColumn = new TableColumn(table, SWT.NONE);
+		logicTwoColumn.setText("");
+		logicTwoColumn.setWidth(45);
 
-		tLayout.addColumnData(new ColumnWeightData(50));
-		TableColumn column1 = new TableColumn(table1, SWT.NONE);
-		column1.setText("");
-		column.setWidth(50);
+		TableColumn logicthreeColumn = new TableColumn(table, SWT.NONE);
+		logicthreeColumn.setText("");
+		logicthreeColumn.setWidth(45);
 
-		tLayout.addColumnData(new ColumnWeightData(50));
-		TableColumn column2 = new TableColumn(table1, SWT.NONE);
-		column2.setText("");
-		column.setWidth(50);
+		TableColumn editAreaColumn = new TableColumn(table, SWT.NONE);
+		editAreaColumn.setText("処理詳細");
+		editAreaColumn.setWidth(500);
 
-		tLayout.addColumnData(new ColumnWeightData(50));
-		TableColumn column3 = new TableColumn(table1, SWT.NONE);
-		column3.setText("");
-		column.setWidth(50);
-
-		tLayout.addColumnData(new ColumnWeightData(500));
-		TableColumn column4 = new TableColumn(table1, SWT.NONE);
-		column4.setText("処理詳細");
-		column.setWidth(500);
-
-		tLayout.addColumnData(new ColumnWeightData(500));
-		TableColumn column5 = new TableColumn(table1, SWT.NONE);
-		column5.setText("コメント");
-		column.setWidth(500);
+		TableColumn commentColumn = new TableColumn(table, SWT.NONE);
+		commentColumn.setText("コメント");
+		commentColumn.setWidth(500);
 
 		tableView.setContentProvider(new TableViewerContentProvider());
 		
 		tableView.setLabelProvider(new TableViewerLabelProvider());
 
+		numberColumn.setLabelProvider(new RowNumberLabelProvider());
+		
 		List<EditArea> editAreaData = new ArrayList<EditArea>();
 		editAreaData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "1", "2", "3", "4", "5"));
 		tableView.setInput(editAreaData);
 
 		tableView.addDoubleClickListener(new IDoubleClickListener() {
-
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
-				
 				RowEditDialog c = new RowEditDialog(PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow().getShell(),tableView);
+						.getActiveWorkbenchWindow().getShell(),tableView,editAreaData);
 				c.open();
-
 			}
 		});
 
-		RightMenuManager actionGroup = new RightMenuManager(tableView);
-		
-		actionGroup.fillContextMenu();
+		RightMenuManager rightMenuManager = new RightMenuManager(tableView,editAreaData);
+		rightMenuManager.fillContextMenu();
 
 		int index = addPage(composite);
 		setPageText(index, "Properties");
