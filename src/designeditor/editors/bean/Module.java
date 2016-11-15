@@ -4,7 +4,7 @@ import java.util.List;
 
 import designeditor.util.StringUtil;
 
-public class ModuleClass {
+public class Module {
 	// プロジェクト名
 	private String project_id;
 	// パケッジ名

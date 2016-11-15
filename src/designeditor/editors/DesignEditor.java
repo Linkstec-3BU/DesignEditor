@@ -1,20 +1,24 @@
 package designeditor.editors;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -24,8 +28,11 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.MultiPageEditorPart;
 
-import designeditor.editors.dialog.AddCalculusDialog;
-import designeditor.editors.dialog.MethodDefineDialog;
+import designeditor.editors.bean.Module;
+import designeditor.editors.dialog.ClassDefineDialog;
+import designeditor.editors.provider.ClassTableViewerLabelProvider;
+import designeditor.editors.provider.RowNumberLabelProvider;
+import designeditor.editors.provider.TableViewerContentProvider;
 
 public class DesignEditor extends MultiPageEditorPart implements IResourceChangeListener {
 	private Composite composite;
@@ -47,132 +54,62 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 		gridLayout.horizontalSpacing = 10;
 		composite.setLayout(gridLayout);		
 
-		// 左側エリア設定
-		Composite leftComposite = new Composite(composite, SWT.BORDER);
-		GridLayout leftGridLayout = new GridLayout(2, false);
-		leftGridLayout.horizontalSpacing = 20;
-		leftGridLayout.verticalSpacing = 20;
-		leftComposite.setLayout(leftGridLayout);
-		GridData leftGridData = new GridData(400, 600);
-		leftComposite.setLayoutData(leftGridData);
-
-		Label projectLabel = new Label(leftComposite, SWT.NONE);
-		projectLabel.setText("プロジェクトID:");
-		Text projectText = new Text(leftComposite, SWT.NONE);
-		projectText.setText("");
-
-		Label packageLabel = new Label(leftComposite, SWT.NONE);
-		packageLabel.setText("package名:");
-		Text packageText = new Text(leftComposite, SWT.NONE);
-		packageText.setText("");
-
-		Label modulLabel1 = new Label(leftComposite, SWT.NONE);
-		modulLabel1.setText("モジュールの物理名:");
-		Text modulText1 = new Text(leftComposite, SWT.NONE);
-		modulText1.setText("");
-
-		Label modulLabel2 = new Label(leftComposite, SWT.NONE);
-		modulLabel2.setText("モジュールの論理名:");
-		Text modulText2 = new Text(leftComposite, SWT.NONE);
-		modulText2.setText("");
-
-		Label commentLabel = new Label(leftComposite, SWT.NONE);
-		commentLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
-		commentLabel.setText("備考:");
-
-		Text commentText = new Text(leftComposite, SWT.WRAP);
-		commentText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
-		commentText.setText("");
-
-		// 右側エリア設定
-		Composite rightComposite = new Composite(composite, SWT.BORDER);
-
-		GridLayout rightGridLayout = new GridLayout(1, false);
-		rightComposite.setLayout(rightGridLayout);
-
-		GridData rightGridData = new GridData(400, 600);
-		rightComposite.setLayoutData(rightGridData);
-
-		Composite rightChildComposite = new Composite(rightComposite, SWT.BORDER);
+		TableViewer tableView = new TableViewer(composite,SWT.FULL_SELECTION);
+		Table table = tableView.getTable();
+		composite.setLayout(new FillLayout());
+		GridData gridData = new GridData();
+		gridData.horizontalSpan = 6;
+		gridData.horizontalAlignment = GridData.FILL;
+		gridData.grabExcessHorizontalSpace = true;
+		gridData.widthHint = 1180;
+		gridData.heightHint = 800;
+		composite.setLayoutData(gridData);
+				
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
 		
-		GridLayout rightChildGridLayout = new GridLayout(3, false);
-		rightChildComposite.setLayout(rightChildGridLayout);
-
-		GridData rightChildGridData = new GridData(400, 80);
-		rightChildComposite.setLayoutData(rightChildGridData);
+		TableViewerColumn numberColumn = new TableViewerColumn(tableView, SWT.RIGHT);
+		numberColumn.getColumn().setText("番号");
+		numberColumn.getColumn().setWidth(45);
 		
-		Label methodLabel = new Label(rightChildComposite, SWT.NONE);
-		methodLabel.setText("method1");
+		TableColumn logicOneColumn = new TableColumn(table, SWT.NONE);
+		logicOneColumn.setText("プロジェクト");
+		logicOneColumn.setWidth(45);
 
-		Button btn1 = new Button(rightChildComposite, SWT.PUSH);
-		btn1.setText("定義");
+		TableColumn logicTwoColumn = new TableColumn(table, SWT.NONE);
+		logicTwoColumn.setText("パッケジ");
+		logicTwoColumn.setWidth(45);
 
-		Button btn2 = new Button(rightChildComposite, SWT.PUSH);
-		btn2.setText("設計");
+		TableColumn logicthreeColumn = new TableColumn(table, SWT.NONE);
+		logicthreeColumn.setText("モジュール名");
+		logicthreeColumn.setWidth(45);
+	
 
-		for (int i = 0; i < 10; i++) {
-			Composite rightChildComposite1 = new Composite(rightComposite, SWT.BORDER);
-			
-			GridLayout rightChildGridLayout1 = new GridLayout(3, false);
-			rightChildComposite1.setLayout(rightChildGridLayout1);
+		tableView.setContentProvider(new TableViewerContentProvider());
+		
+		tableView.setLabelProvider(new ClassTableViewerLabelProvider());
 
-			GridData rightChildGridData1 = new GridData(400, 80);
-			rightChildComposite1.setLayoutData(rightChildGridData1);
-			
-			Label methodLabel1 = new Label(rightChildComposite1, SWT.NONE);
-			methodLabel1.setText("method1");
-			
-
-			Button btn11 = new Button(rightChildComposite1, SWT.PUSH);
-			btn11.setText("定義");
-			btn11.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-//					MethodDefineDialog c = new MethodDefineDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
-//					c.open();
-				}
-			});
-
-			Button btn21 = new Button(rightChildComposite1, SWT.PUSH);
-			btn21.setText("設計");
-			rightChildComposite1.setVisible(false);
-		}
-
-		Composite bottomComposite = new Composite(composite, SWT.BORDER);
-
-		GridLayout bottomGridLayout = new GridLayout(3, false);
-		bottomComposite.setLayout(bottomGridLayout);
-		GridData bottomGridData = new GridData(810, 80);
-		bottomGridData.horizontalSpan = 2;
-		bottomComposite.setLayoutData(bottomGridData);
-
-		Button saveBtn = new Button(bottomComposite, SWT.PUSH | SWT.CENTER);
-		saveBtn.setText("保存");
-
-		Button canclBtn = new Button(bottomComposite, SWT.PUSH | SWT.CENTER);
-		canclBtn.setText("取消");
-
-		Button addMethodBtn = new Button(bottomComposite, SWT.PUSH | SWT.CENTER);
-		addMethodBtn.setText("Add method");
-		addMethodBtn.addSelectionListener(new SelectionAdapter() {
+		numberColumn.setLabelProvider(new RowNumberLabelProvider());
+		
+		List<Module> moduleData = new ArrayList<Module>();
+		Module module = new Module();
+		module.setProject_id("project_id");
+		module.setPackage_id("package_id");
+		module.setModule_id("module_id");
+		tableView.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
-				Control rightControl[] = rightComposite.getChildren();
-				System.out.println(rightControl.length);
-				boolean labelFlg = false;
-				for (Control ctl : rightControl) {
-					if (ctl.getVisible()) {
-						continue;
-					}
-					if (ctl instanceof Composite && !labelFlg) {
-						ctl.setVisible(true);
-						labelFlg = true;
-						continue;
-					}
-				}
+			public void doubleClick(DoubleClickEvent event) {
+				ClassDefineDialog c = new ClassDefineDialog(PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell(),module);
+				c.open();
+				tableView.refresh();
 			}
 		});
-
+		
+		
+		moduleData.add(module);
+		tableView.setInput(moduleData);
+		
 		int index = addPage(composite);
 		setPageText(index, "Properties");
 	}

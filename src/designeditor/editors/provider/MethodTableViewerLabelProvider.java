@@ -12,7 +12,7 @@ import designeditor.editors.bean.EditArea;
  * 各セルに表示内容設定用
  * @author daizhu
  */
-public class TableViewerLabelProvider implements ITableLabelProvider{
+public class MethodTableViewerLabelProvider implements ITableLabelProvider{
     @Override
     public Image getColumnImage(Object element, int columnIndex) {
         return null;

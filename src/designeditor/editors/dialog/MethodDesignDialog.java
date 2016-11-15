@@ -27,7 +27,7 @@ import designeditor.editors.constant.ConstantManager;
 import designeditor.editors.menu.RightMenuManager;
 import designeditor.editors.provider.RowNumberLabelProvider;
 import designeditor.editors.provider.TableViewerContentProvider;
-import designeditor.editors.provider.TableViewerLabelProvider;
+import designeditor.editors.provider.MethodTableViewerLabelProvider;
 
 public class MethodDesignDialog extends Dialog {
 
@@ -239,7 +239,7 @@ public class MethodDesignDialog extends Dialog {
 
 		tableView.setContentProvider(new TableViewerContentProvider());
 
-		tableView.setLabelProvider(new TableViewerLabelProvider());
+		tableView.setLabelProvider(new MethodTableViewerLabelProvider());
 
 		numberColumn.setLabelProvider(new RowNumberLabelProvider());
 
