@@ -6,7 +6,7 @@
          point="org.eclipse.ui.editors">
       <editor
             name="DesignEditorTool"
-            extensions="methodDE"
+            extensions="de"
             icon="icons/sample.gif"
             class="designeditor.editors.DesignEditor"
             id="designeditor.editors.DesignEditor">
@@ -24,5 +24,4 @@
             id="designeditor.wizard.ExcelEditWizard"
             name="DesignEditor"/>
    </extension>
-
 </plugin>

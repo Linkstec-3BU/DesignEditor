@@ -11,7 +11,7 @@ import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 
 public class ExcelEditWizardPage extends WizardNewFileCreationPage {
 
-	private static final String EXTENSION = ".methodDE";
+	private static final String EXTENSION = ".de";
 
 	public ExcelEditWizardPage(IStructuredSelection selection) {
 		super("新規作成", selection);

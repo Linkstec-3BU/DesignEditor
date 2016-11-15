@@ -9,21 +9,22 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionGroup;
 
 import designeditor.editors.bean.EditArea;
 import designeditor.editors.constant.ConstantManager;
 import designeditor.editors.dialog.AddCalculusDialog;
 import designeditor.editors.dialog.AddForeachDialog;
-import designeditor.editors.dialog.AddThrowDialog;
 import designeditor.editors.dialog.AddSelectDialog;
+import designeditor.editors.dialog.AddThrowDialog;
 
 
 public class RightMenuManager extends ActionGroup {
 	private TableViewer tableViewer;
 	private List<EditArea> editAreaList;
+	private Shell shell;
 
 	/**
 	 * 右メニュ-作成
@@ -57,9 +58,10 @@ public class RightMenuManager extends ActionGroup {
 
 	}
 
-	public RightMenuManager(TableViewer tableViewer,List<EditArea> editAreaList) {
+	public RightMenuManager(TableViewer tableViewer,List<EditArea> editAreaList,Shell shell) {
 		this.tableViewer = tableViewer;
 		this.editAreaList = editAreaList;
+		this.shell = shell;
 	}
 
 	/**
@@ -143,7 +145,7 @@ public class RightMenuManager extends ActionGroup {
 		public void run() {
 			String step = getNewRowStep();
 			AddSelectDialog c = new AddSelectDialog(
-					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), tableViewer,step,editAreaList);
+					shell, tableViewer,step,editAreaList);
 			c.open();
 		}
 	}
@@ -160,7 +162,7 @@ public class RightMenuManager extends ActionGroup {
 
 		public void run() {
 			String step = getNewRowStep();
-			AddForeachDialog c = new AddForeachDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+			AddForeachDialog c = new AddForeachDialog(shell,
 					tableViewer,step,editAreaList);
 			c.open();
 		}
@@ -178,7 +180,7 @@ public class RightMenuManager extends ActionGroup {
 
 		public void run() {
 			String step = getNewRowStep();
-			AddThrowDialog c = new AddThrowDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+			AddThrowDialog c = new AddThrowDialog(shell,
 					tableViewer,step,editAreaList);
 			c.open();
 		}
@@ -195,7 +197,7 @@ public class RightMenuManager extends ActionGroup {
 		}
 
 		public void run() {
-			AddCalculusDialog c = new AddCalculusDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+			AddCalculusDialog c = new AddCalculusDialog(shell,
 					tableViewer,editAreaList);
 			c.open();
 		}
@@ -211,7 +213,7 @@ public class RightMenuManager extends ActionGroup {
 		}
 
 		public void run() {
-			AddCalculusDialog c = new AddCalculusDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+			AddCalculusDialog c = new AddCalculusDialog(shell,
 					tableViewer,editAreaList);
 			c.open();
 		}
@@ -227,7 +229,7 @@ public class RightMenuManager extends ActionGroup {
 		}
 
 		public void run() {
-			AddCalculusDialog c = new AddCalculusDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+			AddCalculusDialog c = new AddCalculusDialog(shell,
 					tableViewer,editAreaList);
 			c.open();
 		}
@@ -298,7 +300,7 @@ public class RightMenuManager extends ActionGroup {
 		Table table = tableViewer.getTable();
 		int index = table.getSelectionIndex();
 		String step = ConstantManager.BLOCK_STEP_ONE;
-		for (int j = index; j >= 0; j--) {
+		for (int j = index-1; j >= 0; j--) {
 			EditArea item = (EditArea) table.getItem(j).getData();
 			if (ConstantManager.BLOCK_END_TAG.equals(item.getTag())) {
 				step = item.getStep();

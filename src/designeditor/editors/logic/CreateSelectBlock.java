@@ -5,7 +5,6 @@ import java.util.List;
 
 import designeditor.editors.bean.EditArea;
 import designeditor.editors.constant.ConstantManager;
-import javafx.collections.FXCollections;
 
 public class CreateSelectBlock implements ICreateBlock {
 
