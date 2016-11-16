@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Text;
 import designeditor.editors.bean.EditArea;
 import designeditor.editors.bean.ModuleMethod;
 import designeditor.editors.constant.ConstantManager;
-import designeditor.editors.menu.RightMenuManager;
+import designeditor.editors.menu.MethodDesignRightMenuManager;
 import designeditor.editors.provider.RowNumberLabelProvider;
 import designeditor.editors.provider.TableViewerContentProvider;
 import designeditor.editors.provider.MethodTableViewerLabelProvider;
@@ -255,7 +255,7 @@ public class MethodDesignDialog extends Dialog {
 			}
 		});
 
-		RightMenuManager rightMenuManager = new RightMenuManager(tableView, editAreaData, shell);
+		MethodDesignRightMenuManager rightMenuManager = new MethodDesignRightMenuManager(tableView, editAreaData, shell);
 		rightMenuManager.fillContextMenu();
 	}
 

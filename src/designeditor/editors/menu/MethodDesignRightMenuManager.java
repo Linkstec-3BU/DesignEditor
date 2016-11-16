@@ -21,11 +21,18 @@ import designeditor.editors.dialog.AddSelectDialog;
 import designeditor.editors.dialog.AddThrowDialog;
 
 
-public class RightMenuManager extends ActionGroup {
+public class MethodDesignRightMenuManager extends ActionGroup {
 	private TableViewer tableViewer;
 	private List<EditArea> editAreaList;
 	private Shell shell;
 
+	
+	public MethodDesignRightMenuManager(TableViewer tableViewer,List<EditArea> editAreaList,Shell shell) {
+		this.tableViewer = tableViewer;
+		this.editAreaList = editAreaList;
+		this.shell = shell;
+	}
+	
 	/**
 	 * 右メニュ-作成
 	 * @author daizhu
@@ -55,14 +62,7 @@ public class RightMenuManager extends ActionGroup {
 		Table table = tableViewer.getTable();
 		Menu menu = menuManager.createContextMenu(table);
 		table.setMenu(menu);
-
-	}
-
-	public RightMenuManager(TableViewer tableViewer,List<EditArea> editAreaList,Shell shell) {
-		this.tableViewer = tableViewer;
-		this.editAreaList = editAreaList;
-		this.shell = shell;
-	}
+	}	
 
 	/**
 	 * 空Brock追加用
