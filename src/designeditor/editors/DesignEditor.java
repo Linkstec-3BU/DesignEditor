@@ -10,6 +10,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
@@ -30,6 +31,7 @@ import org.eclipse.ui.part.MultiPageEditorPart;
 
 import designeditor.editors.bean.Module;
 import designeditor.editors.dialog.ClassDefineDialog;
+import designeditor.editors.menu.ClassDesignRightMenuManager;
 import designeditor.editors.provider.ClassTableViewerLabelProvider;
 import designeditor.editors.provider.RowNumberLabelProvider;
 import designeditor.editors.provider.TableViewerContentProvider;
@@ -91,7 +93,7 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 
 		numberColumn.setLabelProvider(new RowNumberLabelProvider());
 		
-		List<Module> moduleData = new ArrayList<Module>();
+		List<Module> moduleDataList = new ArrayList<Module>();
 		Module module = new Module();
 		module.setProject_id("project_id");
 		module.setPackage_id("package_id");
@@ -99,16 +101,22 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 		tableView.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
+				IStructuredSelection selection = (IStructuredSelection) tableView.getSelection();
+				Module moduleData = (Module) (selection.getFirstElement());
+				int index = table.getSelectionIndex();
 				ClassDefineDialog c = new ClassDefineDialog(PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow().getShell(),module);
+						.getActiveWorkbenchWindow().getShell(),moduleData);
 				c.open();
+				moduleDataList.set(index, moduleData);
 				tableView.refresh();
 			}
 		});
 		
+		moduleDataList.add(module);
+		tableView.setInput(moduleDataList);
 		
-		moduleData.add(module);
-		tableView.setInput(moduleData);
+		ClassDesignRightMenuManager rightMenuManager = new ClassDesignRightMenuManager(tableView, moduleDataList);
+		rightMenuManager.fillContextMenu();
 		
 		int index = addPage(composite);
 		setPageText(index, "Properties");

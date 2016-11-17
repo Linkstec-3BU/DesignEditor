@@ -20,6 +20,22 @@ public class Module {
 	
 	private List<ModuleMethod> moduleMethod;
 	
+	public Module() {
+		
+	}
+	
+	public Module(String project_id,String package_id,String module_id, String module_id_name, String module_type,
+			String comment, List<ModuleMethod> moduleMethod) {
+		this.project_id = project_id;
+		this.package_id = package_id;
+		this.module_id = module_id;
+		this.module_id_name = module_id_name;
+		this.module_type = module_type;
+		this.comment = comment;
+		this.moduleMethod = moduleMethod;
+	}
+	
+	
 	public List<ModuleMethod> getModuleMethod() {
 		return moduleMethod;
 	}

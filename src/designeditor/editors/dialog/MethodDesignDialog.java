@@ -8,6 +8,8 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -24,7 +26,7 @@ import org.eclipse.swt.widgets.Text;
 import designeditor.editors.bean.EditArea;
 import designeditor.editors.bean.ModuleMethod;
 import designeditor.editors.constant.ConstantManager;
-import designeditor.editors.menu.RightMenuManager;
+import designeditor.editors.menu.MethodDesignRightMenuManager;
 import designeditor.editors.provider.RowNumberLabelProvider;
 import designeditor.editors.provider.TableViewerContentProvider;
 import designeditor.editors.provider.MethodTableViewerLabelProvider;
@@ -34,6 +36,7 @@ public class MethodDesignDialog extends Dialog {
 	protected Object result;
 	protected Shell shell;
 	private ModuleMethod moduleMethod;
+	private List<EditArea> editAreaData;
 
 //	public static void main(String args[]) {
 //		Display display = new Display();
@@ -243,8 +246,10 @@ public class MethodDesignDialog extends Dialog {
 
 		numberColumn.setLabelProvider(new RowNumberLabelProvider());
 
-		List<EditArea> editAreaData = new ArrayList<EditArea>();
-		editAreaData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "1", "2", "3", "4", "5"));
+		editAreaData = new ArrayList<EditArea>();
+		if (moduleMethod.getEditAreaList() != null) {
+			editAreaData = moduleMethod.getEditAreaList();
+		}
 		tableView.setInput(editAreaData);
 
 		tableView.addDoubleClickListener(new IDoubleClickListener() {
@@ -255,8 +260,18 @@ public class MethodDesignDialog extends Dialog {
 			}
 		});
 
-		RightMenuManager rightMenuManager = new RightMenuManager(tableView, editAreaData, shell);
+		MethodDesignRightMenuManager rightMenuManager = new MethodDesignRightMenuManager(tableView, editAreaData, shell);
 		rightMenuManager.fillContextMenu();
+		
+		Button saveBtn = new Button(shell, SWT.PUSH);
+		saveBtn.setText("保存");
+		saveBtn.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				moduleMethod.setEditAreaList(editAreaData);
+				shell.dispose();
+			}
+		});
 	}
 
 }

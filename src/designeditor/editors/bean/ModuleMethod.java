@@ -12,7 +12,14 @@ public class ModuleMethod {
 	private String method_throws_1;
 	private String comment;
 	private List<MethodParameter> methodParameter;
+	private List<EditArea> editAreaList;
 	
+	public List<EditArea> getEditAreaList() {
+		return editAreaList;
+	}
+	public void setEditAreaList(List<EditArea> editAreaList) {
+		this.editAreaList = editAreaList;
+	}
 	public List<MethodParameter> getMethodParameter() {
 		return methodParameter;
 	}
