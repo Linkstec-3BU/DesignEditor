@@ -23,7 +23,7 @@
 	<category_index>1</category_index>
 	<zoom>0.8</zoom>
 	<x>0</x>
-	<y>567</y>
+	<y>471</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -191,7 +191,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2016-10-29 11:46:21</creation_date>
-			<updated_date>2016-11-17 19:23:48</updated_date>
+			<updated_date>2016-11-17 21:55:23</updated_date>
 			<model_property>
 				<name>プロジェクト名</name>
 				<value></value>
@@ -240,7 +240,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>前一个Block的标识ID</logical_name>
+			<logical_name>同level后一个Block的标识ID</logical_name>
 			<physical_name>after_block_unique_id</physical_name>
 			<type>bigint(n)</type>
 		</word>
@@ -256,7 +256,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>前一个Block的标识ID</logical_name>
+			<logical_name>同level前一个Block的标识ID</logical_name>
 			<physical_name>before_block_unique_id</physical_name>
 			<type>bigint(n)</type>
 		</word>
@@ -1963,7 +1963,7 @@
 					<physical_name></physical_name>
 					<type>bigint(n)</type>
 					<constraint></constraint>
-					<default_value></default_value>
+					<default_value>0</default_value>
 					<auto_increment>false</auto_increment>
 					<foreign_key>false</foreign_key>
 					<not_null>false</not_null>
