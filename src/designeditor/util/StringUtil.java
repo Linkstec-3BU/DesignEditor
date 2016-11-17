@@ -9,4 +9,12 @@ public class StringUtil {
 		}
 			
 	}
+	
+	public static void main(String args[]) {
+		System.out.println();
+	}
+	
+	public static String GetUniqueId() {
+		return String.valueOf(System.nanoTime());
+	}
 }

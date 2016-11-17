@@ -17,6 +17,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -52,20 +53,29 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 	 */
 	void createPage1() {
 		composite = new Composite(getContainer(), SWT.BORDER);
-		GridLayout gridLayout = new GridLayout(2, false);
+		GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.horizontalSpacing = 10;
 		composite.setLayout(gridLayout);		
 
-		TableViewer tableView = new TableViewer(composite,SWT.FULL_SELECTION);
+		Composite topComposite = new Composite(composite, SWT.BORDER);
+		topComposite.setLayout(new GridLayout());
+		topComposite.setLayoutData(new GridData(1180,40));
+		Button btn = new Button(topComposite,SWT.PUSH);
+		btn.setText("ソース生成");
+		btn.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
+		
+		Composite bottomComposite = new Composite(composite, SWT.BORDER);
+		
+		TableViewer tableView = new TableViewer(bottomComposite,SWT.FULL_SELECTION);
 		Table table = tableView.getTable();
-		composite.setLayout(new FillLayout());
+		bottomComposite.setLayout(new FillLayout());
 		GridData gridData = new GridData();
 		gridData.horizontalSpan = 6;
 		gridData.horizontalAlignment = GridData.FILL;
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.widthHint = 1180;
 		gridData.heightHint = 800;
-		composite.setLayoutData(gridData);
+		bottomComposite.setLayoutData(gridData);
 				
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);

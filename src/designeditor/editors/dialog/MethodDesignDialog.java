@@ -23,20 +23,20 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 
-import designeditor.editors.bean.EditArea;
+import designeditor.editors.bean.MethodDesign;
 import designeditor.editors.bean.ModuleMethod;
-import designeditor.editors.constant.ConstantManager;
 import designeditor.editors.menu.MethodDesignRightMenuManager;
+import designeditor.editors.provider.MethodTableViewerLabelProvider;
 import designeditor.editors.provider.RowNumberLabelProvider;
 import designeditor.editors.provider.TableViewerContentProvider;
-import designeditor.editors.provider.MethodTableViewerLabelProvider;
+import designeditor.util.MethodDesignUtil;
 
 public class MethodDesignDialog extends Dialog {
 
 	protected Object result;
 	protected Shell shell;
 	private ModuleMethod moduleMethod;
-	private List<EditArea> editAreaData;
+	private List<MethodDesign> methodDesignList;
 
 //	public static void main(String args[]) {
 //		Display display = new Display();
@@ -220,6 +220,20 @@ public class MethodDesignDialog extends Dialog {
 		numberColumn.getColumn().setText("番号");
 		numberColumn.getColumn().setWidth(45);
 
+		TableColumn logicOneColumn1 = new TableColumn(table, SWT.NONE);
+		logicOneColumn1.setText("uniqueID");
+		logicOneColumn1.setWidth(45);
+		
+		TableColumn logicOneColumn2 = new TableColumn(table, SWT.NONE);
+		logicOneColumn2.setText("parent");
+		logicOneColumn2.setWidth(45);
+		
+		TableColumn logicOneColumn3 = new TableColumn(table, SWT.NONE);
+		logicOneColumn3.setText("next");
+		logicOneColumn3.setWidth(45);
+		
+		
+		
 		TableColumn logicOneColumn = new TableColumn(table, SWT.NONE);
 		logicOneColumn.setText("");
 		logicOneColumn.setWidth(45);
@@ -239,6 +253,10 @@ public class MethodDesignDialog extends Dialog {
 		TableColumn commentColumn = new TableColumn(table, SWT.NONE);
 		commentColumn.setText("コメント");
 		commentColumn.setWidth(300);
+		
+		TableColumn logicOneColumn4 = new TableColumn(table, SWT.NONE);
+		logicOneColumn4.setText("level");
+		logicOneColumn4.setWidth(45);
 
 		tableView.setContentProvider(new TableViewerContentProvider());
 
@@ -246,21 +264,24 @@ public class MethodDesignDialog extends Dialog {
 
 		numberColumn.setLabelProvider(new RowNumberLabelProvider());
 
-		editAreaData = new ArrayList<EditArea>();
-		if (moduleMethod.getEditAreaList() != null) {
-			editAreaData = moduleMethod.getEditAreaList();
+		methodDesignList = new ArrayList<MethodDesign>();
+		
+		if (moduleMethod.getMethodDesignList() == null) {
+			MethodDesignUtil.initBlock(methodDesignList);
+		} else {
+			methodDesignList = moduleMethod.getMethodDesignList();
 		}
-		tableView.setInput(editAreaData);
+		tableView.setInput(methodDesignList);
 
 		tableView.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
-				RowEditDialog c = new RowEditDialog(shell, tableView, editAreaData);
+				RowEditDialog c = new RowEditDialog(shell, tableView, methodDesignList);
 				c.open();
 			}
 		});
 
-		MethodDesignRightMenuManager rightMenuManager = new MethodDesignRightMenuManager(tableView, editAreaData, shell);
+		MethodDesignRightMenuManager rightMenuManager = new MethodDesignRightMenuManager(tableView, methodDesignList, shell);
 		rightMenuManager.fillContextMenu();
 		
 		Button saveBtn = new Button(shell, SWT.PUSH);
@@ -268,7 +289,7 @@ public class MethodDesignDialog extends Dialog {
 		saveBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				moduleMethod.setEditAreaList(editAreaData);
+				moduleMethod.setMethodDesignList(methodDesignList);
 				shell.dispose();
 			}
 		});

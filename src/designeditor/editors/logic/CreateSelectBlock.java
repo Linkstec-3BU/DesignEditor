@@ -1,57 +1,38 @@
-package designeditor.editors.logic;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import designeditor.editors.bean.EditArea;
-import designeditor.editors.constant.ConstantManager;
-
-public class CreateSelectBlock implements ICreateBlock {
-
-	@Override
-	public List<EditArea> CreateStepOneBlock(String jyoken) {
-		List<EditArea> ifLogicData = new ArrayList<EditArea>();
-		ifLogicData.add(new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_ONE, "IF", "", "",
-				jyoken, ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_ONE, "ELSE", "", "", "", ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-		ifLogicData.add(
-				new EditArea(ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_ONE, "END", "", "", "", ""));
-		return ifLogicData;
-	}
-
-	@Override
-	public List<EditArea> CreateStepTwoBlock(String jyoken) {
-		List<EditArea> ifLogicData = new ArrayList<EditArea>();
-		ifLogicData.add(new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_TWO, "", "IF", "",
-				jyoken, ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_TWO, "", "ELSE", "", "", ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-		ifLogicData.add(
-				new EditArea(ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_TWO, "", "END", "", "", ""));
-		return ifLogicData;
-	}
-
-	@Override
-	public List<EditArea> CreateStepThreeBlock(String jyoken) {
-		List<EditArea> ifLogicData = new ArrayList<EditArea>();
-
-		ifLogicData.add(new EditArea(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_THREE, "", "", "IF",
-				jyoken, ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_THREE, "", "", "ELSE", "", ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-		ifLogicData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-		ifLogicData.add(
-				new EditArea(ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_THREE, "", "", "END", "", ""));
-		return ifLogicData;
-	}
-
-}
+//package designeditor.editors.logic;
+//
+//import java.util.List;
+//
+//import designeditor.editors.bean.MethodDesign;
+//import designeditor.editors.constant.ConstantManager;
+//
+//public class CreateSelectBlock implements ICreateBlock {
+//
+//	@Override
+//	public List<MethodDesign> CreateLevel1Block(String jyoken) {
+//		MethodDesign newMethodDesign = new MethodDesign();
+//		newMethodDesign.setAfterBlockUniqueId(ConstantManager.END_NODE);
+//		newMethodDesign.setBeforeBlockUniqueId(ConstantManager.START_NODE);
+//		newMethodDesign.setBlockLevel(ConstantManager.BLOCK_LEVEL_ONE);
+//		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_NORMAL);
+//		newMethodDesign.setBlockUniqueId(ConstantManager.START_NODE);
+//		newMethodDesign.setComment("");
+//		newMethodDesign.setDetailDisplay("");
+//		newMethodDesign.setLevel1Display("");
+//		newMethodDesign.setLevel2Display("");
+//		newMethodDesign.setLevel3Display("");
+//		return null;
+//	}
+//
+//	@Override
+//	public List<MethodDesign> CreateLevel2Block(String jyoken) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public List<MethodDesign> CreateLevel3Block(String jyoken) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//}

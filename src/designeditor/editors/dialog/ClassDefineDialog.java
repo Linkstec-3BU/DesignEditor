@@ -24,7 +24,8 @@ public class ClassDefineDialog extends Dialog {
 	protected Object result;
 	protected Shell shell;
 	private Module moduleClass;
-
+	private ModuleMethod moduleMethod;
+	
 //	public static void main(String[] args) {
 //
 //		Module moduleClass = new Module();
@@ -359,7 +360,7 @@ public class ClassDefineDialog extends Dialog {
 		}
 		
 		for (int i = 0; i < 10; i++) {
-			ModuleMethod moduleMethod = new ModuleMethod();
+			moduleMethod = new ModuleMethod();
 			Composite rightChildComposite = new Composite(rightComposite, SWT.BORDER);
 
 			GridLayout rightChildGridLayout = new GridLayout(3, false);
@@ -369,9 +370,9 @@ public class ClassDefineDialog extends Dialog {
 			rightChildComposite.setLayoutData(rightChildGridData);
 
 			Label methodLabel = new Label(rightChildComposite, SWT.NONE);
-			methodLabel.setText("メソッド名");
+			methodLabel.setText("method name");			
 			moduleMethod.setMethod_id(methodLabel.getText());
-
+			
 			Button btn1 = new Button(rightChildComposite, SWT.PUSH);
 			btn1.setText("定義");
 			btn1.addSelectionListener(new SelectionAdapter() {
@@ -380,7 +381,7 @@ public class ClassDefineDialog extends Dialog {
 					MethodDefineDialog c = new MethodDefineDialog(shell, moduleMethod);
 					c.open();
 					methodLabel.setText(moduleMethod.getMethod_id());
-					moduleMethodList.add(moduleMethod);
+					
 				}
 			});
 
@@ -392,6 +393,7 @@ public class ClassDefineDialog extends Dialog {
 				public void widgetSelected(SelectionEvent e) {
 					MethodDesignDialog c = new MethodDesignDialog(shell, moduleMethod);
 					c.open();
+					
 				}
 			});
 
@@ -451,6 +453,8 @@ public class ClassDefineDialog extends Dialog {
 					}
 					if (ctl instanceof Composite && !labelFlg) {
 						ctl.setVisible(true);
+						moduleMethod = new ModuleMethod();
+						moduleMethodList.add(moduleMethod);
 						labelFlg = true;
 						continue;
 					}

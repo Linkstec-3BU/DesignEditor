@@ -1,6 +1,5 @@
 package designeditor.editors.bean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import designeditor.util.StringUtil;
@@ -12,13 +11,13 @@ public class ModuleMethod {
 	private String method_throws_1;
 	private String comment;
 	private List<MethodParameter> methodParameter;
-	private List<EditArea> editAreaList;
+	private List<MethodDesign> methodDesignList;
 	
-	public List<EditArea> getEditAreaList() {
-		return editAreaList;
+	public List<MethodDesign> getMethodDesignList() {
+		return methodDesignList;
 	}
-	public void setEditAreaList(List<EditArea> editAreaList) {
-		this.editAreaList = editAreaList;
+	public void setMethodDesignList(List<MethodDesign> methodDesignList) {
+		this.methodDesignList = methodDesignList;
 	}
 	public List<MethodParameter> getMethodParameter() {
 		return methodParameter;

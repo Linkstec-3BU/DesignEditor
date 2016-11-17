@@ -14,18 +14,18 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
-import designeditor.editors.bean.EditArea;
+import designeditor.editors.bean.MethodDesign;
 
 public class RowEditDialog extends Dialog {
 	protected Object result;
 	protected Shell shell;
 	private TableViewer tableViewer;
-	private List<EditArea> editAreaList;
+	private List<MethodDesign> methodDesignList;
 
-	public RowEditDialog(Shell parent, TableViewer tableViewer,List<EditArea> editAreaList) {
+	public RowEditDialog(Shell parent, TableViewer tableViewer,List<MethodDesign> methodDesignList) {
 		super(parent, SWT.NONE);
 		this.tableViewer = tableViewer;
-		this.editAreaList = editAreaList;
+		this.methodDesignList = methodDesignList;
 	}
 
 	public Object open() {
@@ -52,8 +52,8 @@ public class RowEditDialog extends Dialog {
 		text.setEditable(true);
 		text.setSize(200, 30);
 		IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
-		EditArea edit = (EditArea) (selection.getFirstElement());
-		text.setText(edit.getEditArea());
+		MethodDesign methodDesign = (MethodDesign) (selection.getFirstElement());
+		text.setText(methodDesign.getDetailDisplay());
 
 		final Button button = new Button(shell, SWT.NONE);
 		button.setText("button");
@@ -61,8 +61,8 @@ public class RowEditDialog extends Dialog {
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				edit.setEditArea(text.getText());
-				editAreaList.set(index, edit);
+				methodDesign.setDetailDisplay(text.getText());
+				methodDesignList.set(index, methodDesign);
 				tableViewer.refresh();				
 				shell.close();
 			}

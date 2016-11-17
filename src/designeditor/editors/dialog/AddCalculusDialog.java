@@ -13,19 +13,20 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
-import designeditor.editors.bean.EditArea;
+import designeditor.editors.bean.MethodDesign;
 import designeditor.editors.constant.ConstantManager;
+import designeditor.util.MethodDesignUtil;
 
 public class AddCalculusDialog extends Dialog {
 	protected Object result;
 	protected Shell shell;
 	private TableViewer tableViewer;
-	private List<EditArea> editAreaList;
+	private List<MethodDesign> methodDesignList;
 
-	public AddCalculusDialog(Shell parent, TableViewer tableViewer,List<EditArea> editAreaList) {
+	public AddCalculusDialog(Shell parent, TableViewer tableViewer,List<MethodDesign> methodDesignList) {
 		super(parent, SWT.NONE);
 		this.tableViewer = tableViewer;
-		this.editAreaList = editAreaList;
+		this.methodDesignList = methodDesignList;
 	}
 
 	public Object open() {
@@ -56,9 +57,14 @@ public class AddCalculusDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Table table = tableViewer.getTable();
-				int index = table.getSelectionIndex() >= 0 ? table.getSelectionIndex() : 0;
-				EditArea edit = new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", text.getText(), "");
-				editAreaList.add(index, edit);
+				int index = table.getSelectionIndex();
+				
+				MethodDesignUtil.addCommonBlock(methodDesignList, index);
+				MethodDesign newMethodDesign = methodDesignList.get(index);
+				newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_NORMAL);
+				newMethodDesign.setDetailDisplay(text.getText());
+				
+				methodDesignList.set(index, newMethodDesign);
 				tableViewer.refresh();
 				shell.close();
 			}

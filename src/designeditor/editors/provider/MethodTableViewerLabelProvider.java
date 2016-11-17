@@ -6,7 +6,7 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
-import designeditor.editors.bean.EditArea;
+import designeditor.editors.bean.MethodDesign;
 
 /**
  * 各セルに表示内容設定用
@@ -26,25 +26,40 @@ public class MethodTableViewerLabelProvider implements ITableLabelProvider{
      */
     @Override
     public String getColumnText(Object element, int columnIndex) {
-        EditArea edit = (EditArea) element;
+        MethodDesign edit = (MethodDesign) element;
         
         if(columnIndex == 1){
-            return edit.getLogicOne();
+            return edit.getBlockUniqueId();
         }
         
         if(columnIndex == 2){
-            return edit.getLogicTwo();
+            return edit.getParentBlockUniqueId();
         }
         
         if(columnIndex == 3){
-            return edit.getLogicThree();
+            return edit.getNextBlockUniqueId();
         }
         
         if(columnIndex == 4){
-            return edit.getEditArea();
+            return edit.getLevel1Display();
         }
+        
         if(columnIndex == 5){
+            return edit.getLevel2Display();
+        }
+        
+        if(columnIndex == 6){
+            return edit.getLevel3Display();
+        }
+        
+        if(columnIndex == 7){
+            return edit.getDetailDisplay();
+        }
+        if(columnIndex == 8){
             return edit.getComment();
+        }
+        if(columnIndex == 9){
+            return edit.getBlockLevel();
         }
         return "";
     }
