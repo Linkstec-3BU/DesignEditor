@@ -23,11 +23,8 @@ public class MainTest {
 			project.setProjectId(date.format(new Date()) + i);
 			project.setProjectIdName("TEST_PROJECT_ID_NAME" + i);
 			em.persist(project);
-			em.persist(project);
 		}
-
 		em.getTransaction().commit();
-
 		em.close();
 	}
 }
