@@ -12,3 +12,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.launching;bundle-version="3.8.100",
  org.eclipse.jdt.core;bundle-version="3.12.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ClassPath: lib/eclipselink.jar,
+ lib/javax.persistence_2.1.0.v201304241213.jar,
+ lib/mysql-connector-java-5.1.40-bin.jar,
+ .
