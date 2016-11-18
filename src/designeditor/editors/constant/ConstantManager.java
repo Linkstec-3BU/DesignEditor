@@ -7,7 +7,7 @@ public final class ConstantManager {
 	public static final String ADD_EMPTY_BLOCK = "空Brock追加";
 	public static final String REMOVE_EMPTY_BLOCK = "Brock削除";
 	public static final String ADD_CONTROY_BLOCK = "制御Brock追加";
-	public static final String ADD_SELECT_BLOCK = "条件分岐Brock追加(if..else)文)";
+	public static final String ADD_SELECT_BLOCK = "条件分岐Brock追加(if..elseif)文)";
 	public static final String ADD_SELECT_ELSE_IF_BLOCK = "条件分岐Brock追加(elseif)文)";
 	public static final String ADD_FOREACH_BLOCK = "繰り返しBrock追加(for-each文)";
 	public static final String ADD_THROW_BLOCK = "例外処理Brock追加(try..catch..finally文)";
@@ -48,4 +48,6 @@ public final class ConstantManager {
 	public static final String DISPLAY_SELECT_ELSE_IF = "ELSE IF";
 	public static final String DISPLAY_SELECT_ELSE = "ELSE";
 	public static final String DISPLAY_END = "END";
+	
+	public static final String PERSISTENCE_UNIT_NAME = "designeditor";
 }

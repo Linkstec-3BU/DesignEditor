@@ -238,7 +238,27 @@ public class MethodDesignDialog extends Dialog {
 
 		TableColumn commentColumn = new TableColumn(table, SWT.NONE);
 		commentColumn.setText("コメント");
-		commentColumn.setWidth(300);
+		commentColumn.setWidth(300);		
+//		
+//		TableColumn logicOneColumn1 = new TableColumn(table, SWT.NONE);
+//		logicOneColumn1.setText("");
+//		logicOneColumn1.setWidth(45);
+//		
+//		TableColumn logicOneColumn2 = new TableColumn(table, SWT.NONE);
+//		logicOneColumn2.setText("");
+//		logicOneColumn2.setWidth(45);
+//		
+//		TableColumn logicOneColumn3 = new TableColumn(table, SWT.NONE);
+//		logicOneColumn3.setText("");
+//		logicOneColumn3.setWidth(45);
+//		
+//		TableColumn logicOneColumn4 = new TableColumn(table, SWT.NONE);
+//		logicOneColumn4.setText("");
+//		logicOneColumn4.setWidth(45);
+//		
+//		TableColumn logicOneColumn5 = new TableColumn(table, SWT.NONE);
+//		logicOneColumn5.setText("");
+//		logicOneColumn5.setWidth(45);
 
 		tableView.setContentProvider(new TableViewerContentProvider());
 

@@ -43,7 +43,7 @@ public class ClassDefineDialog extends Dialog {
 //		Composite leftComposite = new Composite(shell, SWT.BORDER);
 //		GridLayout leftGridLayout = new GridLayout(2, false);
 //		leftGridLayout.horizontalSpacing = 20;
-//		leftGridLayout.verticalSpacing = 20;
+//		leftGridLayout.verticalSpacing = 15;
 //		leftComposite.setLayout(leftGridLayout);
 //		GridData leftGridData = new GridData(300, 300);
 //		leftComposite.setLayoutData(leftGridData);
@@ -72,6 +72,12 @@ public class ClassDefineDialog extends Dialog {
 //		Text modulText2 = new Text(leftComposite, SWT.NONE);
 //		modulText2.setLayoutData(textGridData);
 //		modulText2.setText(moduleClass.getModule_id_name());
+//		
+//		Label modulTypeLabel = new Label(leftComposite, SWT.NONE);
+//		modulTypeLabel.setText("モジュールタイプ:");
+//		Text modulTypeText = new Text(leftComposite, SWT.NONE);
+//		modulTypeText.setLayoutData(textGridData);
+//		modulTypeText.setText(moduleClass.getModule_id_name());
 //
 //		Label commentLabel = new Label(leftComposite, SWT.NONE);
 //		commentLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
@@ -92,6 +98,7 @@ public class ClassDefineDialog extends Dialog {
 //		GridData rightGridData = new GridData(300, 300);
 //		rightComposite.setLayoutData(rightGridData);
 //
+//		List<ModuleMethod> moduleMethodList = new ArrayList<ModuleMethod>();
 //		if (moduleClass.getModuleMethod() != null) {
 //			for (int i = 0; i < moduleClass.getModuleMethod().size(); i++) {
 //				ModuleMethod moduleMethod = moduleClass.getModuleMethod().get(i);
@@ -104,8 +111,7 @@ public class ClassDefineDialog extends Dialog {
 //				rightChildComposite.setLayoutData(rightChildGridData);
 //
 //				Label methodLabel = new Label(rightChildComposite, SWT.NONE);
-//				methodLabel.setText("メソッド名");
-//				moduleMethod.setMethod_id(methodLabel.getText());
+//				methodLabel.setText(moduleMethod.getMethod_id());
 //
 //				Button btn1 = new Button(rightChildComposite, SWT.PUSH);
 //				btn1.setText("定義");
@@ -128,11 +134,23 @@ public class ClassDefineDialog extends Dialog {
 //						c.open();
 //					}
 //				});
+//				
+//				Button btn3 = new Button(rightChildComposite, SWT.PUSH);
+//				btn3.setText("削除");
+//
+//				btn3.addSelectionListener(new SelectionAdapter() {
+//					@Override
+//					public void widgetSelected(SelectionEvent e) {
+//						rightChildComposite.setVisible(false);				
+//					}
+//				});
+//				
+//				moduleMethodList.add(moduleMethod);
 //			}
 //		}
-//		List<ModuleMethod> moduleMethodList = new ArrayList<ModuleMethod>();
+//		
 //		for (int i = 0; i < 10; i++) {
-//			ModuleMethod moduleMethod = new ModuleMethod();
+//			moduleMethod = new ModuleMethod();
 //			Composite rightChildComposite = new Composite(rightComposite, SWT.BORDER);
 //
 //			GridLayout rightChildGridLayout = new GridLayout(3, false);
@@ -142,9 +160,9 @@ public class ClassDefineDialog extends Dialog {
 //			rightChildComposite.setLayoutData(rightChildGridData);
 //
 //			Label methodLabel = new Label(rightChildComposite, SWT.NONE);
-//			methodLabel.setText("メソッド名");
+//			methodLabel.setText("method name");			
 //			moduleMethod.setMethod_id(methodLabel.getText());
-//
+//			
 //			Button btn1 = new Button(rightChildComposite, SWT.PUSH);
 //			btn1.setText("定義");
 //			btn1.addSelectionListener(new SelectionAdapter() {
@@ -153,6 +171,7 @@ public class ClassDefineDialog extends Dialog {
 //					MethodDefineDialog c = new MethodDefineDialog(shell, moduleMethod);
 //					c.open();
 //					methodLabel.setText(moduleMethod.getMethod_id());
+//					
 //				}
 //			});
 //
@@ -164,20 +183,30 @@ public class ClassDefineDialog extends Dialog {
 //				public void widgetSelected(SelectionEvent e) {
 //					MethodDesignDialog c = new MethodDesignDialog(shell, moduleMethod);
 //					c.open();
+//					
+//				}
+//			});
+//			
+//			Button btn3 = new Button(rightChildComposite, SWT.PUSH);
+//			btn3.setText("削除");
+//
+//			btn3.addSelectionListener(new SelectionAdapter() {
+//				@Override
+//				public void widgetSelected(SelectionEvent e) {
+//					rightChildComposite.setVisible(false);				
 //				}
 //			});
 //
 //			rightChildComposite.setVisible(false);
-//			moduleMethodList.add(moduleMethod);
-//			moduleClass.setModuleMethod(moduleMethodList);
 //		}
 //
 //		Composite bottomComposite = new Composite(shell, SWT.BORDER);
 //
 //		GridLayout bottomGridLayout = new GridLayout(3, false);
 //		bottomComposite.setLayout(bottomGridLayout);
+//		bottomGridLayout.horizontalSpacing = 150;
 //		GridData bottomGridData = new GridData(615, 40);
-//		bottomGridData.horizontalSpan = 2;
+//		bottomGridData.horizontalSpan = 2;		
 //		bottomComposite.setLayoutData(bottomGridData);
 //
 //		Button saveBtn = new Button(bottomComposite, SWT.PUSH | SWT.CENTER);
@@ -186,6 +215,18 @@ public class ClassDefineDialog extends Dialog {
 //		saveBtn.addSelectionListener(new SelectionAdapter() {
 //			@Override
 //			public void widgetSelected(SelectionEvent e) {
+//				moduleClass.setProject_id(projectText.getText());
+//				moduleClass.setPackage_id(packageText.getText());
+//				moduleClass.setModule_id(modulText1.getText());
+//				moduleClass.setModule_id_name(modulText2.getText());
+//				moduleClass.setModule_type(modulTypeText.getText());
+//				moduleClass.setComment(commentText.getText());
+//				moduleClass.setModuleMethod(moduleMethodList);
+////				designeditor.editors.models.Module moduleModel = new designeditor.editors.models.Module();
+////				moduleModel.setComment(moduleClass.getComment());
+////				DbUtil.init();
+////				DbUtil.save(moduleModel);
+////				DbUtil.close();
 //				shell.dispose();
 //			}
 //
@@ -204,7 +245,7 @@ public class ClassDefineDialog extends Dialog {
 //		});
 //
 //		Button addMethodBtn = new Button(bottomComposite, SWT.PUSH | SWT.CENTER);
-//		addMethodBtn.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false));
+//		addMethodBtn.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
 //		addMethodBtn.setText("Add method");
 //		addMethodBtn.addSelectionListener(new SelectionAdapter() {
 //			@Override
@@ -218,6 +259,8 @@ public class ClassDefineDialog extends Dialog {
 //					}
 //					if (ctl instanceof Composite && !labelFlg) {
 //						ctl.setVisible(true);
+//						moduleMethod = new ModuleMethod();
+//						moduleMethodList.add(moduleMethod);
 //						labelFlg = true;
 //						continue;
 //					}
@@ -264,7 +307,7 @@ public class ClassDefineDialog extends Dialog {
 		Composite leftComposite = new Composite(shell, SWT.BORDER);
 		GridLayout leftGridLayout = new GridLayout(2, false);
 		leftGridLayout.horizontalSpacing = 20;
-		leftGridLayout.verticalSpacing = 20;
+		leftGridLayout.verticalSpacing = 15;
 		leftComposite.setLayout(leftGridLayout);
 		GridData leftGridData = new GridData(300, 300);
 		leftComposite.setLayoutData(leftGridData);
@@ -295,7 +338,7 @@ public class ClassDefineDialog extends Dialog {
 		modulText2.setText(moduleClass.getModule_id_name());
 		
 		Label modulTypeLabel = new Label(leftComposite, SWT.NONE);
-		modulTypeLabel.setText("モジュールタイプの論理名:");
+		modulTypeLabel.setText("モジュールタイプ:");
 		Text modulTypeText = new Text(leftComposite, SWT.NONE);
 		modulTypeText.setLayoutData(textGridData);
 		modulTypeText.setText(moduleClass.getModule_id_name());
@@ -404,6 +447,7 @@ public class ClassDefineDialog extends Dialog {
 
 		GridLayout bottomGridLayout = new GridLayout(3, false);
 		bottomComposite.setLayout(bottomGridLayout);
+		bottomGridLayout.horizontalSpacing = 150;
 		GridData bottomGridData = new GridData(615, 40);
 		bottomGridData.horizontalSpan = 2;
 		bottomComposite.setLayoutData(bottomGridData);
@@ -439,7 +483,7 @@ public class ClassDefineDialog extends Dialog {
 		});
 
 		Button addMethodBtn = new Button(bottomComposite, SWT.PUSH | SWT.CENTER);
-		addMethodBtn.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false));
+		addMethodBtn.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
 		addMethodBtn.setText("Add method");
 		addMethodBtn.addSelectionListener(new SelectionAdapter() {
 			@Override

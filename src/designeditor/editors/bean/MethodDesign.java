@@ -12,11 +12,11 @@ public class MethodDesign {
 	private String detailDisplay;
 	private String comment;
 
-	public MethodDesign(String blockUniqueId, String parentBlockUniqueId, String nextBlockUniqueId, String blockType,String blockLevel) {
+	public MethodDesign(String blockUniqueId, String parentBlockUniqueId, String nextBlockUniqueId, String blockLevel) {
 		this.blockUniqueId = blockUniqueId;
 		this.parentBlockUniqueId = parentBlockUniqueId;
 		this.nextBlockUniqueId = nextBlockUniqueId;
-		this.blockType = blockType;
+		this.blockType = "";
 		this.blockLevel = blockLevel;
 		this.level1Display = "";
 		this.level2Display = "";

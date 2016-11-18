@@ -47,6 +47,26 @@ public class MethodTableViewerLabelProvider implements ITableLabelProvider{
         if(columnIndex == 5){
             return edit.getComment();
         }
+//        
+//        if(columnIndex == 6){
+//            return edit.getBlockUniqueId();
+//        }
+//        
+//        if(columnIndex == 7){
+//            return edit.getParentBlockUniqueId();
+//        }
+//        
+//        if(columnIndex == 8){
+//            return edit.getNextBlockUniqueId();
+//        }
+//        
+//        if(columnIndex == 9){
+//            return edit.getBlockLevel();
+//        }
+//        
+//        if(columnIndex == 10){
+//            return edit.getBlockType();
+//        }
         return "";
     }
     

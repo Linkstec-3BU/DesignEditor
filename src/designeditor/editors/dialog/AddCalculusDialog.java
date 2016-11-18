@@ -59,9 +59,8 @@ public class AddCalculusDialog extends Dialog {
 				Table table = tableViewer.getTable();
 				int index = table.getSelectionIndex();
 				
-				MethodDesignUtil.addCommonBlock(methodDesignList, index);
+				MethodDesignUtil.addCommonBlock(methodDesignList, index,ConstantManager.BLOCK_TYPE_NORMAL);
 				MethodDesign newMethodDesign = methodDesignList.get(index);
-				newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_NORMAL);
 				newMethodDesign.setDetailDisplay(text.getText());
 				
 				methodDesignList.set(index, newMethodDesign);

@@ -82,19 +82,19 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 		
 		TableViewerColumn numberColumn = new TableViewerColumn(tableView, SWT.RIGHT);
 		numberColumn.getColumn().setText("番号");
-		numberColumn.getColumn().setWidth(45);
+		numberColumn.getColumn().setWidth(60);
 		
 		TableColumn logicOneColumn = new TableColumn(table, SWT.NONE);
 		logicOneColumn.setText("プロジェクト");
-		logicOneColumn.setWidth(45);
+		logicOneColumn.setWidth(180);
 
 		TableColumn logicTwoColumn = new TableColumn(table, SWT.NONE);
 		logicTwoColumn.setText("パッケジ");
-		logicTwoColumn.setWidth(45);
+		logicTwoColumn.setWidth(180);
 
 		TableColumn logicthreeColumn = new TableColumn(table, SWT.NONE);
 		logicthreeColumn.setText("モジュール名");
-		logicthreeColumn.setWidth(45);
+		logicthreeColumn.setWidth(180);
 	
 
 		tableView.setContentProvider(new TableViewerContentProvider());
@@ -104,10 +104,10 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 		numberColumn.setLabelProvider(new RowNumberLabelProvider());
 		
 		List<Module> moduleDataList = new ArrayList<Module>();
-		Module module = new Module();
-		module.setProject_id("project_id");
-		module.setPackage_id("package_id");
-		module.setModule_id("module_id");
+//		Module module = new Module();
+//		module.setProject_id("project_id");
+//		module.setPackage_id("package_id");
+//		module.setModule_id("module_id");
 		tableView.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
@@ -122,7 +122,7 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 			}
 		});
 		
-		moduleDataList.add(module);
+//		moduleDataList.add(module);
 		tableView.setInput(moduleDataList);
 		
 		ClassDesignRightMenuManager rightMenuManager = new ClassDesignRightMenuManager(tableView, moduleDataList);
