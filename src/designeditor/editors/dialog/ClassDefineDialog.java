@@ -3,6 +3,10 @@ package designeditor.editors.dialog;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -19,6 +23,7 @@ import org.eclipse.swt.widgets.Text;
 
 import designeditor.editors.bean.Module;
 import designeditor.editors.bean.ModuleMethod;
+import designeditor.editors.constant.ConstantManager;
 
 public class ClassDefineDialog extends Dialog {
 	protected Object result;
@@ -465,6 +470,25 @@ public class ClassDefineDialog extends Dialog {
 				moduleClass.setModule_type(modulTypeText.getText());
 				moduleClass.setComment(commentText.getText());
 				moduleClass.setModuleMethod(moduleMethodList);
+				
+				designeditor.editors.models.Module module = new designeditor.editors.models.Module();
+				designeditor.editors.models.ModulePK pk = new designeditor.editors.models.ModulePK();
+				pk.setModuleId(moduleClass.getModule_id());
+				pk.setPackageId(moduleClass.getPackage_id());
+				pk.setProjectId(moduleClass.getProject_id());
+				module.setId(pk);
+				module.setComment(moduleClass.getComment());
+				module.setModuleIdName(moduleClass.getModule_id_name());
+				module.setModuleType(moduleClass.getModule_type());
+					
+				EntityManagerFactory factory = Persistence.createEntityManagerFactory(ConstantManager.PERSISTENCE_UNIT_NAME);
+				EntityManager em = factory.createEntityManager();
+				em.getTransaction().begin();
+				em.persist(module);
+				
+				em.getTransaction().commit();
+				em.close();				
+				
 				shell.dispose();
 			}
 
