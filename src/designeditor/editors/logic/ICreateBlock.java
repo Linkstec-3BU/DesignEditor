@@ -6,9 +6,9 @@ import designeditor.editors.bean.MethodDesign;
 
 public interface ICreateBlock {
 	
-	List<MethodDesign> CreateLevel1Block(String jyoken);
+	void CreateLevel1Block(List<MethodDesign>  methodDesignList, int index);
 	
-	List<MethodDesign> CreateLevel2Block(String jyoken);
+	void CreateLevel2Block(List<MethodDesign>  methodDesignList, int index);
 	
-	List<MethodDesign> CreateLevel3Block(String jyoken);
+	void CreateLevel3Block(List<MethodDesign>  methodDesignList, int index);
 }

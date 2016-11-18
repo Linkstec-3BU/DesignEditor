@@ -44,4 +44,8 @@ public final class ConstantManager {
 	 */
 	public static final String START_NODE = "000000000000000";
 	public static final String END_NODE = "999999999999999";
+	
+	public static final String DISPLAY_SELECT_ELSE_IF = "ELSE IF";
+	public static final String DISPLAY_SELECT_ELSE = "ELSE";
+	public static final String DISPLAY_END = "END";
 }

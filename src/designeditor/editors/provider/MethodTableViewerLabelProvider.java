@@ -29,37 +29,23 @@ public class MethodTableViewerLabelProvider implements ITableLabelProvider{
         MethodDesign edit = (MethodDesign) element;
         
         if(columnIndex == 1){
-            return edit.getBlockUniqueId();
-        }
-        
-        if(columnIndex == 2){
-            return edit.getParentBlockUniqueId();
-        }
-        
-        if(columnIndex == 3){
-            return edit.getNextBlockUniqueId();
-        }
-        
-        if(columnIndex == 4){
             return edit.getLevel1Display();
         }
         
-        if(columnIndex == 5){
+        if(columnIndex == 2){
             return edit.getLevel2Display();
         }
         
-        if(columnIndex == 6){
+        if(columnIndex == 3){
             return edit.getLevel3Display();
         }
         
-        if(columnIndex == 7){
+        if(columnIndex == 4){
             return edit.getDetailDisplay();
         }
-        if(columnIndex == 8){
+        
+        if(columnIndex == 5){
             return edit.getComment();
-        }
-        if(columnIndex == 9){
-            return edit.getBlockLevel();
         }
         return "";
     }

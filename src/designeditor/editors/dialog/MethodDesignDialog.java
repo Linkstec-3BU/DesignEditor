@@ -219,20 +219,6 @@ public class MethodDesignDialog extends Dialog {
 		TableViewerColumn numberColumn = new TableViewerColumn(tableView, SWT.RIGHT);
 		numberColumn.getColumn().setText("番号");
 		numberColumn.getColumn().setWidth(45);
-
-		TableColumn logicOneColumn1 = new TableColumn(table, SWT.NONE);
-		logicOneColumn1.setText("uniqueID");
-		logicOneColumn1.setWidth(45);
-		
-		TableColumn logicOneColumn2 = new TableColumn(table, SWT.NONE);
-		logicOneColumn2.setText("parent");
-		logicOneColumn2.setWidth(45);
-		
-		TableColumn logicOneColumn3 = new TableColumn(table, SWT.NONE);
-		logicOneColumn3.setText("next");
-		logicOneColumn3.setWidth(45);
-		
-		
 		
 		TableColumn logicOneColumn = new TableColumn(table, SWT.NONE);
 		logicOneColumn.setText("");
@@ -253,10 +239,6 @@ public class MethodDesignDialog extends Dialog {
 		TableColumn commentColumn = new TableColumn(table, SWT.NONE);
 		commentColumn.setText("コメント");
 		commentColumn.setWidth(300);
-		
-		TableColumn logicOneColumn4 = new TableColumn(table, SWT.NONE);
-		logicOneColumn4.setText("level");
-		logicOneColumn4.setWidth(45);
 
 		tableView.setContentProvider(new TableViewerContentProvider());
 

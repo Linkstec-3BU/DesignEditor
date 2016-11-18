@@ -1,69 +1,132 @@
-//package designeditor.editors.logic;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import designeditor.editors.bean.MethodDesign;
-//import designeditor.editors.constant.ConstantManager;
-//
-//public class CreateThrowBlock implements ICreateBlock {
-//
-//	@Override
-//	public List<MethodDesign> CreateStepOneBlock(String jyoken) {
-//		List<MethodDesign> ifLogicData = new ArrayList<MethodDesign>();
-//		ifLogicData.add(new MethodDesign(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_ONE, "TRY", "", "",
-//				jyoken, ""));
-//		ifLogicData.add(new MethodDesign("", ConstantManager.BLOCK_STEP_ONE, "CATCH", "", "", "", ""));
-//		ifLogicData.add(new MethodDesign("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-//		ifLogicData.add(new MethodDesign("", ConstantManager.BLOCK_STEP_ONE, "FINALLY", "", "", "", ""));
-//		ifLogicData.add(
-//				new MethodDesign(ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_ONE, "END", "", "", "", ""));
-//		return ifLogicData;
-//	}
-//
-//	@Override
-//	public List<MethodDesign> CreateStepTwoBlock(String jyoken) {
-//		List<MethodDesign> ifLogicData = new ArrayList<MethodDesign>();
-//		ifLogicData.add(new MethodDesign(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_TWO, "", "TRY", "",
-//				jyoken, ""));
-//		ifLogicData.add(new MethodDesign("", ConstantManager.BLOCK_STEP_TWO, "", "CATCH", "", "", ""));
-//		ifLogicData.add(new MethodDesign("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-//		ifLogicData.add(new MethodDesign("", ConstantManager.BLOCK_STEP_TWO, "", "FINALLY", "", "", ""));
-//		ifLogicData.add(
-//				new MethodDesign(ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_TWO, "", "END", "", "", ""));
-//		return ifLogicData;
-//	}
-//
-//	@Override
-//	public List<MethodDesign> CreateStepThreeBlock(String jyoken) {
-//		List<MethodDesign> ifLogicData = new ArrayList<MethodDesign>();
-//		ifLogicData.add(new MethodDesign(ConstantManager.BLOCK_START_TAG, ConstantManager.BLOCK_STEP_THREE, "", "", "TRY",
-//				jyoken, ""));
-//		ifLogicData.add(new MethodDesign("", ConstantManager.BLOCK_STEP_THREE, "", "", "CATCH", "", ""));
-//		ifLogicData.add(new MethodDesign("", ConstantManager.BLOCK_STEP_ZERO, "", "", "", "", ""));
-//		ifLogicData.add(new MethodDesign("", ConstantManager.BLOCK_STEP_THREE, "", "", "FINALLY", "", ""));
-//		ifLogicData.add(
-//				new MethodDesign(ConstantManager.BLOCK_END_TAG, ConstantManager.BLOCK_STEP_THREE, "", "", "END", "", ""));
-//
-//		return ifLogicData;
-//	}
-//
-//	@Override
-//	public List<MethodDesign> CreateLevel1Block(String jyoken) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public List<MethodDesign> CreateLevel2Block(String jyoken) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public List<MethodDesign> CreateLevel3Block(String jyoken) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//}
+package designeditor.editors.logic;
+
+import java.util.List;
+
+import designeditor.editors.bean.MethodDesign;
+import designeditor.editors.constant.ConstantManager;
+import designeditor.util.MethodDesignUtil;
+
+public class CreateThrowBlock implements ICreateBlock {
+
+	@Override
+	public void CreateLevel1Block(List<MethodDesign> methodDesignList, int index) {
+		MethodDesignUtil.addCommonBlock(methodDesignList, index);
+		MethodDesign newMethodDesign = methodDesignList.get(index);
+		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_IF);
+		newMethodDesign.setLevel1Display(ConstantManager.DISPLAY_END);
+		methodDesignList.set(index, newMethodDesign);
+		
+		MethodDesignUtil.addCommonBlock(methodDesignList, index);
+		newMethodDesign = methodDesignList.get(index);
+		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_THROW);
+
+		newMethodDesign.setLevel1Display("TRY");
+
+		methodDesignList.set(index, newMethodDesign);
+
+		MethodDesignUtil.addSubBlock(methodDesignList, index);
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 1);
+
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 3);
+		newMethodDesign = methodDesignList.get(index + 3);
+		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_THROW);
+
+		newMethodDesign.setLevel1Display("CATCH");
+
+		methodDesignList.set(index + 3, newMethodDesign);
+
+		MethodDesignUtil.addSubBlock(methodDesignList, index + 3);
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 4);
+
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 6);
+		newMethodDesign = methodDesignList.get(index + 6);
+		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_THROW);
+
+		newMethodDesign.setLevel1Display("THROW");
+
+		methodDesignList.set(index + 6, newMethodDesign);
+
+		MethodDesignUtil.addSubBlock(methodDesignList, index + 6);
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 7);
+
+	}
+
+	@Override
+	public void CreateLevel2Block(List<MethodDesign> methodDesignList, int index) {
+		MethodDesignUtil.addCommonBlock(methodDesignList, index);
+		MethodDesign newMethodDesign = methodDesignList.get(index);
+		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_IF);
+		newMethodDesign.setLevel2Display(ConstantManager.DISPLAY_END);
+		methodDesignList.set(index, newMethodDesign);
+		
+		MethodDesignUtil.addCommonBlock(methodDesignList, index);
+		newMethodDesign = methodDesignList.get(index);
+		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_THROW);
+		newMethodDesign.setLevel2Display("TRY");
+		methodDesignList.set(index, newMethodDesign);
+
+		MethodDesignUtil.addSubBlock(methodDesignList, index);
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 1);
+
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 3);
+		newMethodDesign = methodDesignList.get(index + 3);
+		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_THROW);
+
+		newMethodDesign.setLevel2Display("CATCH");
+
+		methodDesignList.set(index + 3, newMethodDesign);
+
+		MethodDesignUtil.addSubBlock(methodDesignList, index + 3);
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 4);
+
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 6);
+		newMethodDesign = methodDesignList.get(index + 6);
+		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_THROW);
+
+		newMethodDesign.setLevel2Display("THROW");
+
+		methodDesignList.set(index + 6, newMethodDesign);
+
+		MethodDesignUtil.addSubBlock(methodDesignList, index + 6);
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 7);
+
+	}
+
+	@Override
+	public void CreateLevel3Block(List<MethodDesign> methodDesignList, int index) {
+		MethodDesignUtil.addCommonBlock(methodDesignList, index);
+		MethodDesign newMethodDesign = methodDesignList.get(index);
+		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_IF);
+		newMethodDesign.setLevel3Display(ConstantManager.DISPLAY_END);
+		methodDesignList.set(index, newMethodDesign);
+		
+		MethodDesignUtil.addCommonBlock(methodDesignList, index);
+		newMethodDesign = methodDesignList.get(index);
+		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_THROW);
+		newMethodDesign.setLevel3Display("TRY");
+		methodDesignList.set(index, newMethodDesign);
+
+		MethodDesignUtil.addSubBlock(methodDesignList, index);
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 1);
+
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 3);
+		newMethodDesign = methodDesignList.get(index + 3);
+		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_THROW);
+		newMethodDesign.setLevel3Display("CATCH");
+		methodDesignList.set(index + 3, newMethodDesign);
+
+		MethodDesignUtil.addSubBlock(methodDesignList, index + 3);
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 4);
+
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 6);
+		newMethodDesign = methodDesignList.get(index + 6);
+		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_THROW);
+		newMethodDesign.setLevel3Display("THROW");
+		methodDesignList.set(index + 6, newMethodDesign);
+
+		MethodDesignUtil.addSubBlock(methodDesignList, index + 6);
+		MethodDesignUtil.addCommonBlock(methodDesignList, index + 7);
+
+	}
+
+}
