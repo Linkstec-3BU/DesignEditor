@@ -19,7 +19,7 @@ public class MainTest {
 		em.getTransaction().begin();
 
 		for (int i = 0; i < 40; i++) {
-			Project project = new Project();
+			TProject project = new TProject();
 			project.setProjectId(date.format(new Date()) + i);
 			project.setProjectIdName("TEST_PROJECT_ID_NAME" + i);
 			em.persist(project);

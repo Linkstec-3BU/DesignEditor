@@ -10,12 +10,12 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="module_method")
-@NamedQuery(name="ModuleMethod.findAll", query="SELECT m FROM ModuleMethod m")
-public class ModuleMethod implements Serializable {
+@NamedQuery(name="TModuleMethod.findAll", query="SELECT t FROM TModuleMethod t")
+public class TModuleMethod implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private ModuleMethodPK id;
+	private TModuleMethodPK id;
 
 	private String comment;
 
@@ -31,14 +31,14 @@ public class ModuleMethod implements Serializable {
 	@Column(name="method_unique_id")
 	private String methodUniqueId;
 
-	public ModuleMethod() {
+	public TModuleMethod() {
 	}
 
-	public ModuleMethodPK getId() {
+	public TModuleMethodPK getId() {
 		return this.id;
 	}
 
-	public void setId(ModuleMethodPK id) {
+	public void setId(TModuleMethodPK id) {
 		this.id = id;
 	}
 

@@ -11,8 +11,8 @@ import java.math.BigInteger;
  */
 @Entity
 @Table(name="method_block")
-@NamedQuery(name="MethodBlock.findAll", query="SELECT m FROM MethodBlock m")
-public class MethodBlock implements Serializable {
+@NamedQuery(name="TMethodBlock.findAll", query="SELECT t FROM TMethodBlock t")
+public class TMethodBlock implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -48,10 +48,7 @@ public class MethodBlock implements Serializable {
 	@Column(name="level3_display")
 	private String level3Display;
 
-	@Column(name="method_unique_id")
-	private String methodUniqueId;
-
-	public MethodBlock() {
+	public TMethodBlock() {
 	}
 
 	public String getBlockUniqueId() {
@@ -140,14 +137,6 @@ public class MethodBlock implements Serializable {
 
 	public void setLevel3Display(String level3Display) {
 		this.level3Display = level3Display;
-	}
-
-	public String getMethodUniqueId() {
-		return this.methodUniqueId;
-	}
-
-	public void setMethodUniqueId(String methodUniqueId) {
-		this.methodUniqueId = methodUniqueId;
 	}
 
 }

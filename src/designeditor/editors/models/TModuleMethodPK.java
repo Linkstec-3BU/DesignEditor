@@ -4,11 +4,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- * The primary key class for the module database table.
+ * The primary key class for the module_method database table.
  * 
  */
 @Embeddable
-public class ModulePK implements Serializable {
+public class TModuleMethodPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
@@ -21,7 +21,10 @@ public class ModulePK implements Serializable {
 	@Column(name="module_id")
 	private String moduleId;
 
-	public ModulePK() {
+	@Column(name="method_id")
+	private String methodId;
+
+	public TModuleMethodPK() {
 	}
 	public String getProjectId() {
 		return this.projectId;
@@ -41,19 +44,26 @@ public class ModulePK implements Serializable {
 	public void setModuleId(String moduleId) {
 		this.moduleId = moduleId;
 	}
+	public String getMethodId() {
+		return this.methodId;
+	}
+	public void setMethodId(String methodId) {
+		this.methodId = methodId;
+	}
 
 	public boolean equals(Object other) {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof ModulePK)) {
+		if (!(other instanceof TModuleMethodPK)) {
 			return false;
 		}
-		ModulePK castOther = (ModulePK)other;
+		TModuleMethodPK castOther = (TModuleMethodPK)other;
 		return 
 			this.projectId.equals(castOther.projectId)
 			&& this.packageId.equals(castOther.packageId)
-			&& this.moduleId.equals(castOther.moduleId);
+			&& this.moduleId.equals(castOther.moduleId)
+			&& this.methodId.equals(castOther.methodId);
 	}
 
 	public int hashCode() {
@@ -62,6 +72,7 @@ public class ModulePK implements Serializable {
 		hash = hash * prime + this.projectId.hashCode();
 		hash = hash * prime + this.packageId.hashCode();
 		hash = hash * prime + this.moduleId.hashCode();
+		hash = hash * prime + this.methodId.hashCode();
 		
 		return hash;
 	}

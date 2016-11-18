@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="designeditor" transaction-type="RESOURCE_LOCAL">
-		<class>designeditor.editors.models.MethodBlock</class>
-		<class>designeditor.editors.models.MethodParameter</class>
-		<class>designeditor.editors.models.MethodParameterPK</class>
-		<class>designeditor.editors.models.Module</class>
-		<class>designeditor.editors.models.ModulePK</class>
-		<class>designeditor.editors.models.ModuleMethod</class>
-		<class>designeditor.editors.models.ModuleMethodPK</class>
-		<class>designeditor.editors.models.ModuleType</class>
-		<class>designeditor.editors.models.Project</class>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="designeditor"
+		transaction-type="RESOURCE_LOCAL">
+
+		<class>designeditor.editors.models.TMethodBlock</class>
+		<class>designeditor.editors.models.TMethodParameter</class>
+		<class>designeditor.editors.models.TMethodParameterPK</class>
+		<class>designeditor.editors.models.TModule</class>
+		<class>designeditor.editors.models.TModulePK</class>
+		<class>designeditor.editors.models.TModuleMethod</class>
+		<class>designeditor.editors.models.TModuleMethodPK</class>
+		<class>designeditor.editors.models.TModuleType</class>
+		<class>designeditor.editors.models.TProject</class>
+
 		<properties>
-			<property name="eclipselink.ddl-generation" value="create-tables"/>
-			<property name="eclipselink.ddl-generation.output-mode" value="database"/>
-			
-			<property name="eclipselink.jdbc.batch-writing" value="JDBC"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/designeditor"/>
-			<property name="javax.persistence.jdbc.user" value="lkg"/>
-			<property name="javax.persistence.jdbc.password" value="lkg"/>
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="eclipselink.ddl-generation" value="create-tables" />
+			<property name="eclipselink.ddl-generation.output-mode"
+				value="database" />
+
+			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/designeditor" />
+			<property name="javax.persistence.jdbc.user" value="lkg" />
+			<property name="javax.persistence.jdbc.password" value="lkg" />
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 		</properties>
 	</persistence-unit>
 </persistence>

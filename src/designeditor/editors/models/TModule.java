@@ -9,12 +9,13 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name="Module.findAll", query="SELECT m FROM Module m")
-public class Module implements Serializable {
+@Table(name="module")
+@NamedQuery(name="TModule.findAll", query="SELECT t FROM TModule t")
+public class TModule implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private ModulePK id;
+	private TModulePK id;
 
 	private String comment;
 
@@ -24,14 +25,14 @@ public class Module implements Serializable {
 	@Column(name="module_type")
 	private String moduleType;
 
-	public Module() {
+	public TModule() {
 	}
 
-	public ModulePK getId() {
+	public TModulePK getId() {
 		return this.id;
 	}
 
-	public void setId(ModulePK id) {
+	public void setId(TModulePK id) {
 		this.id = id;
 	}
 

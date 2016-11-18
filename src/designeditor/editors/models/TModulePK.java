@@ -4,11 +4,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- * The primary key class for the method_parameter database table.
+ * The primary key class for the module database table.
  * 
  */
 @Embeddable
-public class MethodParameterPK implements Serializable {
+public class TModulePK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
@@ -21,13 +21,7 @@ public class MethodParameterPK implements Serializable {
 	@Column(name="module_id")
 	private String moduleId;
 
-	@Column(name="method_id")
-	private String methodId;
-
-	@Column(name="parameter_id")
-	private String parameterId;
-
-	public MethodParameterPK() {
+	public TModulePK() {
 	}
 	public String getProjectId() {
 		return this.projectId;
@@ -47,33 +41,19 @@ public class MethodParameterPK implements Serializable {
 	public void setModuleId(String moduleId) {
 		this.moduleId = moduleId;
 	}
-	public String getMethodId() {
-		return this.methodId;
-	}
-	public void setMethodId(String methodId) {
-		this.methodId = methodId;
-	}
-	public String getParameterId() {
-		return this.parameterId;
-	}
-	public void setParameterId(String parameterId) {
-		this.parameterId = parameterId;
-	}
 
 	public boolean equals(Object other) {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof MethodParameterPK)) {
+		if (!(other instanceof TModulePK)) {
 			return false;
 		}
-		MethodParameterPK castOther = (MethodParameterPK)other;
+		TModulePK castOther = (TModulePK)other;
 		return 
 			this.projectId.equals(castOther.projectId)
 			&& this.packageId.equals(castOther.packageId)
-			&& this.moduleId.equals(castOther.moduleId)
-			&& this.methodId.equals(castOther.methodId)
-			&& this.parameterId.equals(castOther.parameterId);
+			&& this.moduleId.equals(castOther.moduleId);
 	}
 
 	public int hashCode() {
@@ -82,8 +62,6 @@ public class MethodParameterPK implements Serializable {
 		hash = hash * prime + this.projectId.hashCode();
 		hash = hash * prime + this.packageId.hashCode();
 		hash = hash * prime + this.moduleId.hashCode();
-		hash = hash * prime + this.methodId.hashCode();
-		hash = hash * prime + this.parameterId.hashCode();
 		
 		return hash;
 	}

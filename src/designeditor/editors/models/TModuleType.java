@@ -10,8 +10,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="module_type")
-@NamedQuery(name="ModuleType.findAll", query="SELECT m FROM ModuleType m")
-public class ModuleType implements Serializable {
+@NamedQuery(name="TModuleType.findAll", query="SELECT t FROM TModuleType t")
+public class TModuleType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -23,7 +23,7 @@ public class ModuleType implements Serializable {
 	@Column(name="module_type_name")
 	private String moduleTypeName;
 
-	public ModuleType() {
+	public TModuleType() {
 	}
 
 	public String getModuleType() {

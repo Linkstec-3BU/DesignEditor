@@ -24,6 +24,8 @@ import org.eclipse.swt.widgets.Text;
 import designeditor.editors.bean.Module;
 import designeditor.editors.bean.ModuleMethod;
 import designeditor.editors.constant.ConstantManager;
+import designeditor.editors.models.TModule;
+import designeditor.editors.models.TModulePK;
 
 public class ClassDefineDialog extends Dialog {
 	protected Object result;
@@ -471,8 +473,8 @@ public class ClassDefineDialog extends Dialog {
 				moduleClass.setComment(commentText.getText());
 				moduleClass.setModuleMethod(moduleMethodList);
 				
-				designeditor.editors.models.Module module = new designeditor.editors.models.Module();
-				designeditor.editors.models.ModulePK pk = new designeditor.editors.models.ModulePK();
+				TModule module = new TModule();
+				TModulePK pk = new TModulePK();
 				pk.setModuleId(moduleClass.getModule_id());
 				pk.setPackageId(moduleClass.getPackage_id());
 				pk.setProjectId(moduleClass.getProject_id());

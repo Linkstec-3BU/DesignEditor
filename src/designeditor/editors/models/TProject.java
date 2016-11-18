@@ -9,8 +9,9 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name="Project.findAll", query="SELECT p FROM Project p")
-public class Project implements Serializable {
+@Table(name="project")
+@NamedQuery(name="TProject.findAll", query="SELECT t FROM TProject t")
+public class TProject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -22,7 +23,7 @@ public class Project implements Serializable {
 	@Column(name="project_id_name")
 	private String projectIdName;
 
-	public Project() {
+	public TProject() {
 	}
 
 	public String getProjectId() {

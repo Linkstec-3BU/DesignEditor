@@ -10,12 +10,12 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="method_parameter")
-@NamedQuery(name="MethodParameter.findAll", query="SELECT m FROM MethodParameter m")
-public class MethodParameter implements Serializable {
+@NamedQuery(name="TMethodParameter.findAll", query="SELECT t FROM TMethodParameter t")
+public class TMethodParameter implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private MethodParameterPK id;
+	private TMethodParameterPK id;
 
 	private String comment;
 
@@ -25,14 +25,14 @@ public class MethodParameter implements Serializable {
 	@Column(name="paramter_type")
 	private String paramterType;
 
-	public MethodParameter() {
+	public TMethodParameter() {
 	}
 
-	public MethodParameterPK getId() {
+	public TMethodParameterPK getId() {
 		return this.id;
 	}
 
-	public void setId(MethodParameterPK id) {
+	public void setId(TMethodParameterPK id) {
 		this.id = id;
 	}
 
