@@ -47,7 +47,7 @@ public class ClassDesignRightMenuManager extends ActionGroup {
 	 */
 	private final class AddEmptyBlockAction extends Action {
 		public AddEmptyBlockAction() {
-			setText(ConstantManager.ADD_EMPTY_BLOCK);
+			setText(ConstantManager.ADD_EMPTY_CLASS);
 		}
 
 		public void run() {
@@ -66,7 +66,7 @@ public class ClassDesignRightMenuManager extends ActionGroup {
 	 */
 	private class RemoveEmptyBlockAction extends Action {
 		public RemoveEmptyBlockAction() {
-			setText(ConstantManager.REMOVE_EMPTY_BLOCK);
+			setText(ConstantManager.REMOVE_EMPTY_CLASS);
 		}
 
 		public void run() {
