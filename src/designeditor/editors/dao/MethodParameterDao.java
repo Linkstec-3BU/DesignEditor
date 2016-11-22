@@ -17,7 +17,7 @@ public class MethodParameterDao {
 		return tMethodParameterList;
 	}
 	
-	public MethodParameter ModelToBean(TMethodParameter tMethodParameter) {
+	public MethodParameter modelToBean(TMethodParameter tMethodParameter) {
 		MethodParameter methodParameter = new MethodParameter();
 		methodParameter.setComment(tMethodParameter.getComment());
 		methodParameter.setMethodId(tMethodParameter.getId().getMethodId());
@@ -30,16 +30,16 @@ public class MethodParameterDao {
 		return methodParameter;
 	}
 	
-	public List<MethodParameter> ModelToBean(List<TMethodParameter> tMethodParameterList) {
+	public List<MethodParameter> modelToBean(List<TMethodParameter> tMethodParameterList) {
 		List<MethodParameter> methodParameterList = new ArrayList<MethodParameter>();
 		for (TMethodParameter tMethodParameter : tMethodParameterList){
-			MethodParameter methodParameter = ModelToBean(tMethodParameter);
+			MethodParameter methodParameter = modelToBean(tMethodParameter);
 			methodParameterList.add(methodParameter);
 		}
 		return methodParameterList;		
 	}
 	
-	public TMethodParameter BeanToModel(MethodParameter methodParameter) {
+	public TMethodParameter beanToModel(MethodParameter methodParameter) {
 		TMethodParameter tMethodParameter = new TMethodParameter();
 		tMethodParameter.setComment(methodParameter.getComment());
 		tMethodParameter.setParameterName(methodParameter.getParameterName());

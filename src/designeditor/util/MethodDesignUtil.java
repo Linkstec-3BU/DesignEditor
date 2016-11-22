@@ -7,12 +7,12 @@ import designeditor.editors.constant.ConstantManager;
 
 public class MethodDesignUtil {
 
-	public static void initBlock(List<MethodDesign> methodDesignList) {
+	public static void initBlock(List<MethodDesign> methodDesignList,String methodUniqueId) {
 		MethodDesign startMethodDesign = new MethodDesign(ConstantManager.START_NODE, "", "",
-				 ConstantManager.BLOCK_LEVEL_ONE);
+				 ConstantManager.BLOCK_LEVEL_ONE,methodUniqueId);
 		startMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_NORMAL);
 		MethodDesign endMethodDesign = new MethodDesign(ConstantManager.END_NODE, "", "",
-				 ConstantManager.BLOCK_LEVEL_ONE);
+				 ConstantManager.BLOCK_LEVEL_ONE,methodUniqueId);
 		endMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_NORMAL);
 		methodDesignList.add(startMethodDesign);
 		methodDesignList.add(endMethodDesign);
@@ -25,13 +25,13 @@ public class MethodDesignUtil {
 	 * @param index
 	 * @return
 	 */
-	public static void addCommonBlock(List<MethodDesign> methodDesignList, int index,String blockType) {
+	public static void addCommonBlock(List<MethodDesign> methodDesignList, int index,String blockType,String methodUniqueId) {
 		MethodDesign beforeMethodDesign = methodDesignList.get(index - 1);
 		MethodDesign afterMethodDesign = methodDesignList.get(index);
 		MethodDesign methodDesign = compareLevel(beforeMethodDesign,afterMethodDesign);
 		String uniqueId = StringUtil.GetUniqueId();
 		MethodDesign newMethodDesign = new MethodDesign(uniqueId, methodDesign.getFatherBlockUniqueId(),
-				afterMethodDesign.getBlockUniqueId(), methodDesign.getBlockLevel());
+				afterMethodDesign.getBlockUniqueId(), methodDesign.getBlockLevel(),methodUniqueId);
 		newMethodDesign.setBlockType(blockType);
 		beforeMethodDesign.setAfterBlockUniqueId(uniqueId);
 		methodDesignList.set(index - 1, beforeMethodDesign);
@@ -45,12 +45,12 @@ public class MethodDesignUtil {
 	 * @param index
 	 * @return
 	 */
-	public static void addCommonBlock2(List<MethodDesign> methodDesignList, int index,String blockType) {
+	public static void addCommonBlock2(List<MethodDesign> methodDesignList, int index,String blockType,String methodUniqueId) {
 		MethodDesign beforeMethodDesign = methodDesignList.get(index - 1);
 		MethodDesign afterMethodDesign = methodDesignList.get(index);
 		String uniqueId = StringUtil.GetUniqueId();
 		MethodDesign newMethodDesign = new MethodDesign(uniqueId, afterMethodDesign.getFatherBlockUniqueId(),
-				afterMethodDesign.getBlockUniqueId(), afterMethodDesign.getBlockLevel());
+				afterMethodDesign.getBlockUniqueId(), afterMethodDesign.getBlockLevel(),methodUniqueId);
 		newMethodDesign.setBlockType(blockType);
 		beforeMethodDesign.setAfterBlockUniqueId(uniqueId);
 		methodDesignList.set(index - 1, beforeMethodDesign);
@@ -64,12 +64,12 @@ public class MethodDesignUtil {
 	 * @param index
 	 * @return
 	 */
-	public static void addSubBlock(List<MethodDesign> methodDesignList, int index) {
+	public static void addSubBlock(List<MethodDesign> methodDesignList, int index,String methodUniqueId) {
 		MethodDesign parentMethodDesign = methodDesignList.get(index);
 		String uniqueId = StringUtil.GetUniqueId();
 		MethodDesign newMethodDesign = new MethodDesign(uniqueId, parentMethodDesign.getBlockUniqueId(),
 				parentMethodDesign.getAfterBlockUniqueId(), 
-				getNextLevel(parentMethodDesign.getBlockLevel()));
+				getNextLevel(parentMethodDesign.getBlockLevel()),methodUniqueId);
 		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_NORMAL);
 		parentMethodDesign.setAfterBlockUniqueId(uniqueId);
 		methodDesignList.set(index, parentMethodDesign);

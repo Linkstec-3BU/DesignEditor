@@ -22,11 +22,13 @@ public class AddCalculusDialog extends Dialog {
 	protected Shell shell;
 	private TableViewer tableViewer;
 	private List<MethodDesign> methodDesignList;
+	private String methodUniqueId;
 
-	public AddCalculusDialog(Shell parent, TableViewer tableViewer,List<MethodDesign> methodDesignList) {
+	public AddCalculusDialog(Shell parent, TableViewer tableViewer,List<MethodDesign> methodDesignList,String methodUniqueId) {
 		super(parent, SWT.NONE);
 		this.tableViewer = tableViewer;
 		this.methodDesignList = methodDesignList;
+		this.methodUniqueId = methodUniqueId;
 	}
 
 	public Object open() {
@@ -59,7 +61,7 @@ public class AddCalculusDialog extends Dialog {
 				Table table = tableViewer.getTable();
 				int index = table.getSelectionIndex();
 				
-				MethodDesignUtil.addCommonBlock(methodDesignList, index,ConstantManager.BLOCK_TYPE_NORMAL);
+				MethodDesignUtil.addCommonBlock(methodDesignList, index,ConstantManager.BLOCK_TYPE_NORMAL,methodUniqueId);
 				MethodDesign newMethodDesign = methodDesignList.get(index);
 				newMethodDesign.setDetailDisplay(text.getText());
 				

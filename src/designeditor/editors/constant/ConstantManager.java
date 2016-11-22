@@ -42,7 +42,7 @@ public final class ConstantManager {
 	/*
 	 * ノード
 	 */
-	public static final String START_NODE = "000000000000000";
+	public static final String START_NODE = "100000000000001";
 	public static final String END_NODE = "999999999999999";
 	
 	public static final String DISPLAY_SELECT_ELSE_IF = "ELSE IF";

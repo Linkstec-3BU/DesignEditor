@@ -165,9 +165,9 @@ public class MethodDesignDialog extends Dialog {
 		numberColumn.setLabelProvider(new RowNumberLabelProvider());
 
 		methodDesignList = new ArrayList<MethodDesign>();
-		
-		if (moduleMethod.getMethodDesignList() == null) {
-			MethodDesignUtil.initBlock(methodDesignList);
+		String methodUniqueId = moduleMethod.getMethodUniqueId();
+		if (moduleMethod.getMethodDesignList() == null || moduleMethod.getMethodDesignList().size() == 0) {
+			MethodDesignUtil.initBlock(methodDesignList,methodUniqueId);
 		} else {
 			methodDesignList = moduleMethod.getMethodDesignList();
 		}
@@ -181,7 +181,7 @@ public class MethodDesignDialog extends Dialog {
 			}
 		});
 
-		MethodDesignRightMenuManager rightMenuManager = new MethodDesignRightMenuManager(tableView, methodDesignList, shell);
+		MethodDesignRightMenuManager rightMenuManager = new MethodDesignRightMenuManager(tableView, methodDesignList, shell,methodUniqueId);
 		rightMenuManager.fillContextMenu();
 		
 		Button saveBtn = new Button(shell, SWT.PUSH);

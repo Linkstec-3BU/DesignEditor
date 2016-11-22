@@ -1,6 +1,8 @@
 package designeditor.editors.dialog;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -224,7 +226,9 @@ public class MethodDefineDialog extends Dialog {
 				moduleMethod.setMethodIdName(methodNameText2.getText());
 				moduleMethod.setMethodReturnType(methodReturnText.getText());
 				moduleMethod.setMethodThrows1(methodThrowText.getText());
-				moduleMethod.setComment(commentText.getText());				
+				moduleMethod.setComment(commentText.getText());	
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+				moduleMethod.setMethodUniqueId(methodNameText1.getText() + sdf.format(new Date()));
 				shell.dispose();
 			}
 

@@ -18,7 +18,7 @@ public class MethodDesign {
 	private String detailDisplay;
 	private String comment;
 
-	public MethodDesign(String blockUniqueId, String fatherBlockUniqueId, String afterBlockUniqueId, String blockLevel) {
+	public MethodDesign(String blockUniqueId, String fatherBlockUniqueId, String afterBlockUniqueId, String blockLevel,String methodUniqueId) {
 		this.blockUniqueId = blockUniqueId;
 		this.fatherBlockUniqueId = fatherBlockUniqueId;
 		this.afterBlockUniqueId = afterBlockUniqueId;
@@ -29,6 +29,7 @@ public class MethodDesign {
 		this.level3Display = "";
 		this.detailDisplay = "";
 		this.comment = "";
+		this.methodUniqueId = methodUniqueId;
 	}
 
 	public String getBlockUniqueId() {

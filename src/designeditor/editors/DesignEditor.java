@@ -37,11 +37,13 @@ import designeditor.editors.bean.MethodDesign;
 import designeditor.editors.bean.MethodParameter;
 import designeditor.editors.bean.Module;
 import designeditor.editors.bean.ModuleMethod;
+import designeditor.editors.dao.MethodBlockDao;
 import designeditor.editors.dao.MethodParameterDao;
 import designeditor.editors.dao.ModuleDao;
 import designeditor.editors.dao.ModuleMethodDao;
 import designeditor.editors.dialog.ClassDefineDialog;
 import designeditor.editors.menu.ClassDesignRightMenuManager;
+import designeditor.editors.models.TMethodBlock;
 import designeditor.editors.models.TMethodParameter;
 import designeditor.editors.models.TModule;
 import designeditor.editors.provider.ClassTableViewerLabelProvider;
@@ -55,6 +57,7 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 	private ModuleDao moduleDao;
 	private ModuleMethodDao moduleMethodDao;
 	private MethodParameterDao methodParameterDao;
+	private MethodBlockDao methodBlockDao;
 
 	/**
 	 * Creates a multi-page editor example.
@@ -64,6 +67,7 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 		moduleDao = new ModuleDao();
 		moduleMethodDao = new ModuleMethodDao();
 		methodParameterDao = new MethodParameterDao();
+		methodBlockDao = new MethodBlockDao();
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
 	}
 
@@ -71,14 +75,15 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 	 * Creates page 1 of the multi-page editor,
 	 */
 	void createPage1() {
-		EntityManager em = DbUtil.init();
+		DbUtil.init();
 		List<TModule> tModuleList = moduleDao.selectAll();
-
+		
 		if (tModuleList == null) {
 			moduleList = new ArrayList<Module>();
 		} else {
-			moduleList = moduleDao.ModelToBean(tModuleList);
+			moduleList = moduleDao.modelToBean(tModuleList);
 		}
+		DbUtil.close();
 		composite = new Composite(getContainer(), SWT.BORDER);
 		GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.horizontalSpacing = 10;
@@ -92,6 +97,7 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 		btn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				EntityManager em = DbUtil.init();
 				em.getTransaction().begin();
 				try {
 					for (int i = 0; i < moduleList.size(); i++) {
@@ -104,29 +110,29 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 							List<MethodDesign> methodDesignList = moduleMethod.getMethodDesignList();
 							List<MethodParameter> methodParameterList = moduleMethod.getMethodParameter();
 							for (MethodDesign methodDesign : methodDesignList) {
-								// TODO BeanToModel
 //								em.joinTransaction();
-								DbUtil.save(methodDesign);
+								TMethodBlock methodBlock = methodBlockDao.beanToModel(methodDesign);
+								DbUtil.save(methodBlock);
 							}
 							for (MethodParameter methodParameter : methodParameterList) {
 								methodParameter.setProjectId(moduleMethod.getProjectId());
 								methodParameter.setPackageId(moduleMethod.getPackageId());
 								methodParameter.setModuleId(moduleMethod.getModuleId());
 								methodParameter.setMethodId(moduleMethod.getMethodId());
-								TMethodParameter tMethodParameter = methodParameterDao.BeanToModel(methodParameter);
+								TMethodParameter tMethodParameter = methodParameterDao.beanToModel(methodParameter);
 //								em.joinTransaction();
 								DbUtil.save(tMethodParameter);
 							}
 //							em.joinTransaction();
-							DbUtil.save(moduleMethodDao.BeanToModel(moduleMethod));
+							DbUtil.save(moduleMethodDao.beanToModel(moduleMethod));
 						}
-						TModule tModule = moduleDao.BeanToModel(module);
+						TModule tModule = moduleDao.beanToModel(module);
 //						em.joinTransaction();
 						DbUtil.save(tModule);
 					}
 					em.getTransaction().commit();
 				} catch (Exception ex) {
-					System.out.println(ex.getStackTrace());
+					System.out.println(ex.getMessage());					
 					em.getTransaction().rollback();
 				} finally {
 					DbUtil.close();

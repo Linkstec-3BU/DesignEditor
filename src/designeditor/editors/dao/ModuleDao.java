@@ -24,13 +24,13 @@ public class ModuleDao {
 		return tModuleList;
 	}
 	
-	public Module ModelToBean(TModule module) {
+	public Module modelToBean(TModule module) {
 		Module tmpModule = new Module();		
 		tmpModule.setComment(module.getComment());
 		tmpModule.setModuleId(module.getId().getModuleId());
 		tmpModule.setModuleIdName(module.getModuleIdName());
 		List<TModuleMethod> tModuleMethodList = moduleMethodDao.selectByFk(module.getId().getProjectId(),module.getId().getPackageId(),module.getId().getModuleId());
-		List<ModuleMethod> moduleMethodList = moduleMethodDao.ModelToBean(tModuleMethodList);
+		List<ModuleMethod> moduleMethodList = moduleMethodDao.modelToBean(tModuleMethodList);
 		tmpModule.setModuleMethod(moduleMethodList);
 		tmpModule.setModuleType(module.getModuleType());
 		tmpModule.setPackageId(module.getId().getPackageId());
@@ -38,16 +38,16 @@ public class ModuleDao {
 		return tmpModule;
 	}
 	
-	public List<Module> ModelToBean(List<TModule> tModuleList) {
+	public List<Module> modelToBean(List<TModule> tModuleList) {
 		List<Module> moduleList = new ArrayList<Module>();
 		for (TModule tModule : tModuleList){
-			Module module = ModelToBean(tModule);
+			Module module = modelToBean(tModule);
 			moduleList.add(module);
 		}
 		return moduleList;
 	}
 	
-	public TModule BeanToModel(Module module) {
+	public TModule beanToModel(Module module) {
 		TModule tmpModule = new TModule();
 		TModulePK id = new TModulePK();
 		id.setModuleId(module.getModuleId());

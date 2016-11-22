@@ -27,11 +27,13 @@ public class MethodDesignRightMenuManager extends ActionGroup {
 	private List<MethodDesign> methodDesignList;
 	private Shell shell;
 	private ICreateBlock block;
+	private String methodUniqueId;
 
-	public MethodDesignRightMenuManager(TableViewer tableViewer, List<MethodDesign> methodDesignList, Shell shell) {
+	public MethodDesignRightMenuManager(TableViewer tableViewer, List<MethodDesign> methodDesignList, Shell shell,String methodUniqueId) {
 		this.tableViewer = tableViewer;
 		this.methodDesignList = methodDesignList;
 		this.shell = shell;
+		this.methodUniqueId = methodUniqueId;
 	}
 
 	/**
@@ -86,7 +88,7 @@ public class MethodDesignRightMenuManager extends ActionGroup {
 				MessageDialog.openInformation(null, null, "開始行以外のレコードを選択してください");
 				return;
 			} else {
-				MethodDesignUtil.addCommonBlock(methodDesignList, index, ConstantManager.BLOCK_TYPE_NORMAL);
+				MethodDesignUtil.addCommonBlock(methodDesignList, index, ConstantManager.BLOCK_TYPE_NORMAL,methodUniqueId);
 			}
 
 			tableViewer.refresh();
@@ -187,20 +189,20 @@ public class MethodDesignRightMenuManager extends ActionGroup {
 					MethodDesign beforeMethodDesign = methodDesignList.get(index-1);
 					MethodDesign methodDesign = MethodDesignUtil.compareLevel(beforeMethodDesign, newMethodDesign);
 					if (ConstantManager.BLOCK_LEVEL_ONE.equals(methodDesign.getBlockLevel())) {
-						block.CreateLevel1Block(methodDesignList, index);
+						block.CreateLevel1Block(methodDesignList, index,methodUniqueId);
 					} else if (ConstantManager.BLOCK_LEVEL_TWO.equals(methodDesign.getBlockLevel())) {
-						block.CreateLevel2Block(methodDesignList, index);
+						block.CreateLevel2Block(methodDesignList, index,methodUniqueId);
 					} else if (ConstantManager.BLOCK_LEVEL_THREE.equals(methodDesign.getBlockLevel())) {
-						block.CreateLevel3Block(methodDesignList, index);
+						block.CreateLevel3Block(methodDesignList, index,methodUniqueId);
 					}
 				} else {
 					block = new CreateElseIfBlock();
 					if (ConstantManager.BLOCK_LEVEL_ONE.equals(newMethodDesign.getBlockLevel())) {
-						block.CreateLevel1Block(methodDesignList, index);
+						block.CreateLevel1Block(methodDesignList, index,methodUniqueId);
 					} else if (ConstantManager.BLOCK_LEVEL_TWO.equals(newMethodDesign.getBlockLevel())) {
-						block.CreateLevel2Block(methodDesignList, index);
+						block.CreateLevel2Block(methodDesignList, index,methodUniqueId);
 					} else if (ConstantManager.BLOCK_LEVEL_THREE.equals(newMethodDesign.getBlockLevel())) {
-						block.CreateLevel3Block(methodDesignList, index);
+						block.CreateLevel3Block(methodDesignList, index,methodUniqueId);
 					}
 				}
 			}
@@ -273,11 +275,11 @@ public class MethodDesignRightMenuManager extends ActionGroup {
 				MethodDesign beforeMethodDesign = methodDesignList.get(index-1);
 				MethodDesign methodDesign = MethodDesignUtil.compareLevel(beforeMethodDesign, newMethodDesign);
 				if (ConstantManager.BLOCK_LEVEL_ONE.equals(methodDesign.getBlockLevel())) {
-					block.CreateLevel1Block(methodDesignList, index);
+					block.CreateLevel1Block(methodDesignList, index,methodUniqueId);
 				} else if (ConstantManager.BLOCK_LEVEL_TWO.equals(methodDesign.getBlockLevel())) {
-					block.CreateLevel2Block(methodDesignList, index);
+					block.CreateLevel2Block(methodDesignList, index,methodUniqueId);
 				} else if (ConstantManager.BLOCK_LEVEL_THREE.equals(methodDesign.getBlockLevel())) {
-					block.CreateLevel3Block(methodDesignList, index);
+					block.CreateLevel3Block(methodDesignList, index,methodUniqueId);
 				}
 			}
 
@@ -309,11 +311,11 @@ public class MethodDesignRightMenuManager extends ActionGroup {
 				MethodDesign beforeMethodDesign = methodDesignList.get(index-1);
 				MethodDesign methodDesign = MethodDesignUtil.compareLevel(beforeMethodDesign, newMethodDesign);
 				if (ConstantManager.BLOCK_LEVEL_ONE.equals(methodDesign.getBlockLevel())) {
-					block.CreateLevel1Block(methodDesignList, index);
+					block.CreateLevel1Block(methodDesignList, index,methodUniqueId);
 				} else if (ConstantManager.BLOCK_LEVEL_TWO.equals(methodDesign.getBlockLevel())) {
-					block.CreateLevel2Block(methodDesignList, index);
+					block.CreateLevel2Block(methodDesignList, index,methodUniqueId);
 				} else if (ConstantManager.BLOCK_LEVEL_THREE.equals(methodDesign.getBlockLevel())) {
-					block.CreateLevel3Block(methodDesignList, index);
+					block.CreateLevel3Block(methodDesignList, index,methodUniqueId);
 				}
 			}
 
@@ -340,7 +342,7 @@ public class MethodDesignRightMenuManager extends ActionGroup {
 				MessageDialog.openInformation(null, null, "開始行以外のレコードを選択してください");
 				return;
 			} else {
-				AddCalculusDialog c = new AddCalculusDialog(shell, tableViewer, methodDesignList);
+				AddCalculusDialog c = new AddCalculusDialog(shell, tableViewer, methodDesignList,methodUniqueId);
 				c.open();
 			}
 		}
@@ -364,7 +366,7 @@ public class MethodDesignRightMenuManager extends ActionGroup {
 				MessageDialog.openInformation(null, null, "開始行以外のレコードを選択してください");
 				return;
 			} else {
-				AddCalculusDialog c = new AddCalculusDialog(shell, tableViewer, methodDesignList);
+				AddCalculusDialog c = new AddCalculusDialog(shell, tableViewer, methodDesignList,methodUniqueId);
 				c.open();
 			}
 		}
@@ -388,7 +390,7 @@ public class MethodDesignRightMenuManager extends ActionGroup {
 				MessageDialog.openInformation(null, null, "開始行以外のレコードを選択してください");
 				return;
 			} else {
-				AddCalculusDialog c = new AddCalculusDialog(shell, tableViewer, methodDesignList);
+				AddCalculusDialog c = new AddCalculusDialog(shell, tableViewer, methodDesignList,methodUniqueId);
 				c.open();
 			}
 		}
@@ -413,7 +415,7 @@ public class MethodDesignRightMenuManager extends ActionGroup {
 				MessageDialog.openInformation(null, null, "開始行以外のレコードを選択してください");
 				return;
 			} else {
-				MethodDesignUtil.addCommonBlock(methodDesignList, index, ConstantManager.BLOCK_TYPE_NORMAL);
+				MethodDesignUtil.addCommonBlock(methodDesignList, index, ConstantManager.BLOCK_TYPE_NORMAL,methodUniqueId);
 				MethodDesign newMethodDesign = methodDesignList.get(index);
 				newMethodDesign.setDetailDisplay("return");
 				methodDesignList.set(index, newMethodDesign);
@@ -441,7 +443,7 @@ public class MethodDesignRightMenuManager extends ActionGroup {
 				MessageDialog.openInformation(null, null, "開始行以外のレコードを選択してください");
 				return;
 			} else {
-				MethodDesignUtil.addCommonBlock(methodDesignList, index, ConstantManager.BLOCK_TYPE_NORMAL);
+				MethodDesignUtil.addCommonBlock(methodDesignList, index, ConstantManager.BLOCK_TYPE_NORMAL,methodUniqueId);
 				MethodDesign newMethodDesign = methodDesignList.get(index);
 				newMethodDesign.setDetailDisplay("break");
 				methodDesignList.set(index, newMethodDesign);
@@ -471,7 +473,7 @@ public class MethodDesignRightMenuManager extends ActionGroup {
 				MessageDialog.openInformation(null, null, "開始行以外のレコードを選択してください");
 				return;
 			} else {
-				MethodDesignUtil.addCommonBlock(methodDesignList, index, ConstantManager.BLOCK_TYPE_NORMAL);
+				MethodDesignUtil.addCommonBlock(methodDesignList, index, ConstantManager.BLOCK_TYPE_NORMAL,methodUniqueId);
 				MethodDesign newMethodDesign = methodDesignList.get(index);
 				newMethodDesign.setDetailDisplay("continue");
 				methodDesignList.set(index, newMethodDesign);
