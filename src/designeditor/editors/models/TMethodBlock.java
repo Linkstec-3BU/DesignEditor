@@ -17,7 +17,7 @@ public class TMethodBlock implements Serializable {
 
 	@Id
 	@Column(name="block_unique_id")
-	private String blockUniqueId;
+	private BigInteger blockUniqueId;
 
 	@Column(name="after_block_unique_id")
 	private BigInteger afterBlockUniqueId;
@@ -54,11 +54,11 @@ public class TMethodBlock implements Serializable {
 	public TMethodBlock() {
 	}
 
-	public String getBlockUniqueId() {
+	public BigInteger getBlockUniqueId() {
 		return this.blockUniqueId;
 	}
 
-	public void setBlockUniqueId(String blockUniqueId) {
+	public void setBlockUniqueId(BigInteger blockUniqueId) {
 		this.blockUniqueId = blockUniqueId;
 	}
 
