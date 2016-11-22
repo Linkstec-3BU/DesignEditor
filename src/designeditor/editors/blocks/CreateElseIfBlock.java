@@ -1,4 +1,4 @@
-package designeditor.editors.logic;
+package designeditor.editors.blocks;
 
 import java.util.List;
 

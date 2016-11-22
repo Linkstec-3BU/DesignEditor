@@ -13,13 +13,13 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.actions.ActionGroup;
 
 import designeditor.editors.bean.MethodDesign;
+import designeditor.editors.blocks.CreateElseIfBlock;
+import designeditor.editors.blocks.CreateForeachBlock;
+import designeditor.editors.blocks.CreateSelectBlock;
+import designeditor.editors.blocks.CreateThrowBlock;
+import designeditor.editors.blocks.ICreateBlock;
 import designeditor.editors.constant.ConstantManager;
 import designeditor.editors.dialog.AddCalculusDialog;
-import designeditor.editors.logic.CreateElseIfBlock;
-import designeditor.editors.logic.CreateForeachBlock;
-import designeditor.editors.logic.CreateSelectBlock;
-import designeditor.editors.logic.CreateThrowBlock;
-import designeditor.editors.logic.ICreateBlock;
 import designeditor.util.MethodDesignUtil;
 
 public class MethodDesignRightMenuManager extends ActionGroup {
