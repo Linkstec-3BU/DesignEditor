@@ -105,7 +105,7 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 							List<MethodParameter> methodParameterList = moduleMethod.getMethodParameter();
 							for (MethodDesign methodDesign : methodDesignList) {
 								// TODO BeanToModel
-								em.joinTransaction();
+//								em.joinTransaction();
 								DbUtil.save(methodDesign);
 							}
 							for (MethodParameter methodParameter : methodParameterList) {
@@ -114,14 +114,14 @@ public class DesignEditor extends MultiPageEditorPart implements IResourceChange
 								methodParameter.setModuleId(moduleMethod.getModuleId());
 								methodParameter.setMethodId(moduleMethod.getMethodId());
 								TMethodParameter tMethodParameter = methodParameterDao.BeanToModel(methodParameter);
-								em.joinTransaction();
+//								em.joinTransaction();
 								DbUtil.save(tMethodParameter);
 							}
-							em.joinTransaction();
+//							em.joinTransaction();
 							DbUtil.save(moduleMethodDao.BeanToModel(moduleMethod));
 						}
 						TModule tModule = moduleDao.BeanToModel(module);
-						em.joinTransaction();
+//						em.joinTransaction();
 						DbUtil.save(tModule);
 					}
 					em.getTransaction().commit();

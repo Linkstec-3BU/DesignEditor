@@ -14,7 +14,6 @@ public class MethodParameter {
 	private String parameterId;
 	private String parameterName;
 	private String paramterType;
-
 	private String comment;
 	
 	public MethodParameter(){

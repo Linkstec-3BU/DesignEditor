@@ -38,112 +38,6 @@ public class MethodDesignDialog extends Dialog {
 	private ModuleMethod moduleMethod;
 	private List<MethodDesign> methodDesignList;
 
-//	public static void main(String args[]) {
-//		Display display = new Display();
-//		Shell shell = new Shell();
-//		shell.setSize(800, 600);
-//		shell.setText("メソッド設計editor");
-//
-//		GridLayout layout = new GridLayout(6, false);
-//		shell.setLayout(layout);
-//
-//		Label methodLabel = new Label(shell, SWT.NONE);
-//		methodLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-//		methodLabel.setText("メソッド名");
-//
-//		Text methodText = new Text(shell, SWT.BORDER);
-//		methodText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-//
-//		Label paramterLabel = new Label(shell, SWT.NONE);
-//		paramterLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-//		paramterLabel.setText("パラメータ");
-//
-//		Text paramterText = new Text(shell, SWT.BORDER);
-//		paramterText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-//
-//		Label returnLabel = new Label(shell, SWT.NONE);
-//		returnLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-//		returnLabel.setText("戻り値");
-//
-//		Text returnText = new Text(shell, SWT.BORDER);
-//		returnText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-//
-//		Button btn = new Button(shell, SWT.PUSH);
-//		btn.setText("ソース生成");
-//		btn.setSize(50, 20);
-//
-//		Composite tableComposite = new Composite(shell, SWT.NONE);
-//
-//		TableViewer tableView = new TableViewer(tableComposite, SWT.FULL_SELECTION);
-//		Table table = tableView.getTable();
-//		tableComposite.setLayout(new FillLayout());
-//		GridData gridData = new GridData();
-//		gridData.horizontalSpan = 6;
-//		gridData.horizontalAlignment = GridData.FILL;
-//		gridData.grabExcessHorizontalSpace = true;
-//		gridData.widthHint = 780;
-//		gridData.heightHint = 500;
-//		tableComposite.setLayoutData(gridData);
-//
-//		table.setHeaderVisible(true);
-//		table.setLinesVisible(true);
-//
-//		/**
-//		 * 
-//		 */
-//		TableViewerColumn numberColumn = new TableViewerColumn(tableView, SWT.RIGHT);
-//		numberColumn.getColumn().setText("番号");
-//		numberColumn.getColumn().setWidth(45);
-//
-//		TableColumn logicOneColumn = new TableColumn(table, SWT.NONE);
-//		logicOneColumn.setText("");
-//		logicOneColumn.setWidth(45);
-//
-//		TableColumn logicTwoColumn = new TableColumn(table, SWT.NONE);
-//		logicTwoColumn.setText("");
-//		logicTwoColumn.setWidth(45);
-//
-//		TableColumn logicthreeColumn = new TableColumn(table, SWT.NONE);
-//		logicthreeColumn.setText("");
-//		logicthreeColumn.setWidth(45);
-//
-//		TableColumn editAreaColumn = new TableColumn(table, SWT.NONE);
-//		editAreaColumn.setText("処理詳細");
-//		editAreaColumn.setWidth(300);
-//
-//		TableColumn commentColumn = new TableColumn(table, SWT.NONE);
-//		commentColumn.setText("コメント");
-//		commentColumn.setWidth(300);
-//
-//		tableView.setContentProvider(new TableViewerContentProvider());
-//
-//		tableView.setLabelProvider(new TableViewerLabelProvider());
-//
-//		numberColumn.setLabelProvider(new RowNumberLabelProvider());
-//
-//		List<EditArea> editAreaData = new ArrayList<EditArea>();
-//		editAreaData.add(new EditArea("", ConstantManager.BLOCK_STEP_ZERO, "1", "2", "3", "4", "5"));
-//		tableView.setInput(editAreaData);
-//
-//		tableView.addDoubleClickListener(new IDoubleClickListener() {
-//			@Override
-//			public void doubleClick(DoubleClickEvent event) {
-//				RowEditDialog c = new RowEditDialog(shell, tableView, editAreaData);
-//				c.open();
-//			}
-//		});
-//
-//		RightMenuManager rightMenuManager = new RightMenuManager(tableView, editAreaData, shell);
-//		rightMenuManager.fillContextMenu();
-//
-//		shell.open();
-//		while (!shell.isDisposed()) {
-//			if (!display.readAndDispatch())
-//				display.sleep();
-//		}
-//		display.dispose();
-//	}
-
 	public MethodDesignDialog(Shell parent, ModuleMethod moduleMethod) {
 		super(parent, SWT.NONE);
 		this.moduleMethod = moduleMethod;
@@ -162,7 +56,7 @@ public class MethodDesignDialog extends Dialog {
 	}
 
 	protected void createContents() {
-		shell = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+		shell = new Shell(getParent(), SWT.SHELL_TRIM);
 		shell.setSize(800, 600);
 		shell.setText("メソッド設計editor");
 

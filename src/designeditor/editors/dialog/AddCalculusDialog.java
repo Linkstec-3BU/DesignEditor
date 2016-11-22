@@ -42,7 +42,7 @@ public class AddCalculusDialog extends Dialog {
 	}
 
 	protected void createContents() {
-		shell = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+		shell = new Shell(getParent(), SWT.SHELL_TRIM);
 		shell.setSize(312, 212);
 		shell.setText("SWT Dialog");
 		Text text = new Text(shell, SWT.BORDER);

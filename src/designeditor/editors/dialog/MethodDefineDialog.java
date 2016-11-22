@@ -10,6 +10,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -42,7 +43,7 @@ public class MethodDefineDialog extends Dialog {
 	}
 
 	protected void createContents() {
-		shell = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+		shell = new Shell(getParent(), SWT.SHELL_TRIM);
 		shell.setSize(650, 400);
 		shell.setText("メソッド定義editor");
 
@@ -103,29 +104,102 @@ public class MethodDefineDialog extends Dialog {
 
 		GridData rightGridData = new GridData(300, 300);
 		rightComposite.setLayoutData(rightGridData);
-
+		List<MethodParameter> methodParameterList = new ArrayList<MethodParameter>();
 		if (moduleMethod.getMethodParameter() != null) {
 			for (int i = 0; i < moduleMethod.getMethodParameter().size(); i++) {
 				MethodParameter methodParameter = moduleMethod.getMethodParameter().get(i);
 				
 				Composite rightChildComposite = new Composite(rightComposite, SWT.BORDER);
 
-				GridLayout rightChildGridLayout = new GridLayout(2, false);
+				GridLayout rightChildGridLayout = new GridLayout(4, false);
 				rightChildComposite.setLayout(rightChildGridLayout);
 
 				GridData rightChildGridData = new GridData(280, 30);
 				rightChildComposite.setLayoutData(rightChildGridData);
 				
 				Label parameterTypeLabel = new Label(rightChildComposite, SWT.NONE);
-				parameterTypeLabel.setLayoutData(new GridData(120,20));
+				parameterTypeLabel.setLayoutData(new GridData(70,30));
 				parameterTypeLabel.setText(methodParameter.getParamterType());
 				
 				Label parameterLabel = new Label(rightChildComposite, SWT.NONE);
-				parameterLabel.setLayoutData(new GridData(120,20));
+				parameterLabel.setLayoutData(new GridData(70,30));
 				parameterLabel.setText(methodParameter.getParameterId());
+				
+				Button editBtn = new Button(rightChildComposite,SWT.PUSH);
+				editBtn.setText("編集");
+				editBtn.setLayoutData(new GridData(70,30));
+				editBtn.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						MethodParameter methodParameter = new MethodParameter();
+						ParameterDefineDialog dialog = new ParameterDefineDialog(shell, methodParameter);
+						dialog.open();
+						parameterTypeLabel.setText(methodParameter.getParamterType());
+						parameterLabel.setText(methodParameter.getParameterId());						
+					}
+				});
+				
+				Button removeBtn = new Button(rightChildComposite, SWT.PUSH);
+				removeBtn.setText("削除");
+				removeBtn.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						rightChildComposite.dispose();
+						rightComposite.layout();
+						methodParameterList.remove(methodParameter);
+					}
+				});
+
+				methodParameterList.add(methodParameter);
 			}
 		}
+		for (int i = 0; i < 100; i++) {
+			MethodParameter methodParameter = new MethodParameter();
+			Composite rightChildComposite = new Composite(rightComposite, SWT.BORDER);
 
+			GridLayout rightChildGridLayout = new GridLayout(4, false);
+			rightChildComposite.setLayout(rightChildGridLayout);
+
+			GridData rightChildGridData = new GridData(280, 30);
+			rightChildComposite.setLayoutData(rightChildGridData);
+
+			Label parameterTypeLabel = new Label(rightChildComposite, SWT.NONE);
+			parameterTypeLabel.setLayoutData(new GridData(70,30));
+			parameterTypeLabel.setText(methodParameter.getParamterType());
+			
+			Label parameterLabel = new Label(rightChildComposite, SWT.NONE);
+			parameterLabel.setLayoutData(new GridData(70,30));
+			parameterLabel.setText(methodParameter.getParameterId());
+			
+			Button editBtn = new Button(rightChildComposite,SWT.PUSH);
+			editBtn.setText("編集");
+			editBtn.setLayoutData(new GridData(70,30));
+			editBtn.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					MethodParameter methodParameter = new MethodParameter();
+					ParameterDefineDialog dialog = new ParameterDefineDialog(shell, methodParameter);
+					dialog.open();
+					parameterTypeLabel.setText(methodParameter.getParamterType());
+					parameterLabel.setText(methodParameter.getParameterId());	
+					methodParameterList.add(methodParameter);
+					moduleMethod.setMethodParameter(methodParameterList);
+				}
+			});
+			
+			Button removeBtn = new Button(rightChildComposite, SWT.PUSH);
+			removeBtn.setText("削除");
+			removeBtn.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					rightChildComposite.dispose();
+					rightComposite.layout();
+					methodParameterList.remove(methodParameter);
+				}
+			});
+			
+			rightChildComposite.setVisible(false);
+		}
 		Composite bottomComposite = new Composite(shell, SWT.BORDER);
 
 		GridLayout bottomGridLayout = new GridLayout(5, false);
@@ -140,8 +214,7 @@ public class MethodDefineDialog extends Dialog {
 		saveBtn.addSelectionListener(new SelectionAdapter() {
 
 			@Override
-			public void widgetSelected(SelectionEvent e) {
-				
+			public void widgetSelected(SelectionEvent e) {				
 				moduleMethod.setMethodId(methodNameText1.getText());
 				moduleMethod.setMethodIdName(methodNameText2.getText());
 				moduleMethod.setMethodReturnType(methodReturnText.getText());
@@ -162,35 +235,25 @@ public class MethodDefineDialog extends Dialog {
 			}
 		});
 
-		List<MethodParameter> methodParameterList = new ArrayList<MethodParameter>();
-
 		Button addParamterBtn = new Button(bottomComposite, SWT.PUSH | SWT.CENTER);
 		addParamterBtn.setText("Add paramter");
 		addParamterBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MethodParameter methodParameter = new MethodParameter();
-				ParameterDefineDialog dialog = new ParameterDefineDialog(shell, methodParameter);
-				dialog.open();
-				methodParameterList.add(methodParameter);
-				moduleMethod.setMethodParameter(methodParameterList);
+				Control rightControl[] = rightComposite.getChildren();
 				
-				Composite rightChildComposite = new Composite(rightComposite, SWT.BORDER);
-
-				GridLayout rightChildGridLayout = new GridLayout(2, false);
-				rightChildComposite.setLayout(rightChildGridLayout);
-
-				GridData rightChildGridData = new GridData(280, 30);
-				rightChildComposite.setLayoutData(rightChildGridData);
-
-				Label parameterTypeLabel = new Label(rightChildComposite, SWT.NONE);
-				parameterTypeLabel.setLayoutData(new GridData(120,20));
-				parameterTypeLabel.setText(methodParameter.getParamterType());
 				
-				Label parameterLabel = new Label(rightChildComposite, SWT.NONE);
-				parameterLabel.setLayoutData(new GridData(120,20));
-				parameterLabel.setText(methodParameter.getParameterId());
-				
+				boolean labelFlg = false;
+				for (Control ctl : rightControl) {
+					if (ctl.getVisible()) {
+						continue;
+					}
+					if (ctl instanceof Composite && !labelFlg) {
+						ctl.setVisible(true);
+						labelFlg = true;
+						continue;
+					}
+				}
 			}
 		});
 		addParamterBtn.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false));

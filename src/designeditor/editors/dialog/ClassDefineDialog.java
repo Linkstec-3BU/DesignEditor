@@ -6,6 +6,7 @@ import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -47,7 +48,7 @@ public class ClassDefineDialog extends Dialog {
 	}
 
 	protected void createContents() {
-		shell = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+		shell = new Shell(getParent(), SWT.SHELL_TRIM);
 		shell.setSize(650, 400);
 		shell.setText("クラス定義editor");
 
@@ -123,7 +124,7 @@ public class ClassDefineDialog extends Dialog {
 			for (int i = 0; i < moduleClass.getModuleMethod().size(); i++) {
 				ModuleMethod moduleMethod = moduleClass.getModuleMethod().get(i);
 				Composite rightChildComposite = new Composite(rightComposite, SWT.BORDER);
-				GridLayout rightChildGridLayout = new GridLayout(3, false);
+				GridLayout rightChildGridLayout = new GridLayout(4, false);
 				rightChildComposite.setLayout(rightChildGridLayout);
 
 				GridData rightChildGridData = new GridData(280, 60);
@@ -153,14 +154,25 @@ public class ClassDefineDialog extends Dialog {
 						c.open();
 					}
 				});
+				
+				Button removeBtn = new Button(rightChildComposite, SWT.PUSH);
+				removeBtn.setText("削除");
+				removeBtn.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						rightChildComposite.dispose();
+						rightComposite.layout();
+						moduleMethodList.remove(moduleMethod);
+					}
+				});
 				moduleMethodList.add(moduleMethod);
 			}
 		}
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 100; i++) {
 			moduleMethod = new ModuleMethod();
 			Composite rightChildComposite = new Composite(rightComposite, SWT.BORDER);
 
-			GridLayout rightChildGridLayout = new GridLayout(3, false);
+			GridLayout rightChildGridLayout = new GridLayout(4, false);
 			rightChildComposite.setLayout(rightChildGridLayout);
 
 			GridData rightChildGridData = new GridData(280, 60);
@@ -191,6 +203,17 @@ public class ClassDefineDialog extends Dialog {
 					MethodDesignDialog c = new MethodDesignDialog(shell, moduleMethod);
 					c.open();
 
+				}
+			});
+			
+			Button removeBtn = new Button(rightChildComposite, SWT.PUSH);
+			removeBtn.setText("削除");
+			removeBtn.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					rightChildComposite.dispose();
+					rightComposite.layout();
+					moduleMethodList.remove(moduleMethod);
 				}
 			});
 
