@@ -3,8 +3,8 @@ package designeditor.editors.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import designeditor.editors.bean.MethodDesign;
 import designeditor.editors.bean.ModuleMethod;
+import designeditor.editors.constant.ConstantManager;
 import designeditor.editors.models.TMethodBlock;
 import designeditor.editors.models.TMethodParameter;
 import designeditor.editors.models.TModuleMethod;
@@ -36,7 +36,20 @@ public class ModuleMethodDao {
 		moduleMethod.setModuleId(tModuleMethod.getId().getModuleId());
 		moduleMethod.setMethodId(tModuleMethod.getId().getMethodId());
 		List<TMethodBlock> methodBlockList = methodBlockDao.selectByFk(tModuleMethod.getMethodUniqueId());
-		moduleMethod.setMethodDesignList(methodBlockDao.modelToBean(methodBlockList));
+		List<TMethodBlock> newMethodBlockList = new ArrayList<TMethodBlock>();
+		for (TMethodBlock tMethodBlock : methodBlockList) {
+			if (ConstantManager.START_NODE.equals(tMethodBlock.getBlockUniqueId().toString())) {
+				for (;;) {
+					if (ConstantManager.END_NODE.equals(tMethodBlock.getBlockUniqueId().toString())) {
+						break;
+					}
+					tMethodBlock = methodBlockDao.selectByAfterBlockUniqueId(tMethodBlock.getMethodUniqueId(), tMethodBlock.getAfterBlockUniqueId());
+					newMethodBlockList.add(tMethodBlock);
+				}
+				break;
+			}
+		}
+		moduleMethod.setMethodDesignList(methodBlockDao.modelToBean(newMethodBlockList));
 		moduleMethod.setMethodIdName(tModuleMethod.getMethodIdName());
 
 		List<TMethodParameter> tMethodParameterList = methodParameterDao.selectByFk(tModuleMethod.getId().getProjectId(),

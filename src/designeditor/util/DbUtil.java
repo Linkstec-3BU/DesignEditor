@@ -27,29 +27,31 @@ public class DbUtil {
 		entityManager.merge(obj);
 	}
 
-	public static void executeUpdateSql(String sql,String[] parameters) {
+	public static void executeUpdateSql(String sql, String[] parameters) {
 		Query query = entityManager.createQuery(sql);
-		for (int i = 1;i<=parameters.length;i++) {
-			query.setParameter(i, parameters[i-1]);
+		for (int i = 1; i <= parameters.length; i++) {
+			query.setParameter(i, parameters[i - 1]);
 		}
 		query.executeUpdate();
 	}
-	
-	public static Object selectByOthers(String sql,String[] parameters) {
+
+	public static Object selectByOthers(String sql, Object[] parameters) {
 		Query query = entityManager.createQuery(sql);
-		for (int i=1;i<=parameters.length;i++) {
-			query.setParameter(i, parameters[i-1]);
+		for (int i = 1; i <= parameters.length; i++) {
+			query.setParameter(i, parameters[i - 1]);
 		}
 		Object obj = query.getResultList();
 		return obj;
 	}
-	
-	public static Object selectByKey(Object obj,String key) {
-		Object result=entityManager.find(obj.getClass(), key);
+
+	public static Object selectByKey(Object obj, String key) {
+		Object result = entityManager.find(obj.getClass(), key);
 		return result;
 	}
-	
+
 	public static List<?> selectAll(Object obj) {
-		return entityManager.createQuery("select c from " + obj.getClass().getName() + " c", obj.getClass()).getResultList();
+		return entityManager.createQuery("select c from " + obj.getClass().getName() + " c", obj.getClass())
+				.getResultList();
 	}
+
 }

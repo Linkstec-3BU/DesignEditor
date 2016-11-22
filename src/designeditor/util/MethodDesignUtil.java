@@ -8,7 +8,7 @@ import designeditor.editors.constant.ConstantManager;
 public class MethodDesignUtil {
 
 	public static void initBlock(List<MethodDesign> methodDesignList,String methodUniqueId) {
-		MethodDesign startMethodDesign = new MethodDesign(ConstantManager.START_NODE, "", "",
+		MethodDesign startMethodDesign = new MethodDesign(ConstantManager.START_NODE, "", ConstantManager.END_NODE,
 				 ConstantManager.BLOCK_LEVEL_ONE,methodUniqueId);
 		startMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_NORMAL);
 		MethodDesign endMethodDesign = new MethodDesign(ConstantManager.END_NODE, "", "",

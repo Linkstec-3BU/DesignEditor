@@ -17,6 +17,14 @@ public class MethodBlockDao {
 		methodBlockList = (List<TMethodBlock>) DbUtil.selectByOthers(sql, parameters);
 		return methodBlockList;
 	}
+	
+	public TMethodBlock selectByAfterBlockUniqueId(String methodUniqueId,BigInteger afterBlockUniqueId) {
+		List<TMethodBlock> methodBlockList = new ArrayList<TMethodBlock>();
+		String sql = "SELECT t FROM TMethodBlock t where t.methodUniqueId = ?1 and t.blockUniqueId = ?2";
+		Object parameters[] = {methodUniqueId, afterBlockUniqueId };
+		methodBlockList = (List<TMethodBlock>) DbUtil.selectByOthers(sql, parameters);
+		return methodBlockList.get(0);
+	}
 
 	public MethodDesign modelToBean(TMethodBlock methodBlock) {
 		MethodDesign methodDesign = new MethodDesign(methodBlock.getBlockUniqueId().toString(), "", "",
