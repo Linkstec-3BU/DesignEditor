@@ -116,7 +116,7 @@ public class MethodDesignRightMenuManager extends ActionGroup {
 				MethodDesign methodDesign = methodDesignList.get(index);
 				List<MethodDesign> newMethodDesignList = new ArrayList<MethodDesign>();
 
-				String parentBlockUniqueId = methodDesign.getParentBlockUniqueId();
+				String parentBlockUniqueId = methodDesign.getFatherBlockUniqueId();
 				int afterIndex = 0;
 				boolean startTag = false;
 				if (ConstantManager.BLOCK_TYPE_NORMAL.equals(methodDesign.getBlockType())) {
@@ -124,25 +124,25 @@ public class MethodDesignRightMenuManager extends ActionGroup {
 				} else {
 					for (int i = 1; i < methodDesignList.size(); i++) {
 						MethodDesign nextMethodDesign = methodDesignList.get(i);
-						if (!startTag && !nextMethodDesign.getParentBlockUniqueId()
-								.equals(methodDesign.getParentBlockUniqueId())) {
+						if (!startTag && !nextMethodDesign.getFatherBlockUniqueId()
+								.equals(methodDesign.getFatherBlockUniqueId())) {
 							continue;
 						}
 						startTag = true;
 						newMethodDesignList.add(nextMethodDesign);
 						afterIndex = i + 1;
 						if (ConstantManager.BLOCK_LEVEL_ONE.equals(methodDesign.getBlockLevel())) {
-							if (parentBlockUniqueId.equals(nextMethodDesign.getParentBlockUniqueId())
+							if (parentBlockUniqueId.equals(nextMethodDesign.getFatherBlockUniqueId())
 									&& ConstantManager.DISPLAY_END.equals(nextMethodDesign.getLevel1Display())) {
 								break;
 							}
 						} else if (ConstantManager.BLOCK_LEVEL_TWO.equals(methodDesign.getBlockLevel())) {
-							if (parentBlockUniqueId.equals(nextMethodDesign.getParentBlockUniqueId())
+							if (parentBlockUniqueId.equals(nextMethodDesign.getFatherBlockUniqueId())
 									&& ConstantManager.DISPLAY_END.equals(nextMethodDesign.getLevel2Display())) {
 								break;
 							}
 						} else if (ConstantManager.BLOCK_LEVEL_THREE.equals(methodDesign.getBlockLevel())) {
-							if (parentBlockUniqueId.equals(nextMethodDesign.getParentBlockUniqueId())
+							if (parentBlockUniqueId.equals(nextMethodDesign.getFatherBlockUniqueId())
 									&& ConstantManager.DISPLAY_END.equals(nextMethodDesign.getLevel3Display())) {
 								break;
 							}
@@ -151,7 +151,7 @@ public class MethodDesignRightMenuManager extends ActionGroup {
 				}
 				MethodDesign beforeMethodDesign = methodDesignList.get(index - 1);
 				MethodDesign afterMethodDesign = methodDesignList.get(afterIndex);
-				beforeMethodDesign.setNextBlockUniqueId(afterMethodDesign.getBlockUniqueId());
+				beforeMethodDesign.setAfterBlockUniqueId(afterMethodDesign.getBlockUniqueId());
 
 				methodDesignList.removeAll(newMethodDesignList);
 				tableViewer.refresh();

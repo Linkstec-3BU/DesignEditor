@@ -1,9 +1,15 @@
 package designeditor.editors.bean;
 
+/**
+ * @author daizhu
+ *
+ */
 public class MethodDesign {
+	private String methodUniqueId;
 	private String blockUniqueId;
-	private String parentBlockUniqueId;
-	private String nextBlockUniqueId;
+	private String fatherBlockUniqueId;
+	private String afterBlockUniqueId;
+	private String beforeBlockUniqueId;	
 	private String blockType;
 	private String blockLevel;
 	private String level1Display;
@@ -12,10 +18,10 @@ public class MethodDesign {
 	private String detailDisplay;
 	private String comment;
 
-	public MethodDesign(String blockUniqueId, String parentBlockUniqueId, String nextBlockUniqueId, String blockLevel) {
+	public MethodDesign(String blockUniqueId, String fatherBlockUniqueId, String afterBlockUniqueId, String blockLevel) {
 		this.blockUniqueId = blockUniqueId;
-		this.parentBlockUniqueId = parentBlockUniqueId;
-		this.nextBlockUniqueId = nextBlockUniqueId;
+		this.fatherBlockUniqueId = fatherBlockUniqueId;
+		this.afterBlockUniqueId = afterBlockUniqueId;
 		this.blockType = "";
 		this.blockLevel = blockLevel;
 		this.level1Display = "";
@@ -33,20 +39,28 @@ public class MethodDesign {
 		this.blockUniqueId = blockUniqueId;
 	}
 
-	public String getParentBlockUniqueId() {
-		return parentBlockUniqueId;
+	public String getFatherBlockUniqueId() {
+		return fatherBlockUniqueId;
 	}
 
-	public void setParentBlockUniqueId(String parentBlockUniqueId) {
-		this.parentBlockUniqueId = parentBlockUniqueId;
+	public void setFatherBlockUniqueId(String fatherBlockUniqueId) {
+		this.fatherBlockUniqueId = fatherBlockUniqueId;
 	}
 
-	public String getNextBlockUniqueId() {
-		return nextBlockUniqueId;
+	public String getAfterBlockUniqueId() {
+		return afterBlockUniqueId;
 	}
 
-	public void setNextBlockUniqueId(String nextBlockUniqueId) {
-		this.nextBlockUniqueId = nextBlockUniqueId;
+	public void setAfterBlockUniqueId(String afterBlockUniqueId) {
+		this.afterBlockUniqueId = afterBlockUniqueId;
+	}
+
+	public String getBeforeBlockUniqueId() {
+		return beforeBlockUniqueId;
+	}
+
+	public void setBeforeBlockUniqueId(String beforeBlockUniqueId) {
+		this.beforeBlockUniqueId = beforeBlockUniqueId;
 	}
 
 	public String getBlockType() {
@@ -103,6 +117,14 @@ public class MethodDesign {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public String getMethodUniqueId() {
+		return methodUniqueId;
+	}
+
+	public void setMethodUniqueId(String methodUniqueId) {
+		this.methodUniqueId = methodUniqueId;
 	}
 
 }

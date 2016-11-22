@@ -137,19 +137,19 @@ public class ParameterDefineDialog extends Dialog {
 		parmeterNameLabel1.setText("パラメータの物理名:");
 		Text parmeterNameText1 = new Text(topComposite, SWT.NONE);
 		parmeterNameText1.setLayoutData(textGridData);
-		parmeterNameText1.setText(methodParameter.getParameter_id());
+		parmeterNameText1.setText(methodParameter.getParameterId());
 
 		Label parmeterNameLabel2 = new Label(topComposite, SWT.NONE);
 		parmeterNameLabel2.setText("パラメータの論理名:");
 		Text parmeterNameText2 = new Text(topComposite, SWT.NONE);
 		parmeterNameText2.setLayoutData(textGridData);
-		parmeterNameText2.setText(methodParameter.getParameter_name());
+		parmeterNameText2.setText(methodParameter.getParameterName());
 
 		Label parmeterLabel = new Label(topComposite, SWT.NONE);
 		parmeterLabel.setText("パラメータタイプ:");
 		Combo parmeterCombo = new Combo(topComposite, SWT.DROP_DOWN);
 		parmeterCombo.setLayoutData(textGridData);
-		parmeterCombo.setText(methodParameter.getParamter_type());
+		parmeterCombo.setText(methodParameter.getParamterType());
 		parmeterCombo.setItems(JAVA_TYPES);
 
 		Label commentLabel = new Label(topComposite, SWT.NONE);
@@ -176,9 +176,9 @@ public class ParameterDefineDialog extends Dialog {
 		saveBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				methodParameter.setParameter_id(parmeterNameText1.getText());
-				methodParameter.setParameter_name(parmeterNameText2.getText());
-				methodParameter.setParamter_type(parmeterCombo.getText());
+				methodParameter.setParameterId(parmeterNameText1.getText());
+				methodParameter.setParameterName(parmeterNameText2.getText());
+				methodParameter.setParamterType(parmeterCombo.getText());
 				methodParameter.setComment(commentText.getText());
 				shell.dispose();
 			}

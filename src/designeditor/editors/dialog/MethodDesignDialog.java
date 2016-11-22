@@ -175,7 +175,7 @@ public class MethodDesignDialog extends Dialog {
 
 		Text methodText = new Text(shell, SWT.BORDER);
 		methodText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		methodText.setText(moduleMethod.getMethod_id());
+		methodText.setText(moduleMethod.getMethodId());
 
 		Label paramterLabel = new Label(shell, SWT.NONE);
 		paramterLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -186,7 +186,7 @@ public class MethodDesignDialog extends Dialog {
 		if (moduleMethod.getMethodParameter() == null || moduleMethod.getMethodParameter().isEmpty()) {
 			paramterText.setText("");
 		} else {
-			paramterText.setText(moduleMethod.getMethodParameter().get(0).getParameter_id());
+			paramterText.setText(moduleMethod.getMethodParameter().get(0).getParameterId());
 		}
 
 		Label returnLabel = new Label(shell, SWT.NONE);
@@ -195,7 +195,7 @@ public class MethodDesignDialog extends Dialog {
 
 		Text returnText = new Text(shell, SWT.BORDER);
 		returnText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		returnText.setText(moduleMethod.getMethod_return_type());
+		returnText.setText(moduleMethod.getMethodReturnType());
 
 		Composite tableComposite = new Composite(shell, SWT.NONE);
 

@@ -1,36 +1,41 @@
 package designeditor.editors.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import designeditor.util.StringUtil;
 
 public class Module {
 	// プロジェクト名
-	private String project_id;
+	private String projectId;
 	// パケッジ名
-	private String package_id;
+	private String packageId;
 	//モジュール物理名
-	private String module_id;
+	private String moduleId;
 	//モジュール論理名
-	private String module_id_name;
+	private String moduleIdName;
 	//モジュールタイプ
-	private String module_type;
+	private String moduleType;
 	//コメント
 	private String comment;
 	
 	private List<ModuleMethod> moduleMethod;
 	
 	public Module() {
-		
+		this.moduleId = "";
+		this.moduleIdName = "";
+		this.moduleType = "";
+		this.comment = "";
+		this.moduleMethod = new ArrayList<ModuleMethod>();
 	}
 	
-	public Module(String project_id,String package_id,String module_id, String module_id_name, String module_type,
+	public Module(String projectId,String packageId,String moduleId, String moduleIdName, String moduleType,
 			String comment, List<ModuleMethod> moduleMethod) {
-		this.project_id = project_id;
-		this.package_id = package_id;
-		this.module_id = module_id;
-		this.module_id_name = module_id_name;
-		this.module_type = module_type;
+		this.projectId = projectId;
+		this.packageId = packageId;
+		this.moduleId = moduleId;
+		this.moduleIdName = moduleIdName;
+		this.moduleType = moduleType;
 		this.comment = comment;
 		this.moduleMethod = moduleMethod;
 	}
@@ -42,36 +47,47 @@ public class Module {
 	public void setModuleMethod(List<ModuleMethod> moduleMethod) {
 		this.moduleMethod = moduleMethod;
 	}
-	public String getProject_id() {
-		return StringUtil.NullToEmpty(project_id);
+	
+	public String getProjectId() {
+		return projectId;
 	}
-	public void setProject_id(String project_id) {
-		this.project_id = project_id;
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
 	}
-	public String getPackage_id() {
-		return StringUtil.NullToEmpty(package_id);
+
+	public String getPackageId() {
+		return packageId;
 	}
-	public void setPackage_id(String package_id) {
-		this.package_id = package_id;
+
+	public void setPackageId(String packageId) {
+		this.packageId = packageId;
 	}
-	public String getModule_id() {
-		return StringUtil.NullToEmpty(module_id);
+
+	public String getModuleId() {
+		return moduleId;
 	}
-	public void setModule_id(String module_id) {
-		this.module_id = module_id;
+
+	public void setModuleId(String moduleId) {
+		this.moduleId = moduleId;
 	}
-	public String getModule_id_name() {
-		return StringUtil.NullToEmpty(module_id_name);
+
+	public String getModuleIdName() {
+		return moduleIdName;
 	}
-	public void setModule_id_name(String module_id_name) {
-		this.module_id_name = module_id_name;
+
+	public void setModuleIdName(String moduleIdName) {
+		this.moduleIdName = moduleIdName;
 	}
-	public String getModule_type() {
-		return StringUtil.NullToEmpty(module_type);
+
+	public String getModuleType() {
+		return moduleType;
 	}
-	public void setModule_type(String module_type) {
-		this.module_type = module_type;
+
+	public void setModuleType(String moduleType) {
+		this.moduleType = moduleType;
 	}
+
 	public String getComment() {
 		return StringUtil.NullToEmpty(comment);
 	}

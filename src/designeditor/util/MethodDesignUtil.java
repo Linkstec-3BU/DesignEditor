@@ -30,10 +30,10 @@ public class MethodDesignUtil {
 		MethodDesign afterMethodDesign = methodDesignList.get(index);
 		MethodDesign methodDesign = compareLevel(beforeMethodDesign,afterMethodDesign);
 		String uniqueId = StringUtil.GetUniqueId();
-		MethodDesign newMethodDesign = new MethodDesign(uniqueId, methodDesign.getParentBlockUniqueId(),
+		MethodDesign newMethodDesign = new MethodDesign(uniqueId, methodDesign.getFatherBlockUniqueId(),
 				afterMethodDesign.getBlockUniqueId(), methodDesign.getBlockLevel());
 		newMethodDesign.setBlockType(blockType);
-		beforeMethodDesign.setNextBlockUniqueId(uniqueId);
+		beforeMethodDesign.setAfterBlockUniqueId(uniqueId);
 		methodDesignList.set(index - 1, beforeMethodDesign);
 		methodDesignList.add(index, newMethodDesign);
 	}
@@ -49,10 +49,10 @@ public class MethodDesignUtil {
 		MethodDesign beforeMethodDesign = methodDesignList.get(index - 1);
 		MethodDesign afterMethodDesign = methodDesignList.get(index);
 		String uniqueId = StringUtil.GetUniqueId();
-		MethodDesign newMethodDesign = new MethodDesign(uniqueId, afterMethodDesign.getParentBlockUniqueId(),
+		MethodDesign newMethodDesign = new MethodDesign(uniqueId, afterMethodDesign.getFatherBlockUniqueId(),
 				afterMethodDesign.getBlockUniqueId(), afterMethodDesign.getBlockLevel());
 		newMethodDesign.setBlockType(blockType);
-		beforeMethodDesign.setNextBlockUniqueId(uniqueId);
+		beforeMethodDesign.setAfterBlockUniqueId(uniqueId);
 		methodDesignList.set(index - 1, beforeMethodDesign);
 		methodDesignList.add(index, newMethodDesign);
 	}
@@ -68,10 +68,10 @@ public class MethodDesignUtil {
 		MethodDesign parentMethodDesign = methodDesignList.get(index);
 		String uniqueId = StringUtil.GetUniqueId();
 		MethodDesign newMethodDesign = new MethodDesign(uniqueId, parentMethodDesign.getBlockUniqueId(),
-				parentMethodDesign.getNextBlockUniqueId(), 
+				parentMethodDesign.getAfterBlockUniqueId(), 
 				getNextLevel(parentMethodDesign.getBlockLevel()));
 		newMethodDesign.setBlockType(ConstantManager.BLOCK_TYPE_NORMAL);
-		parentMethodDesign.setNextBlockUniqueId(uniqueId);
+		parentMethodDesign.setAfterBlockUniqueId(uniqueId);
 		methodDesignList.set(index, parentMethodDesign);
 		methodDesignList.add(index + 1, newMethodDesign);
 	}

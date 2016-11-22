@@ -29,15 +29,15 @@ public class ClassTableViewerLabelProvider implements ITableLabelProvider{
     	Module edit = (Module) element;
         
         if(columnIndex == 1){
-            return edit.getProject_id();
+            return edit.getProjectId();
         }
         
         if(columnIndex == 2){
-            return edit.getPackage_id();
+            return edit.getPackageId();
         }
         
         if(columnIndex == 3){
-            return edit.getModule_id();
+            return edit.getModuleId();
         }
         
         return "";
