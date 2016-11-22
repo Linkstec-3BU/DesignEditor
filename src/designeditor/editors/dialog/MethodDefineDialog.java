@@ -138,7 +138,6 @@ public class MethodDefineDialog extends Dialog {
 				editBtn.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
-						MethodParameter methodParameter = new MethodParameter();
 						ParameterDefineDialog dialog = new ParameterDefineDialog(shell, methodParameter);
 						dialog.open();
 						parameterTypeLabel.setText(methodParameter.getParamterType());
@@ -184,7 +183,6 @@ public class MethodDefineDialog extends Dialog {
 			editBtn.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					MethodParameter methodParameter = new MethodParameter();
 					ParameterDefineDialog dialog = new ParameterDefineDialog(shell, methodParameter);
 					dialog.open();
 					parameterTypeLabel.setText(methodParameter.getParamterType());

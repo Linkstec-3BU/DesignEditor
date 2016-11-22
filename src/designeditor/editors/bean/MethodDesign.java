@@ -9,7 +9,7 @@ public class MethodDesign {
 	private String blockUniqueId;
 	private String fatherBlockUniqueId;
 	private String afterBlockUniqueId;
-	private String beforeBlockUniqueId;	
+	private String beforeBlockUniqueId;
 	private String blockType;
 	private String blockLevel;
 	private String level1Display;
@@ -18,7 +18,8 @@ public class MethodDesign {
 	private String detailDisplay;
 	private String comment;
 
-	public MethodDesign(String blockUniqueId, String fatherBlockUniqueId, String afterBlockUniqueId, String blockLevel,String methodUniqueId) {
+	public MethodDesign(String blockUniqueId, String fatherBlockUniqueId, String afterBlockUniqueId, String blockLevel,
+			String methodUniqueId) {
 		this.blockUniqueId = blockUniqueId;
 		this.fatherBlockUniqueId = fatherBlockUniqueId;
 		this.afterBlockUniqueId = afterBlockUniqueId;

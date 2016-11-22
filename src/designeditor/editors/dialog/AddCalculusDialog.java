@@ -48,13 +48,12 @@ public class AddCalculusDialog extends Dialog {
 		shell.setSize(312, 212);
 		shell.setText("SWT Dialog");
 		Text text = new Text(shell, SWT.BORDER);
-		text.setBounds(100, 35, 20, 18);
+		text.setBounds(50, 35, 200, 30);
 		text.setEditable(true);
-		text.setSize(200, 30);
 
 		final Button button = new Button(shell, SWT.NONE);
 		button.setText("button");
-		button.setBounds(127, 74, 44, 23);
+		button.setBounds(90, 70, 80, 30);
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
