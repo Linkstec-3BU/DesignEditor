@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Text;
 
 import designeditor.editors.bean.MethodParameter;
 import designeditor.editors.bean.ModuleMethod;
+import designeditor.util.StringUtil;
 
 public class MethodDefineDialog extends Dialog {
 	protected Object result;
@@ -67,12 +68,16 @@ public class MethodDefineDialog extends Dialog {
 		Text methodNameText1 = new Text(leftComposite, SWT.NONE);
 		methodNameText1.setLayoutData(textGridData);
 		methodNameText1.setText(moduleMethod.getMethodId());
+		if (StringUtil.NotNullAndEmpty(moduleMethod.getMethodId())) {
+			methodNameText1.setEnabled(false);
+		} 
 
 		Label methodNameLabel2 = new Label(leftComposite, SWT.NONE);
 		methodNameLabel2.setText("メソッドの論理名:");
 		Text methodNameText2 = new Text(leftComposite, SWT.NONE);
 		methodNameText2.setLayoutData(textGridData);
 		methodNameText2.setText(moduleMethod.getMethodIdName());
+		
 
 		Label methodReturnLabel = new Label(leftComposite, SWT.NONE);
 		methodReturnLabel.setText("メソッドの戻り値タイプ:");

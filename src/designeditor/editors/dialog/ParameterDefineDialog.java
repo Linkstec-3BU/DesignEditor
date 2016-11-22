@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import designeditor.editors.bean.MethodParameter;
+import designeditor.util.StringUtil;
 
 public class ParameterDefineDialog extends Dialog {
 	protected Object result;
@@ -66,6 +67,9 @@ public class ParameterDefineDialog extends Dialog {
 		Text parmeterNameText1 = new Text(topComposite, SWT.NONE);
 		parmeterNameText1.setLayoutData(textGridData);
 		parmeterNameText1.setText(methodParameter.getParameterId());
+		if (StringUtil.NotNullAndEmpty(methodParameter.getParameterId())) {
+			parmeterNameText1.setEnabled(false);
+		} 
 
 		Label parmeterNameLabel2 = new Label(topComposite, SWT.NONE);
 		parmeterNameLabel2.setText("パラメータの論理名:");

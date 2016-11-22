@@ -30,6 +30,7 @@ import designeditor.editors.provider.MethodTableViewerLabelProvider;
 import designeditor.editors.provider.RowNumberLabelProvider;
 import designeditor.editors.provider.TableViewerContentProvider;
 import designeditor.util.MethodDesignUtil;
+import designeditor.util.StringUtil;
 
 public class MethodDesignDialog extends Dialog {
 
@@ -70,6 +71,9 @@ public class MethodDesignDialog extends Dialog {
 		Text methodText = new Text(shell, SWT.BORDER);
 		methodText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		methodText.setText(moduleMethod.getMethodId());
+		if (StringUtil.NotNullAndEmpty(moduleMethod.getMethodId())) {
+			methodText.setEnabled(false);
+		} 
 
 		Label paramterLabel = new Label(shell, SWT.NONE);
 		paramterLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));

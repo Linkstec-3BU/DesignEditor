@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Text;
 
 import designeditor.editors.bean.Module;
 import designeditor.editors.bean.ModuleMethod;
+import designeditor.util.StringUtil;
 
 public class ClassDefineDialog extends Dialog {
 	protected Object result;
@@ -70,23 +71,29 @@ public class ClassDefineDialog extends Dialog {
 		projectLabel.setText("プロジェクトID:");
 		Text projectText = new Text(leftComposite, SWT.NONE);
 		projectText.setLayoutData(textGridData);
-
 		projectText.setText(moduleClass.getProjectId());
-
+		if (StringUtil.NotNullAndEmpty(moduleClass.getProjectId())) {
+			projectText.setEnabled(false);
+		} 
+ 
 		Label packageLabel = new Label(leftComposite, SWT.NONE);
 		packageLabel.setText("package名:");
 		Text packageText = new Text(leftComposite, SWT.NONE);
 		packageText.setLayoutData(textGridData);
-
 		packageText.setText(moduleClass.getPackageId());
+		if (StringUtil.NotNullAndEmpty(moduleClass.getPackageId())) {
+			packageText.setEnabled(false);
+		} 
 
 		Label modulLabel1 = new Label(leftComposite, SWT.NONE);
 		modulLabel1.setText("モジュールの物理名:");
 		Text modulText1 = new Text(leftComposite, SWT.NONE);
 		modulText1.setLayoutData(textGridData);
-
 		modulText1.setText(moduleClass.getModuleId());
-
+		if (StringUtil.NotNullAndEmpty(moduleClass.getModuleId())) {
+			modulText1.setEnabled(false);
+		} 
+		
 		Label modulLabel2 = new Label(leftComposite, SWT.NONE);
 		modulLabel2.setText("モジュールの論理名:");
 		Text modulText2 = new Text(leftComposite, SWT.NONE);

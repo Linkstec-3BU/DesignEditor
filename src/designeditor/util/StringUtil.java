@@ -17,4 +17,13 @@ public class StringUtil {
 	public static String GetUniqueId() {
 		return String.valueOf(System.nanoTime());
 	}
+	
+	public static boolean NotNullAndEmpty(String str) {
+		if (str == null) {
+			return false;
+		} else if ("".equals(str)) {
+			return false;
+		} 
+		return true;
+	}
 }
