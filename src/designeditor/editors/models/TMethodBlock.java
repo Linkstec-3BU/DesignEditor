@@ -48,6 +48,9 @@ public class TMethodBlock implements Serializable {
 	@Column(name="level3_display")
 	private String level3Display;
 
+	@Column(name="method_unique_id")
+	private String methodUniqueId;
+
 	public TMethodBlock() {
 	}
 
@@ -137,6 +140,14 @@ public class TMethodBlock implements Serializable {
 
 	public void setLevel3Display(String level3Display) {
 		this.level3Display = level3Display;
+	}
+
+	public String getMethodUniqueId() {
+		return this.methodUniqueId;
+	}
+
+	public void setMethodUniqueId(String methodUniqueId) {
+		this.methodUniqueId = methodUniqueId;
 	}
 
 }
