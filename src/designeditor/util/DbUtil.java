@@ -8,6 +8,11 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import designeditor.editors.constant.ConstantManager;
 
+/**
+ * 应该用singleton模式
+ * @author LKG
+ *
+ */
 public class DbUtil {
 	private static EntityManagerFactory entityManagerFactory;
 	private static EntityManager entityManager;
